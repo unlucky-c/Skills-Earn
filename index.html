@@ -1,0 +1,2174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillEarn India — Turn Your Skills Into Income</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ─────────────────────────────────────────────
+   ROOT VARIABLES
+───────────────────────────────────────────── */
+:root {
+  --bg: #050509;
+  --surface: #0b0b12;
+  --card: #0f0f1c;
+  --card2: #141428;
+  --accent: #f0b429;
+  --accent2: #ff5e3a;
+  --accent3: #6d28d9;
+  --green: #10b981;
+  --text: #ede9e0;
+  --muted: #5c5c78;
+  --muted2: #8888aa;
+  --border: rgba(240,180,41,0.15);
+  --border2: rgba(255,255,255,0.055);
+  --glow: rgba(240,180,41,0.22);
+  --radius: 22px;
+  --radius-sm: 14px;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Grain overlay */
+body::after {
+  content:'';
+  position:fixed; inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:9999; opacity:0.5;
+}
+
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius:10px; }
+
+/* ─────────────────────────────────────────────
+   NAV
+───────────────────────────────────────────── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:1rem 5%;
+  background: rgba(5,5,9,0.75);
+  backdrop-filter: blur(24px) saturate(1.5);
+  border-bottom: 1px solid var(--border2);
+  transition: all 0.3s;
+}
+nav.scrolled { background:rgba(5,5,9,0.96); border-bottom-color:var(--border); }
+.logo {
+  font-family:'Bricolage Grotesque', sans-serif;
+  font-weight:800; font-size:1.6rem; letter-spacing:-1px;
+  text-decoration:none; color:var(--text);
+  display:flex; align-items:center; gap:0.35rem;
+  cursor:pointer;
+}
+.logo-icon {
+  width:34px; height:34px; background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border-radius:9px; display:flex; align-items:center; justify-content:center;
+  font-size:1rem;
+}
+.logo em {
+  font-style:normal;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+nav ul { list-style:none; display:flex; gap:2.2rem; align-items:center; }
+nav ul a {
+  color:var(--muted2); text-decoration:none;
+  font-size:0.875rem; font-weight:500; letter-spacing:0.01em;
+  transition:color 0.2s; position:relative;
+}
+nav ul a:not(.nav-cta)::after {
+  content:''; position:absolute; bottom:-4px; left:0; right:0; height:1.5px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transform:scaleX(0); transition:transform 0.25s; transform-origin:left;
+}
+nav ul a:not(.nav-cta):hover { color:var(--text); }
+nav ul a:not(.nav-cta):hover::after { transform:scaleX(1); }
+.nav-cta {
+  background:linear-gradient(135deg,var(--accent),#e8a01a);
+  color:#000 !important; padding:0.55rem 1.4rem;
+  border-radius:9px; font-weight:700 !important; font-size:0.82rem !important;
+  letter-spacing:0.02em;
+  box-shadow:0 4px 16px rgba(240,180,41,0.25);
+  transition:transform 0.2s, box-shadow 0.2s !important;
+}
+.nav-cta:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(240,180,41,0.38) !important; }
+.nav-cta::after { display:none !important; }
+
+/* ─────────────────────────────────────────────
+   PAGE SYSTEM
+───────────────────────────────────────────── */
+.page { display:none; }
+.page.active { display:block; }
+
+/* ─────────────────────────────────────────────
+   HERO
+───────────────────────────────────────────── */
+.hero {
+  min-height:100vh;
+  display:flex; flex-direction:column; justify-content:center;
+  padding:9rem 5% 5rem;
+  position:relative; overflow:hidden;
+}
+
+/* Animated mesh background */
+.hero-mesh {
+  position:absolute; inset:0; pointer-events:none;
+  overflow:hidden;
+}
+.mesh-orb {
+  position:absolute; border-radius:50%;
+  filter:blur(80px);
+}
+.mesh-orb-1 {
+  width:700px; height:700px; top:-180px; right:-150px;
+  background:radial-gradient(circle, rgba(240,180,41,0.1) 0%, transparent 65%);
+  animation:orbFloat1 12s ease-in-out infinite;
+}
+.mesh-orb-2 {
+  width:500px; height:500px; bottom:-100px; left:-100px;
+  background:radial-gradient(circle, rgba(255,94,58,0.09) 0%, transparent 65%);
+  animation:orbFloat2 15s ease-in-out infinite;
+}
+.mesh-orb-3 {
+  width:350px; height:350px; top:45%; left:38%;
+  background:radial-gradient(circle, rgba(109,40,217,0.07) 0%, transparent 65%);
+  animation:orbFloat3 10s ease-in-out infinite;
+}
+@keyframes orbFloat1 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-40px,30px) scale(1.05)} }
+@keyframes orbFloat2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(30px,-40px)} }
+@keyframes orbFloat3 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-20px,20px)} }
+
+.hero-grid {
+  position:absolute; inset:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(240,180,41,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240,180,41,0.025) 1px, transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 70% 70% at 50% 40%, black 0%, transparent 100%);
+}
+
+.hero-badge {
+  display:inline-flex; align-items:center; gap:0.55rem;
+  background:rgba(240,180,41,0.07);
+  border:1px solid rgba(240,180,41,0.22);
+  color:var(--accent); font-size:0.7rem; font-weight:700;
+  letter-spacing:0.14em; text-transform:uppercase;
+  padding:0.45rem 1.1rem; border-radius:100px;
+  margin-bottom:2rem; width:fit-content;
+  animation:fadeUp 0.8s ease both;
+}
+.badge-dot {
+  width:6px; height:6px; border-radius:50%; background:var(--accent);
+  box-shadow:0 0 6px var(--accent);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.5)} }
+
+.hero h1 {
+  font-family:'Bricolage Grotesque', sans-serif; font-weight:800;
+  font-size:clamp(2.8rem, 6.5vw, 6.2rem);
+  line-height:1.02; letter-spacing:-3px;
+  max-width:920px;
+  animation:fadeUp 0.8s 0.1s ease both;
+}
+.hero h1 .accent-word {
+  background:linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  font-style:italic;
+  font-family:'Instrument Serif', serif;
+}
+.hero-sub {
+  margin-top:1.6rem; color:var(--muted2);
+  font-size:1.08rem; max-width:490px; font-weight:400; line-height:1.75;
+  animation:fadeUp 0.8s 0.2s ease both;
+}
+.hero-actions {
+  margin-top:2.8rem; display:flex; gap:1rem; flex-wrap:wrap;
+  animation:fadeUp 0.8s 0.3s ease both;
+}
+
+/* Buttons */
+.btn-primary {
+  background:linear-gradient(135deg, var(--accent), #e8a01a);
+  color:#000; font-weight:700; font-size:0.9rem;
+  padding:0.95rem 2.1rem; border:none; border-radius:11px;
+  cursor:pointer; text-decoration:none;
+  display:inline-flex; align-items:center; gap:0.55rem;
+  box-shadow:0 6px 28px rgba(240,180,41,0.35);
+  transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s;
+  position:relative; overflow:hidden;
+  font-family:'Instrument Sans',sans-serif;
+}
+.btn-primary::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+  opacity:0; transition:opacity 0.2s;
+}
+.btn-primary:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 14px 40px rgba(240,180,41,0.45); }
+.btn-primary:hover::before { opacity:1; }
+
+.btn-secondary {
+  background:transparent; color:var(--text);
+  font-weight:500; font-size:0.9rem;
+  padding:0.95rem 2.1rem;
+  border:1.5px solid rgba(255,255,255,0.1); border-radius:11px;
+  cursor:pointer; text-decoration:none;
+  display:inline-flex; align-items:center; gap:0.55rem;
+  transition:all 0.25s;
+  font-family:'Instrument Sans',sans-serif;
+}
+.btn-secondary:hover { border-color:rgba(240,180,41,0.4); background:rgba(240,180,41,0.06); transform:translateY(-2px); }
+
+/* Stats */
+.hero-stats {
+  margin-top:4.5rem; display:flex; flex-wrap:wrap;
+  animation:fadeUp 0.8s 0.4s ease both;
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:var(--radius); overflow:hidden;
+  width:fit-content; position:relative;
+}
+.hero-stats::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1.5px;
+  background:linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
+}
+.stat-item {
+  padding:1.6rem 2.6rem; border-right:1px solid var(--border2);
+  position:relative; transition:background 0.2s;
+}
+.stat-item:last-child { border-right:none; }
+.stat-item:hover { background:rgba(240,180,41,0.04); }
+.stat-num {
+  font-family:'Bricolage Grotesque', sans-serif;
+  font-size:2.1rem; font-weight:800;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  letter-spacing:-1.5px;
+}
+.stat-label { font-size:0.76rem; color:var(--muted); margin-top:0.15rem; letter-spacing:0.04em; }
+
+/* ─────────────────────────────────────────────
+   MARQUEE
+───────────────────────────────────────────── */
+.marquee-wrap {
+  overflow:hidden; position:relative;
+  border-top:1px solid var(--border2); border-bottom:1px solid var(--border2);
+  background:var(--surface); padding:1.1rem 0;
+}
+.marquee-wrap::before,.marquee-wrap::after {
+  content:''; position:absolute; top:0; bottom:0; width:130px; z-index:2;
+}
+.marquee-wrap::before { left:0; background:linear-gradient(90deg,var(--surface),transparent); }
+.marquee-wrap::after { right:0; background:linear-gradient(-90deg,var(--surface),transparent); }
+.marquee-track { display:flex; gap:0; width:max-content; animation:marquee 28s linear infinite; }
+.marquee-item {
+  display:inline-flex; align-items:center; gap:0.7rem;
+  font-size:0.72rem; font-weight:700; letter-spacing:0.12em;
+  text-transform:uppercase; color:var(--muted); flex-shrink:0;
+  padding:0 2rem;
+}
+.marquee-item .sep { color:var(--accent); opacity:0.5; }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ─────────────────────────────────────────────
+   SECTIONS
+───────────────────────────────────────────── */
+section { padding:7rem 5%; position:relative; z-index:1; }
+.section-eyebrow {
+  display:inline-flex; align-items:center; gap:0.55rem;
+  font-size:0.7rem; font-weight:700; letter-spacing:0.16em;
+  text-transform:uppercase; color:var(--accent); margin-bottom:1.1rem;
+}
+.section-eyebrow::before {
+  content:''; width:22px; height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  border-radius:2px; flex-shrink:0;
+}
+.section-title {
+  font-family:'Bricolage Grotesque', sans-serif;
+  font-size:clamp(2rem,3.8vw,3.2rem);
+  font-weight:800; letter-spacing:-1.5px; line-height:1.08;
+  margin-bottom:1rem;
+}
+.section-sub {
+  color:var(--muted2); font-size:0.98rem;
+  max-width:500px; line-height:1.75; margin-bottom:3.5rem;
+}
+
+/* ─────────────────────────────────────────────
+   HOW IT WORKS
+───────────────────────────────────────────── */
+#how { background:var(--surface); }
+.how-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.5rem;
+}
+.step-card {
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:var(--radius); padding:2.4rem 2.1rem;
+  position:relative; overflow:hidden;
+  transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s, box-shadow 0.3s;
+  cursor:default;
+}
+.step-card::after {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(circle at 50% 0%, rgba(240,180,41,0.07), transparent 65%);
+  opacity:0; transition:opacity 0.35s;
+}
+.step-card:hover { transform:translateY(-10px); border-color:var(--border); box-shadow:0 25px 60px rgba(0,0,0,0.45); }
+.step-card:hover::after { opacity:1; }
+.step-number {
+  font-family:'Bricolage Grotesque', sans-serif; font-size:5rem; font-weight:800;
+  color:rgba(240,180,41,0.06); line-height:1;
+  position:absolute; top:1rem; right:1.5rem;
+  letter-spacing:-3px;
+}
+.step-icon {
+  width:52px; height:52px; border-radius:14px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.6rem; margin-bottom:1.4rem;
+  background:var(--card2); border:1px solid var(--border2);
+  position:relative; z-index:1;
+}
+.step-card h3 {
+  font-family:'Bricolage Grotesque', sans-serif;
+  font-weight:700; font-size:1.08rem; margin-bottom:0.6rem;
+  color:var(--text); position:relative; z-index:1;
+}
+.step-card p { color:var(--muted2); font-size:0.87rem; line-height:1.7; position:relative; z-index:1; }
+
+/* ─────────────────────────────────────────────
+   SKILLS
+───────────────────────────────────────────── */
+#skills { background:var(--bg); }
+.skills-grid {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(168px,1fr)); gap:1.1rem;
+}
+.skill-pill {
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:var(--radius-sm);
+  padding:1.6rem 1.3rem;
+  text-align:center;
+  cursor:pointer; position:relative; overflow:hidden;
+  transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s, box-shadow 0.3s, background 0.3s;
+  display:block; color:inherit;
+}
+.skill-pill::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transform:scaleX(0); transition:transform 0.3s; transform-origin:left;
+}
+.skill-pill::after {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(circle at 50% 0%, rgba(240,180,41,0.05), transparent 70%);
+  opacity:0; transition:opacity 0.3s;
+}
+.skill-pill:hover {
+  background:var(--card2); border-color:rgba(240,180,41,0.3);
+  transform:translateY(-8px) scale(1.03);
+  box-shadow:0 20px 50px rgba(0,0,0,0.4), 0 0 30px rgba(240,180,41,0.06);
+}
+.skill-pill:hover::before { transform:scaleX(1); }
+.skill-pill:hover::after { opacity:1; }
+.skill-emoji { font-size:2.3rem; margin-bottom:0.7rem; display:block; line-height:1; position:relative; z-index:1; }
+.skill-pill h4 {
+  font-family:'Bricolage Grotesque', sans-serif;
+  font-weight:700; font-size:0.87rem; margin-bottom:0.3rem;
+  color:var(--text); position:relative; z-index:1;
+}
+.skill-pill p { color:var(--muted); font-size:0.72rem; line-height:1.45; position:relative; z-index:1; }
+.skill-arrow {
+  position:absolute; bottom:0.9rem; right:1rem;
+  font-size:0.7rem; color:var(--accent); opacity:0;
+  transition:opacity 0.2s, transform 0.2s;
+  z-index:1;
+}
+.skill-pill:hover .skill-arrow { opacity:1; transform:translateX(2px); }
+
+/* ─────────────────────────────────────────────
+   PLATFORMS
+───────────────────────────────────────────── */
+#platforms { background:var(--surface); }
+.platforms-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; }
+.platform-card {
+  background:var(--card); border:1px solid var(--border2);
+  border-radius:var(--radius); padding:2.1rem;
+  text-decoration:none; color:inherit; display:block;
+  position:relative; overflow:hidden;
+  transition:transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.platform-card::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(circle at 80% 15%, rgba(240,180,41,0.05), transparent 55%);
+  opacity:0; transition:opacity 0.3s;
+}
+.platform-card:hover { transform:translateY(-7px); border-color:var(--border); box-shadow:0 22px 55px rgba(0,0,0,0.35); }
+.platform-card:hover::before { opacity:1; }
+.platform-header { display:flex; align-items:center; gap:1.1rem; margin-bottom:1.1rem; }
+.platform-logo {
+  width:50px; height:50px; border-radius:13px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.5rem; background:var(--card2);
+  border:1px solid var(--border2); flex-shrink:0;
+}
+.platform-header h3 { font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:1.02rem; color:var(--text); }
+.platform-tag {
+  font-size:0.66rem; font-weight:700; letter-spacing:0.07em;
+  background:rgba(240,180,41,0.09); color:var(--accent);
+  border:1px solid rgba(240,180,41,0.2);
+  padding:0.2rem 0.65rem; border-radius:5px;
+  display:inline-block; margin-top:0.25rem;
+}
+.platform-card p { color:var(--muted2); font-size:0.86rem; line-height:1.68; }
+.platform-link {
+  margin-top:1.3rem; font-size:0.8rem; font-weight:700;
+  color:var(--accent); display:flex; align-items:center; gap:0.35rem;
+  transition:gap 0.2s;
+}
+.platform-card:hover .platform-link { gap:0.6rem; }
+
+/* ─────────────────────────────────────────────
+   TESTIMONIALS
+───────────────────────────────────────────── */
+#testimonials { background:var(--bg); }
+.testi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; }
+.testi-card {
+  background:var(--card); border:1px solid var(--border2);
+  border-radius:var(--radius); padding:2.2rem;
+  position:relative; overflow:hidden;
+  transition:transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.testi-quote-mark {
+  font-family:'Instrument Serif',serif; font-size:7rem; line-height:0.8;
+  color:rgba(240,180,41,0.06); position:absolute;
+  top:1.5rem; right:1.5rem; user-select:none;
+}
+.testi-card:hover { transform:translateY(-6px); border-color:var(--border); box-shadow:0 20px 50px rgba(0,0,0,0.3); }
+.stars { color:var(--accent); font-size:0.82rem; letter-spacing:3px; margin-bottom:1.1rem; }
+.testi-card > p {
+  color:var(--muted2); font-size:0.93rem; line-height:1.78;
+  margin-bottom:1.7rem; font-family:'Instrument Serif',serif; font-style:italic;
+  position:relative; z-index:1;
+}
+.testi-author { display:flex; align-items:center; gap:1rem; }
+.avatar {
+  width:46px; height:46px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-weight:800; font-size:0.85rem;
+  font-family:'Bricolage Grotesque',sans-serif;
+  flex-shrink:0; border:2px solid var(--border2);
+}
+.testi-author h4 { font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:0.9rem; }
+.testi-author span { color:var(--muted); font-size:0.75rem; display:block; margin-top:0.12rem; }
+
+/* ─────────────────────────────────────────────
+   CTA SECTION
+───────────────────────────────────────────── */
+.cta-section {
+  text-align:center; padding:8rem 5%;
+  background:var(--surface);
+  border-top:1px solid var(--border2);
+  position:relative; overflow:hidden;
+}
+.cta-section::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 65% 65% at 50% 50%, rgba(240,180,41,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 45% at 20% 85%, rgba(255,94,58,0.06) 0%, transparent 60%);
+}
+.cta-section h2 {
+  font-family:'Bricolage Grotesque',sans-serif; font-weight:800;
+  font-size:clamp(2.2rem,5vw,4.2rem);
+  letter-spacing:-2px; margin-bottom:1.1rem; position:relative;
+  line-height:1.05;
+}
+.cta-section h2 em {
+  font-style:italic;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  font-family:'Instrument Serif',serif;
+}
+.cta-section > p { color:var(--muted2); max-width:480px; margin:0 auto 2.5rem; line-height:1.7; font-size:1rem; position:relative; }
+
+/* ── QUIZ ── */
+.quiz-wrap { max-width:620px; margin:0 auto; position:relative; }
+.quiz-progress {
+  display:flex; align-items:center; gap:0.6rem;
+  justify-content:center; margin-bottom:2rem;
+}
+.quiz-pip {
+  width:28px; height:4px; border-radius:4px;
+  background:var(--border2); transition:background 0.3s, width 0.3s;
+}
+.quiz-pip.done { background:var(--accent); }
+.quiz-pip.active { background:linear-gradient(90deg,var(--accent),var(--accent2)); width:44px; }
+.quiz-step { display:none; animation:fadeUp 0.35s ease both; }
+.quiz-step.active { display:block; }
+.quiz-q {
+  font-family:'Bricolage Grotesque',sans-serif; font-weight:700;
+  font-size:1.15rem; color:var(--text); margin-bottom:1.4rem;
+  letter-spacing:-0.3px;
+}
+.quiz-q span {
+  font-size:0.7rem; font-weight:700; letter-spacing:0.14em;
+  text-transform:uppercase; color:var(--accent);
+  display:block; margin-bottom:0.5rem;
+}
+.quiz-options {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  gap:0.7rem;
+}
+.quiz-opt {
+  background:var(--card); border:1.5px solid var(--border2);
+  border-radius:13px; padding:1rem 1.1rem;
+  cursor:pointer; text-align:left;
+  transition:border-color 0.2s, background 0.2s, transform 0.2s;
+  font-family:'Instrument Sans',sans-serif;
+  display:flex; align-items:center; gap:0.7rem;
+  color:var(--text); font-size:0.88rem; font-weight:500;
+}
+.quiz-opt:hover { border-color:rgba(240,180,41,0.4); background:var(--card2); transform:translateY(-2px); }
+.quiz-opt.selected { border-color:var(--accent); background:rgba(240,180,41,0.08); }
+.quiz-opt-icon { font-size:1.4rem; flex-shrink:0; }
+.quiz-result {
+  display:none; animation:fadeUp 0.4s ease both;
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius); padding:2.2rem; text-align:left;
+  position:relative; overflow:hidden;
+}
+.quiz-result::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2.5px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+}
+.quiz-result.show { display:block; }
+.quiz-result-top { display:flex; align-items:center; gap:1.2rem; margin-bottom:1.2rem; }
+.quiz-result-emoji {
+  width:64px; height:64px; border-radius:16px;
+  background:var(--card2); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  font-size:2.2rem; flex-shrink:0;
+}
+.quiz-result-label {
+  font-size:0.68rem; font-weight:700; letter-spacing:0.14em;
+  text-transform:uppercase; color:var(--accent); margin-bottom:0.35rem;
+}
+.quiz-result-name {
+  font-family:'Bricolage Grotesque',sans-serif; font-weight:800;
+  font-size:1.5rem; letter-spacing:-0.8px; color:var(--text);
+}
+.quiz-result-desc { color:var(--muted2); font-size:0.9rem; line-height:1.72; margin-bottom:1.5rem; }
+.quiz-result-stats {
+  display:flex; gap:1.2rem; flex-wrap:wrap; margin-bottom:1.5rem;
+}
+.qrs {
+  background:var(--card2); border:1px solid var(--border2);
+  border-radius:9px; padding:0.65rem 1rem;
+}
+.qrs-label { font-size:0.68rem; color:var(--muted); letter-spacing:0.06em; text-transform:uppercase; }
+.qrs-val { font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:0.95rem; color:var(--text); margin-top:0.15rem; }
+.quiz-result-btns { display:flex; gap:0.7rem; flex-wrap:wrap; }
+.quiz-retake {
+  background:transparent; color:var(--muted2); border:1.5px solid var(--border2);
+  border-radius:9px; padding:0.75rem 1.4rem; cursor:pointer;
+  font-family:'Instrument Sans',sans-serif; font-size:0.85rem; font-weight:500;
+  transition:all 0.2s;
+}
+.quiz-retake:hover { border-color:var(--border); color:var(--text); }
+
+/* ─────────────────────────────────────────────
+   FOOTER
+───────────────────────────────────────────── */
+footer {
+  background:var(--bg);
+  border-top:1px solid var(--border2);
+  padding:2.8rem 5%;
+}
+.footer-top {
+  display:flex; justify-content:space-between; align-items:center;
+  flex-wrap:wrap; gap:1.5rem;
+  padding-bottom:2.2rem; border-bottom:1px solid var(--border2);
+}
+.footer-links { display:flex; gap:2.2rem; flex-wrap:wrap; }
+.footer-links a {
+  color:var(--muted); text-decoration:none;
+  font-size:0.83rem; transition:color 0.2s;
+}
+.footer-links a:hover { color:var(--text); }
+.footer-bottom {
+  display:flex; justify-content:space-between; align-items:center;
+  flex-wrap:wrap; gap:1rem; padding-top:2rem;
+}
+.footer-bottom p { color:var(--muted); font-size:0.79rem; }
+.made-by {
+  font-size:0.79rem; color:var(--muted);
+  display:flex; align-items:center; gap:0.4rem;
+}
+.made-by strong { color:var(--accent); font-weight:700; }
+.heart { color:var(--accent2); animation:heartbeat 1.4s infinite; display:inline-block; }
+@keyframes heartbeat { 0%,100%{transform:scale(1)} 50%{transform:scale(1.35)} }
+
+/* ─────────────────────────────────────────────
+   SCROLL REVEAL
+───────────────────────────────────────────── */
+.fade-in { opacity:0; transform:translateY(26px); transition:opacity 0.65s ease, transform 0.65s ease; }
+.fade-in.visible { opacity:1; transform:translateY(0); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+/* ─────────────────────────────────────────────
+   DIVIDER
+───────────────────────────────────────────── */
+.divider {
+  width:100%; height:1px;
+  background:linear-gradient(90deg,transparent,var(--border),transparent);
+}
+
+/* ─────────────────────────────────────────────
+   ════════ SKILL DETAIL PAGE ════════
+───────────────────────────────────────────── */
+#skill-page {
+  padding-top:80px;
+  min-height:100vh;
+  background:var(--bg);
+}
+
+.skill-hero {
+  padding:5rem 5% 4rem;
+  position:relative; overflow:hidden;
+  background:var(--surface);
+  border-bottom:1px solid var(--border2);
+}
+.skill-hero::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse 60% 70% at 70% 50%, rgba(240,180,41,0.07), transparent 65%);
+  pointer-events:none;
+}
+.skill-back {
+  display:inline-flex; align-items:center; gap:0.5rem;
+  color:var(--muted2); text-decoration:none;
+  font-size:0.83rem; font-weight:500; margin-bottom:2.5rem;
+  transition:color 0.2s, gap 0.2s;
+  cursor:pointer; background:none; border:none;
+}
+.skill-back:hover { color:var(--accent); gap:0.7rem; }
+.skill-back .back-arrow { transform:scaleX(-1); display:inline-block; }
+
+.skill-hero-inner {
+  display:grid; grid-template-columns:1fr 380px; gap:4rem; align-items:center;
+}
+.skill-big-icon {
+  width:90px; height:90px; background:var(--card);
+  border:1px solid var(--border);
+  border-radius:24px; font-size:3rem;
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:1.8rem;
+  box-shadow:0 0 40px rgba(240,180,41,0.1);
+}
+.skill-hero h1 {
+  font-family:'Bricolage Grotesque',sans-serif; font-weight:800;
+  font-size:clamp(2.2rem,4.5vw,3.8rem);
+  letter-spacing:-2px; line-height:1.05; margin-bottom:1rem;
+}
+.skill-hero h1 em {
+  font-style:italic; font-family:'Instrument Serif',serif;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.skill-hero-desc {
+  color:var(--muted2); font-size:1rem; line-height:1.75;
+  max-width:580px; margin-bottom:2rem;
+}
+.skill-hero-tags { display:flex; flex-wrap:wrap; gap:0.6rem; margin-bottom:2.5rem; }
+.skill-tag {
+  background:rgba(240,180,41,0.08); border:1px solid rgba(240,180,41,0.2);
+  color:var(--accent); font-size:0.72rem; font-weight:700;
+  letter-spacing:0.05em; padding:0.35rem 0.9rem; border-radius:6px;
+}
+
+/* Earnings card */
+.earnings-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius); padding:2rem;
+  position:relative; overflow:hidden;
+}
+.earnings-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+}
+.earnings-label {
+  font-size:0.7rem; font-weight:700; letter-spacing:0.14em;
+  text-transform:uppercase; color:var(--muted); margin-bottom:1rem;
+  display:flex; align-items:center; gap:0.5rem;
+}
+.earnings-label::before {
+  content:''; width:14px; height:2px;
+  background:var(--accent); border-radius:2px;
+}
+.earnings-range {
+  font-family:'Bricolage Grotesque',sans-serif; font-size:2.8rem; font-weight:800;
+  letter-spacing:-2px; line-height:1;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  margin-bottom:0.4rem;
+}
+.earnings-sub { color:var(--muted); font-size:0.8rem; margin-bottom:1.8rem; }
+.earnings-divider { height:1px; background:var(--border2); margin-bottom:1.5rem; }
+.earnings-stat { display:flex; justify-content:space-between; margin-bottom:1rem; }
+.earnings-stat:last-child { margin-bottom:0; }
+.earnings-stat span { color:var(--muted); font-size:0.82rem; }
+.earnings-stat strong { font-weight:700; font-size:0.85rem; color:var(--text); }
+
+/* Content grid */
+.skill-content { display:grid; grid-template-columns:1fr 380px; gap:3rem; padding:4rem 5%; }
+
+/* Roadmap */
+.roadmap-title {
+  font-family:'Bricolage Grotesque',sans-serif; font-weight:800;
+  font-size:1.5rem; letter-spacing:-0.8px; margin-bottom:2rem;
+}
+.roadmap-steps { display:flex; flex-direction:column; gap:0; }
+.roadmap-step {
+  display:flex; gap:1.5rem; position:relative;
+  padding-bottom:2.2rem;
+}
+.roadmap-step:last-child { padding-bottom:0; }
+.roadmap-step-left { display:flex; flex-direction:column; align-items:center; }
+.roadmap-dot {
+  width:44px; height:44px; border-radius:12px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:0.9rem;
+  background:var(--card2); border:1.5px solid var(--border2);
+  color:var(--accent); flex-shrink:0; position:relative; z-index:1;
+  transition:background 0.2s, border-color 0.2s;
+}
+.roadmap-step:hover .roadmap-dot { background:rgba(240,180,41,0.1); border-color:var(--border); }
+.roadmap-line {
+  width:1.5px; flex:1; margin:6px 0;
+  background:linear-gradient(180deg, var(--border), transparent);
+  min-height:20px;
+}
+.roadmap-step:last-child .roadmap-line { display:none; }
+.roadmap-step-content { padding-top:0.6rem; flex:1; }
+.roadmap-step-content h4 {
+  font-family:'Bricolage Grotesque',sans-serif; font-weight:700;
+  font-size:0.98rem; margin-bottom:0.4rem; color:var(--text);
+}
+.roadmap-step-content p { color:var(--muted2); font-size:0.86rem; line-height:1.68; }
+.roadmap-step-week {
+  font-size:0.7rem; font-weight:700; letter-spacing:0.1em;
+  color:var(--accent); text-transform:uppercase; margin-bottom:0.4rem;
+  display:block;
+}
+
+/* Sidebar cards */
+.skill-sidebar { display:flex; flex-direction:column; gap:1.5rem; }
+.sidebar-card {
+  background:var(--card); border:1px solid var(--border2);
+  border-radius:var(--radius); padding:1.8rem;
+  transition:border-color 0.2s;
+}
+.sidebar-card:hover { border-color:var(--border); }
+.sidebar-card-title {
+  font-family:'Bricolage Grotesque',sans-serif; font-weight:700;
+  font-size:0.95rem; margin-bottom:1.2rem; color:var(--text);
+  display:flex; align-items:center; gap:0.5rem;
+}
+.sidebar-card-title span { font-size:1.1rem; }
+.tool-list { list-style:none; display:flex; flex-direction:column; gap:0.8rem; }
+.tool-item {
+  display:flex; align-items:center; gap:0.8rem;
+  font-size:0.85rem; color:var(--muted2);
+}
+.tool-icon {
+  width:32px; height:32px; border-radius:8px;
+  background:var(--card2); border:1px solid var(--border2);
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.95rem; flex-shrink:0;
+}
+.resource-list { list-style:none; display:flex; flex-direction:column; gap:0.9rem; }
+.resource-item {
+  display:flex; align-items:flex-start; gap:0.8rem;
+  font-size:0.83rem; color:var(--muted2);
+  padding-bottom:0.9rem;
+  border-bottom:1px solid var(--border2);
+}
+.resource-item:last-child { border-bottom:none; padding-bottom:0; }
+.resource-item .ri-num {
+  font-family:'Bricolage Grotesque',sans-serif; font-weight:800;
+  font-size:0.7rem; color:var(--accent);
+  background:rgba(240,180,41,0.08); border:1px solid rgba(240,180,41,0.2);
+  border-radius:5px; padding:0.2rem 0.5rem; flex-shrink:0; margin-top:0.1rem;
+}
+.resource-item a { color:var(--text); text-decoration:none; font-weight:500; transition:color 0.2s; }
+.resource-item a:hover { color:var(--accent); }
+.resource-item p { color:var(--muted); font-size:0.75rem; margin-top:0.2rem; }
+
+/* Skill tabs */
+.skill-tabs {
+  display:flex; gap:0.5rem; flex-wrap:wrap;
+  padding:0.4rem; background:var(--card);
+  border:1px solid var(--border2); border-radius:12px;
+  width:fit-content; margin-bottom:2.5rem;
+}
+.skill-tab {
+  padding:0.55rem 1.2rem; border-radius:9px;
+  font-size:0.83rem; font-weight:600; cursor:pointer;
+  border:none; background:transparent; color:var(--muted2);
+  transition:all 0.2s; font-family:'Instrument Sans',sans-serif;
+}
+.skill-tab.active { background:var(--card2); color:var(--text); border:1px solid var(--border2); }
+.skill-tab-content { display:none; }
+.skill-tab-content.active { display:block; }
+
+/* Freelance tips */
+.tips-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1.2rem; }
+.tip-card {
+  background:var(--card); border:1px solid var(--border2);
+  border-radius:var(--radius-sm); padding:1.5rem;
+  transition:transform 0.25s, border-color 0.25s;
+}
+.tip-card:hover { transform:translateY(-4px); border-color:var(--border); }
+.tip-icon { font-size:1.5rem; margin-bottom:0.8rem; display:block; }
+.tip-card h4 {
+  font-family:'Bricolage Grotesque',sans-serif; font-weight:700;
+  font-size:0.9rem; margin-bottom:0.5rem;
+}
+.tip-card p { color:var(--muted2); font-size:0.82rem; line-height:1.65; }
+
+/* Platforms for skill */
+.skill-platforms-list { display:flex; flex-direction:column; gap:0.9rem; }
+.skill-platform-item {
+  display:flex; align-items:center; gap:1.1rem;
+  background:var(--card); border:1px solid var(--border2);
+  border-radius:var(--radius-sm); padding:1.2rem 1.4rem;
+  text-decoration:none; color:inherit;
+  transition:transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+.skill-platform-item:hover { transform:translateX(6px); border-color:var(--border); box-shadow:0 8px 24px rgba(0,0,0,0.25); }
+.spi-logo {
+  width:42px; height:42px; border-radius:10px;
+  background:var(--card2); border:1px solid var(--border2);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.3rem; flex-shrink:0;
+}
+.spi-info { flex:1; }
+.spi-info h4 {
+  font-family:'Bricolage Grotesque',sans-serif; font-weight:700;
+  font-size:0.9rem; margin-bottom:0.2rem;
+}
+.spi-info p { color:var(--muted2); font-size:0.78rem; }
+.spi-tag {
+  font-size:0.65rem; font-weight:700; letter-spacing:0.07em;
+  background:rgba(240,180,41,0.09); color:var(--accent);
+  border:1px solid rgba(240,180,41,0.2);
+  padding:0.2rem 0.6rem; border-radius:5px; white-space:nowrap;
+}
+
+/* CTA inside skill page */
+.skill-page-cta {
+  background:var(--surface); border-top:1px solid var(--border2);
+  padding:5rem 5%; text-align:center; position:relative; overflow:hidden;
+}
+.skill-page-cta::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse 60% 60% at 50% 50%, rgba(240,180,41,0.06), transparent 70%);
+  pointer-events:none;
+}
+.skill-page-cta h2 {
+  font-family:'Bricolage Grotesque',sans-serif; font-weight:800;
+  font-size:clamp(1.8rem,3.5vw,3rem); letter-spacing:-1.5px;
+  margin-bottom:1rem; position:relative;
+}
+.skill-page-cta > p { color:var(--muted2); max-width:420px; margin:0 auto 2.5rem; line-height:1.7; position:relative; }
+
+/* ─────────────────────────────────────────────
+   MOBILE
+───────────────────────────────────────────── */
+@media (max-width:900px) {
+  .skill-hero-inner { grid-template-columns:1fr; }
+  .skill-content { grid-template-columns:1fr; }
+  .skill-sidebar { order:2; }
+}
+@media (max-width:768px) {
+  nav ul { display:none; }
+  .hero-stats { width:100%; }
+  .stat-item { padding:1.2rem 1.6rem; }
+  .footer-top,.footer-bottom { flex-direction:column; text-align:center; }
+}
+@media (max-width:480px) {
+  .hero h1 { letter-spacing:-1.5px; }
+  .section-title { letter-spacing:-0.8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="navbar">
+  <div class="logo" onclick="goHome()">
+    <div class="logo-icon">💡</div>
+    Skill<em>Earn</em>
+  </div>
+  <ul>
+    <li><a href="#how" onclick="navTo(event,'how')">How It Works</a></li>
+    <li><a href="#skills" onclick="navTo(event,'skills')">Skills</a></li>
+    <li><a href="#platforms" onclick="navTo(event,'platforms')">Platforms</a></li>
+    <li><a href="#testimonials" onclick="navTo(event,'testimonials')">Stories</a></li>
+    <li><a href="#start" onclick="navTo(event,'start')" class="nav-cta">Find My Skill →</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     MAIN PAGE
+═══════════════════════════════════════════ -->
+<div id="main-page" class="page active">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-mesh">
+    <div class="mesh-orb mesh-orb-1"></div>
+    <div class="mesh-orb mesh-orb-2"></div>
+    <div class="mesh-orb mesh-orb-3"></div>
+  </div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-badge"><span class="badge-dot"></span>India's #1 Skill-to-Income Platform</div>
+
+  <h1>Your skills are
+    <span class="accent-word">worth real money.</span>
+    Let's prove it.
+  </h1>
+
+  <p class="hero-sub">You already have valuable skills — you just need the right direction. We guide Indians step-by-step from zero to their first online income, completely free.</p>
+
+  <div class="hero-actions">
+    <a href="#start" class="btn-primary" onclick="smoothScrollTo(event,'start')">Find My Best Skill →</a>
+    <a href="#how" class="btn-secondary" onclick="smoothScrollTo(event,'how')">See How It Works</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item"><div class="stat-num">12K+</div><div class="stat-label">Indians Helped</div></div>
+    <div class="stat-item"><div class="stat-num">₹35Cr+</div><div class="stat-label">Earned by Community</div></div>
+    <div class="stat-item"><div class="stat-num">80+</div><div class="stat-label">Skills Covered</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item">Graphic Design <span class="sep">✦</span></div>
+    <div class="marquee-item">Video Editing <span class="sep">✦</span></div>
+    <div class="marquee-item">Content Writing <span class="sep">✦</span></div>
+    <div class="marquee-item">Cooking <span class="sep">✦</span></div>
+    <div class="marquee-item">Photography <span class="sep">✦</span></div>
+    <div class="marquee-item">Online Teaching <span class="sep">✦</span></div>
+    <div class="marquee-item">Web Development <span class="sep">✦</span></div>
+    <div class="marquee-item">Music Production <span class="sep">✦</span></div>
+    <div class="marquee-item">Translation <span class="sep">✦</span></div>
+    <div class="marquee-item">Social Media <span class="sep">✦</span></div>
+    <div class="marquee-item">Voiceover <span class="sep">✦</span></div>
+    <div class="marquee-item">Virtual Assistant <span class="sep">✦</span></div>
+    <div class="marquee-item">Graphic Design <span class="sep">✦</span></div>
+    <div class="marquee-item">Video Editing <span class="sep">✦</span></div>
+    <div class="marquee-item">Content Writing <span class="sep">✦</span></div>
+    <div class="marquee-item">Cooking <span class="sep">✦</span></div>
+    <div class="marquee-item">Photography <span class="sep">✦</span></div>
+    <div class="marquee-item">Online Teaching <span class="sep">✦</span></div>
+    <div class="marquee-item">Web Development <span class="sep">✦</span></div>
+    <div class="marquee-item">Music Production <span class="sep">✦</span></div>
+    <div class="marquee-item">Translation <span class="sep">✦</span></div>
+    <div class="marquee-item">Social Media <span class="sep">✦</span></div>
+    <div class="marquee-item">Voiceover <span class="sep">✦</span></div>
+    <div class="marquee-item">Virtual Assistant <span class="sep">✦</span></div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-eyebrow">The Process</div>
+  <div class="section-title">From skill to paycheck<br>in 4 simple steps</div>
+  <p class="section-sub">No experience needed. No investment required. Just follow the 4 steps we've built for you.</p>
+  <div class="how-grid">
+    <div class="step-card fade-in">
+      <div class="step-number">01</div>
+      <div class="step-icon">🔍</div>
+      <h3>Identify Your Skill</h3>
+      <p>Discover what you're good at and what people are willing to pay for right now in the Indian market.</p>
+    </div>
+    <div class="step-card fade-in">
+      <div class="step-number">02</div>
+      <div class="step-icon">🗺️</div>
+      <h3>Get Your Roadmap</h3>
+      <p>We give you a personalized, step-by-step guide tailored to your skill level and time available.</p>
+    </div>
+    <div class="step-card fade-in">
+      <div class="step-number">03</div>
+      <div class="step-icon">🚀</div>
+      <h3>Set Up & Launch</h3>
+      <p>Create your profile on the right platforms, build a simple portfolio, and send your first proposals.</p>
+    </div>
+    <div class="step-card fade-in">
+      <div class="step-number">04</div>
+      <div class="step-icon">💰</div>
+      <h3>Earn & Grow</h3>
+      <p>Land your first client, deliver great work, and build towards a sustainable growing income stream.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-eyebrow">All Skills Welcome</div>
+  <div class="section-title">Whatever you can do,<br>someone will pay for it</div>
+  <p class="section-sub">Think you don't have a marketable skill? Think again — all of these are in high demand right now. Click any skill to explore your roadmap.</p>
+  <div class="skills-grid">
+    <div class="skill-pill fade-in" onclick="openSkill('writing')">
+      <span class="skill-emoji">✍️</span><h4>Writing</h4><p>Blogs, copywriting, scripts</p>
+      <span class="skill-arrow">→</span>
+    </div>
+    <div class="skill-pill fade-in" onclick="openSkill('design')">
+      <span class="skill-emoji">🎨</span><h4>Design</h4><p>Logos, social media, UI</p>
+      <span class="skill-arrow">→</span>
+    </div>
+    <div class="skill-pill fade-in" onclick="openSkill('video')">
+      <span class="skill-emoji">🎬</span><h4>Video Editing</h4><p>YouTube, Reels, ads</p>
+      <span class="skill-arrow">→</span>
+    </div>
+    <div class="skill-pill fade-in" onclick="openSkill('photography')">
+      <span class="skill-emoji">📸</span><h4>Photography</h4><p>Sell photos online</p>
+      <span class="skill-arrow">→</span>
+    </div>
+    <div class="skill-pill fade-in" onclick="openSkill('coding')">
+      <span class="skill-emoji">💻</span><h4>Coding</h4><p>Web apps, automation</p>
+      <span class="skill-arrow">→</span>
+    </div>
+    <div class="skill-pill fade-in" onclick="openSkill('music')">
+      <span class="skill-emoji">🎵</span><h4>Music</h4><p>Beats, mixing, lessons</p>
+      <span class="skill-arrow">→</span>
+    </div>
+    <div class="skill-pill fade-in" onclick="openSkill('teaching')">
+      <span class="skill-emoji">📚</span><h4>Teaching</h4><p>Tutoring, online courses</p>
+      <span class="skill-arrow">→</span>
+    </div>
+    <div class="skill-pill fade-in" onclick="openSkill('translation')">
+      <span class="skill-emoji">🌍</span><h4>Translation</h4><p>Documents, subtitles</p>
+      <span class="skill-arrow">→</span>
+    </div>
+    <div class="skill-pill fade-in" onclick="openSkill('cooking')">
+      <span class="skill-emoji">🍳</span><h4>Cooking</h4><p>Recipe content, courses</p>
+      <span class="skill-arrow">→</span>
+    </div>
+    <div class="skill-pill fade-in" onclick="openSkill('socialmedia')">
+      <span class="skill-emoji">📱</span><h4>Social Media</h4><p>Management, strategy</p>
+      <span class="skill-arrow">→</span>
+    </div>
+    <div class="skill-pill fade-in" onclick="openSkill('voiceover')">
+      <span class="skill-emoji">🎙️</span><h4>Voiceover</h4><p>Ads, audiobooks, videos</p>
+      <span class="skill-arrow">→</span>
+    </div>
+    <div class="skill-pill fade-in" onclick="openSkill('va')">
+      <span class="skill-emoji">🤝</span><h4>Virtual Assist.</h4><p>Admin, scheduling, email</p>
+      <span class="skill-arrow">→</span>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORMS -->
+<section id="platforms">
+  <div class="section-eyebrow">Where To Earn</div>
+  <div class="section-title">The best platforms<br>to get paid online</div>
+  <p class="section-sub">The best platforms for Indian freelancers — sign up and start earning today.</p>
+  <div class="platforms-grid">
+    <a href="https://www.fiverr.com" target="_blank" class="platform-card fade-in">
+      <div class="platform-header"><div class="platform-logo">🟢</div><div><h3>Fiverr</h3><span class="platform-tag">Beginner Friendly</span></div></div>
+      <p>Create "gigs" for your services and let clients come to you. Great for design, writing, voiceover, and more.</p>
+      <div class="platform-link">Visit Fiverr <span>→</span></div>
+    </a>
+    <a href="https://www.upwork.com" target="_blank" class="platform-card fade-in">
+      <div class="platform-header"><div class="platform-logo">🔵</div><div><h3>Upwork</h3><span class="platform-tag">Higher Pay</span></div></div>
+      <p>Bid on projects posted by businesses worldwide. Best for freelancers with some experience and better rates.</p>
+      <div class="platform-link">Visit Upwork <span>→</span></div>
+    </a>
+    <a href="https://internshala.com" target="_blank" class="platform-card fade-in">
+      <div class="platform-header"><div class="platform-logo">🇮🇳</div><div><h3>Internshala</h3><span class="platform-tag">India's Own</span></div></div>
+      <p>India's largest platform for internships and fresher jobs. Perfect for beginners looking for their first Indian client.</p>
+      <div class="platform-link">Visit Internshala <span>→</span></div>
+    </a>
+    <a href="https://www.youtube.com/creators" target="_blank" class="platform-card fade-in">
+      <div class="platform-header"><div class="platform-logo">🔴</div><div><h3>YouTube</h3><span class="platform-tag">Content Creator</span></div></div>
+      <p>Share your skill and earn through ad revenue, sponsorships, and selling products. Scales massively with consistency.</p>
+      <div class="platform-link">Visit YouTube Creators <span>→</span></div>
+    </a>
+    <a href="https://www.linkedin.com" target="_blank" class="platform-card fade-in">
+      <div class="platform-header"><div class="platform-logo">🔷</div><div><h3>LinkedIn</h3><span class="platform-tag">Professional</span></div></div>
+      <p>Build your personal brand, attract corporate clients, and land consulting or freelance contracts professionally.</p>
+      <div class="platform-link">Visit LinkedIn <span>→</span></div>
+    </a>
+    <a href="https://instamojo.com" target="_blank" class="platform-card fade-in">
+      <div class="platform-header"><div class="platform-logo">💛</div><div><h3>Instamojo</h3><span class="platform-tag">Sell in ₹</span></div></div>
+      <p>Sell digital products, courses, and services directly in India. Receive payments via UPI, cards, and net banking.</p>
+      <div class="platform-link">Visit Instamojo <span>→</span></div>
+    </a>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-eyebrow">Real People, Real Results</div>
+  <div class="section-title">They didn't think they could.<br>Now they do it full-time.</div>
+  <div class="testi-grid">
+    <div class="testi-card fade-in">
+      <div class="testi-quote-mark">"</div>
+      <div class="stars">★★★★★</div>
+      <p>"I always thought writing was just a hobby. Within 3 months on Upwork, I was making ₹55,000/month. Now I'm a full-time freelancer."</p>
+      <div class="testi-author">
+        <div class="avatar" style="background:rgba(240,180,41,0.12);color:var(--accent);">RS</div>
+        <div><h4>Rahul S.</h4><span>Freelance Content Writer, Pune</span></div>
+      </div>
+    </div>
+    <div class="testi-card fade-in">
+      <div class="testi-quote-mark">"</div>
+      <div class="stars">★★★★★</div>
+      <p>"I spoke Hindi and English my whole life but never thought it was valuable. Now I earn ₹1.5 lakh/month translating documents."</p>
+      <div class="testi-author">
+        <div class="avatar" style="background:rgba(255,94,58,0.12);color:var(--accent2);">PM</div>
+        <div><h4>Priya M.</h4><span>Freelance Translator, Delhi</span></div>
+      </div>
+    </div>
+    <div class="testi-card fade-in">
+      <div class="testi-quote-mark">"</div>
+      <div class="stars">★★★★★</div>
+      <p>"I've been cooking at home for 20 years. Now I earn ₹40,000/month through YouTube and Instamojo selling recipe content."</p>
+      <div class="testi-author">
+        <div class="avatar" style="background:rgba(109,40,217,0.15);color:#a78bfa;">AK</div>
+        <div><h4>Anita K.</h4><span>Food Content Creator, Mumbai</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILL QUIZ CTA -->
+<section class="cta-section" id="start">
+  <div class="section-eyebrow" style="justify-content:center;">Find Your Skill</div>
+  <h2>Not sure where to start?<br><em>Take the 60-second quiz.</em></h2>
+  <p>Answer 3 quick questions and we'll match you with the skill most likely to earn you money — based on what you already enjoy.</p>
+
+  <div class="quiz-wrap">
+
+    <!-- Progress pips -->
+    <div class="quiz-progress" id="quiz-progress">
+      <div class="quiz-pip active" id="pip-0"></div>
+      <div class="quiz-pip" id="pip-1"></div>
+      <div class="quiz-pip" id="pip-2"></div>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="quiz-step active" id="qstep-0">
+      <div class="quiz-q">
+        <span>Question 1 of 3</span>
+        What do you naturally spend time doing?
+      </div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="quizPick(0,'creative')">
+          <span class="quiz-opt-icon">🎨</span> Making or designing things
+        </button>
+        <button class="quiz-opt" onclick="quizPick(0,'words')">
+          <span class="quiz-opt-icon">✍️</span> Writing, talking or explaining
+        </button>
+        <button class="quiz-opt" onclick="quizPick(0,'tech')">
+          <span class="quiz-opt-icon">💻</span> Building or fixing things with tech
+        </button>
+        <button class="quiz-opt" onclick="quizPick(0,'teach')">
+          <span class="quiz-opt-icon">📚</span> Teaching, helping or organising
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="quiz-step" id="qstep-1">
+      <div class="quiz-q">
+        <span>Question 2 of 3</span>
+        How much time can you commit per day?
+      </div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="quizPick(1,'low')">
+          <span class="quiz-opt-icon">⏱️</span> 30–60 minutes
+        </button>
+        <button class="quiz-opt" onclick="quizPick(1,'mid')">
+          <span class="quiz-opt-icon">🕐</span> 2–3 hours
+        </button>
+        <button class="quiz-opt" onclick="quizPick(1,'high')">
+          <span class="quiz-opt-icon">🚀</span> 4+ hours — I'm serious
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="quiz-step" id="qstep-2">
+      <div class="quiz-q">
+        <span>Question 3 of 3</span>
+        What matters most to you right now?
+      </div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="quizPick(2,'fast')">
+          <span class="quiz-opt-icon">⚡</span> Earn money as fast as possible
+        </button>
+        <button class="quiz-opt" onclick="quizPick(2,'passive')">
+          <span class="quiz-opt-icon">💤</span> Build something that earns passively
+        </button>
+        <button class="quiz-opt" onclick="quizPick(2,'grow')">
+          <span class="quiz-opt-icon">📈</span> Build a long-term career or business
+        </button>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div class="quiz-result" id="quiz-result">
+      <div class="quiz-result-top">
+        <div class="quiz-result-emoji" id="qr-emoji"></div>
+        <div>
+          <div class="quiz-result-label">Your Best Match</div>
+          <div class="quiz-result-name" id="qr-name"></div>
+        </div>
+      </div>
+      <p class="quiz-result-desc" id="qr-desc"></p>
+      <div class="quiz-result-stats" id="qr-stats"></div>
+      <div class="quiz-result-btns">
+        <button class="btn-primary" id="qr-explore-btn">Explore My Roadmap →</button>
+        <button class="quiz-retake" onclick="quizReset()">Retake Quiz</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="logo" onclick="goHome()">
+      <div class="logo-icon">💡</div>
+      Skill<em>Earn</em>
+    </div>
+    <div class="footer-links">
+      <a href="#how" onclick="smoothScrollTo(event,'how')">How It Works</a>
+      <a href="#skills" onclick="smoothScrollTo(event,'skills')">Skills</a>
+      <a href="#platforms" onclick="smoothScrollTo(event,'platforms')">Platforms</a>
+      <a href="#testimonials" onclick="smoothScrollTo(event,'testimonials')">Stories</a>
+      <a href="#start" onclick="smoothScrollTo(event,'start')">Get Started</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 SkillEarn India. Empowering Indian freelancers & creators.</p>
+    <div class="made-by">
+      Made with <span class="heart">❤️</span> by <strong>Abhijit</strong> &nbsp;·&nbsp; For <strong>Asin</strong>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /main-page -->
+
+
+<!-- ══════════════════════════════════════════
+     SKILL DETAIL PAGE
+═══════════════════════════════════════════ -->
+<div id="skill-page" class="page">
+  <div id="skill-page-content"></div>
+</div>
+
+
+<script>
+/* ─────────────────────────────────────────────
+   SKILL DATA
+───────────────────────────────────────────── */
+const skills = {
+  writing: {
+    emoji: '✍️',
+    name: 'Content Writing',
+    tagline: 'Turn your words into income',
+    taglineEm: 'words',
+    desc: 'Content writing is one of the most in-demand skills online. Businesses, startups, YouTubers, and brands need writers who can blog, script, and craft copy that converts visitors into customers.',
+    tags: ['Beginner Friendly', 'Work From Home', 'Flexible Hours', 'Low Setup Cost'],
+    earning: '₹25K–₹1.5L',
+    earningPeriod: 'per month',
+    difficulty: 'Easy to Start',
+    timeToFirst: '2–4 Weeks',
+    demandLevel: 'Very High 🔥',
+    roadmap: [
+      { week: 'Week 1–2', title: 'Master the Basics', desc: 'Learn sentence structure, tone, and how to write for the web. Study top Indian writing blogs like Contentmart and iWriter.' },
+      { week: 'Week 3–4', title: 'Pick Your Niche', desc: 'Choose 1-2 topics you enjoy: tech, finance, health, travel, or food. Niche writers earn 2x more than generalists.' },
+      { week: 'Month 2', title: 'Build Your Portfolio', desc: 'Write 5–8 sample articles. Publish free on Medium or LinkedIn. These samples get you your first paid gigs.' },
+      { week: 'Month 2–3', title: 'Land First Clients', desc: 'Sign up on Fiverr, Upwork, and Internshala. Send 10 proposals/day with your portfolio. First client usually comes in 2–3 weeks.' },
+      { week: 'Month 3+', title: 'Scale & Specialize', desc: 'Ask for referrals, raise rates, and consider SEO writing or UX copywriting for higher-paying work.' },
+    ],
+    tools: [
+      { icon: '📝', name: 'Google Docs', desc: 'Free writing tool' },
+      { icon: '🔍', name: 'Grammarly', desc: 'Grammar checker' },
+      { icon: '📊', name: 'SurferSEO', desc: 'SEO optimization' },
+      { icon: '🎯', name: 'Hemingway App', desc: 'Readability score' },
+    ],
+    resources: [
+      { title: 'Copyblogger', url: 'https://copyblogger.com', desc: 'Best blog to learn content writing basics' },
+      { title: 'Fiverr Learn – Writing', url: 'https://learn.fiverr.com', desc: 'Free course to launch writing gigs' },
+      { title: 'HubSpot Blog Ideas Generator', url: 'https://hubspot.com', desc: 'Never run out of article ideas' },
+    ],
+    platforms: [
+      { icon: '🔵', name: 'Upwork', tag: 'Best for Writers', desc: 'Highest paying platform for long-form content writers' },
+      { icon: '🟢', name: 'Fiverr', tag: 'Easy Start', desc: 'Post a gig and let clients come to you' },
+      { icon: '🇮🇳', name: 'Internshala', tag: 'India First', desc: 'Great for beginners, Indian clients, INR payments' },
+      { icon: '📝', name: 'iWriter', tag: 'Volume Work', desc: 'Consistent work for articles, great for practice' },
+    ],
+    tips: [
+      { icon: '💡', title: 'Write Every Day', desc: 'Even 500 words/day builds habit and improves speed drastically within a month.' },
+      { icon: '🎯', title: 'Specialize Fast', desc: 'B2B SaaS writers earn ₹5–15/word. Generalists get ₹0.5–2/word. Niche pays.' },
+      { icon: '📸', title: 'Sample Portfolio', desc: 'Clients don\'t hire writers without samples. Write for free once, then charge forever.' },
+      { icon: '💬', title: 'Learn SEO Basics', desc: 'SEO writers earn 3x more. Learn keyword research on YouTube — it takes just one weekend.' },
+    ]
+  },
+
+  design: {
+    emoji: '🎨',
+    name: 'Graphic Design',
+    tagline: 'Create visuals that speak louder than words',
+    taglineEm: 'speak louder',
+    desc: 'Every brand, startup, and content creator needs a designer. From logos and social posts to UI mockups and pitch decks — great design is in non-stop demand across India and globally.',
+    tags: ['Creative Work', 'High Demand', 'Scalable Income', 'Remote Friendly'],
+    earning: '₹30K–₹2L',
+    earningPeriod: 'per month',
+    difficulty: 'Moderate',
+    timeToFirst: '3–6 Weeks',
+    demandLevel: 'Extremely High 🔥',
+    roadmap: [
+      { week: 'Week 1–2', title: 'Learn Design Principles', desc: 'Study color theory, typography, spacing, and composition. Watch free YouTube playlists by Satori Graphics and The Futur.' },
+      { week: 'Week 3', title: 'Master Your Tool', desc: 'Pick Canva (easiest) or Adobe Illustrator (most powerful). Spend 1–2 weeks learning it deeply with daily practice.' },
+      { week: 'Week 4–5', title: 'Create 5 Portfolio Pieces', desc: 'Design a logo, social media post, poster, banner, and business card. Post on Behance and your Instagram.' },
+      { week: 'Month 2', title: 'Start Getting Clients', desc: 'Sign up on Fiverr with a logo design gig. Offer at ₹500 initially for reviews, then increase to ₹2000+.' },
+      { week: 'Month 3+', title: 'Build Brand & Scale', desc: 'Get referrals from happy clients. Explore UI/UX design for much higher pay (₹80K–₹2L/month).' },
+    ],
+    tools: [
+      { icon: '🖌️', name: 'Canva', desc: 'Fastest to learn' },
+      { icon: '✏️', name: 'Adobe Illustrator', desc: 'Industry standard' },
+      { icon: '📐', name: 'Figma', desc: 'For UI/UX work' },
+      { icon: '🖼️', name: 'Behance', desc: 'Showcase portfolio' },
+    ],
+    resources: [
+      { title: 'Canva Design School', url: 'https://canva.com/learn', desc: 'Free design tutorials for all levels' },
+      { title: 'Satori Graphics – YouTube', url: 'https://youtube.com', desc: 'Best free channel for graphic design skills' },
+      { title: 'The Futur', url: 'https://thefutur.com', desc: 'Business of design — how to charge more' },
+    ],
+    platforms: [
+      { icon: '🟢', name: 'Fiverr', tag: 'Best for Designers', desc: 'Biggest platform for logo, social, and branding gigs' },
+      { icon: '🔵', name: 'Upwork', tag: 'High Pay', desc: 'Long-term design contracts with global brands' },
+      { icon: '🖼️', name: '99designs', tag: 'Design Contests', desc: 'Compete and get paid even as a beginner' },
+      { icon: '🇮🇳', name: 'Internshala', tag: 'India First', desc: 'Design internships with Indian startups' },
+    ],
+    tips: [
+      { icon: '🖼️', title: 'Behance Is Your CV', desc: 'Clients Google you before hiring. A strong Behance profile gets you clients without proposals.' },
+      { icon: '🎯', title: 'Specialize Your Niche', desc: 'A "logo designer for restaurants" earns 3x more than a "general designer". Pick a niche.' },
+      { icon: '📱', title: 'Instagram Portfolio', desc: 'Post your designs on Instagram with #graphicdesign. Clients DM you directly — free marketing.' },
+      { icon: '💬', title: 'Ask for Testimonials', desc: 'After every client, ask for a written review. 5 good reviews = 10x more enquiries.' },
+    ]
+  },
+
+  video: {
+    emoji: '🎬',
+    name: 'Video Editing',
+    tagline: 'The skill that every creator desperately needs',
+    taglineEm: 'every creator',
+    desc: 'YouTube channels, Instagram Reels, brand ads, wedding videos, corporate content — the demand for skilled video editors has exploded in India. One good editor can serve 10+ clients simultaneously.',
+    tags: ['Booming Demand', 'High Pay', 'Recurring Work', 'No Degree Needed'],
+    earning: '₹40K–₹2.5L',
+    earningPeriod: 'per month',
+    difficulty: 'Moderate',
+    timeToFirst: '3–5 Weeks',
+    demandLevel: 'Exploding 🚀',
+    roadmap: [
+      { week: 'Week 1–2', title: 'Learn Your Editing Software', desc: 'Start with CapCut (free, mobile) or DaVinci Resolve (free, professional). Watch 10 YouTube tutorials. Edit daily.' },
+      { week: 'Week 3', title: 'Study the Craft', desc: 'Learn jump cuts, color grading, audio sync, transitions, and text animation. Copy styles from top YouTube channels.' },
+      { week: 'Week 4–5', title: 'Build a Demo Reel', desc: 'Edit 3–5 sample videos. Use free stock footage from Pexels. Upload your demo reel to YouTube and Google Drive.' },
+      { week: 'Month 2', title: 'Get First Paying Clients', desc: 'Reach out to small YouTubers (5K–50K subscribers) offering affordable editing. They always need help and pay consistently.' },
+      { week: 'Month 3+', title: 'Scale & Raise Rates', desc: 'Move into brand video editing and short-form (Reels/Shorts) — these pay ₹2000–₹15,000 per video.' },
+    ],
+    tools: [
+      { icon: '🎬', name: 'DaVinci Resolve', desc: 'Free, pro-grade' },
+      { icon: '📱', name: 'CapCut', desc: 'Fast mobile editing' },
+      { icon: '✂️', name: 'Adobe Premiere Pro', desc: 'Industry standard' },
+      { icon: '🎵', name: 'Epidemic Sound', desc: 'Royalty-free music' },
+    ],
+    resources: [
+      { title: 'DaVinci Resolve – Free Course', url: 'https://youtube.com', desc: 'Casey Faris on YouTube: best free beginner course' },
+      { title: 'Motion Array Templates', url: 'https://motionarray.com', desc: 'Customizable video templates to speed up work' },
+      { title: 'Pexels / Pixabay', url: 'https://pexels.com', desc: 'Free stock footage to build your portfolio' },
+    ],
+    platforms: [
+      { icon: '🟢', name: 'Fiverr', tag: 'Top Platform', desc: 'Thousands of video editing orders placed daily' },
+      { icon: '🔵', name: 'Upwork', tag: 'Premium Clients', desc: 'Long-term editing retainers with YouTubers & brands' },
+      { icon: '📱', name: 'Instagram/DMs', tag: 'Direct Outreach', desc: 'DM small creators offering a free trial edit' },
+      { icon: '🇮🇳', name: 'Internshala', tag: 'India Clients', desc: 'Startups and agencies looking for video editors' },
+    ],
+    tips: [
+      { icon: '🎬', title: 'Offer One Free Edit', desc: 'Do one free edit for a YouTuber you like. If they love it, they become your best recurring client.' },
+      { icon: '⚡', title: 'Speed = More Income', desc: 'A faster editor earns more. Practice keyboard shortcuts until editing feels like second nature.' },
+      { icon: '🎨', title: 'Learn Colour Grading', desc: 'Editors who can colour grade professionally charge 2–3x more. It\'s a weekend skill to learn.' },
+      { icon: '📦', title: 'Create Packages', desc: 'Offer "10 Reels/month for ₹8000" packages. Recurring income is better than per-project.' },
+    ]
+  },
+
+  photography: {
+    emoji: '📸',
+    name: 'Photography',
+    tagline: 'Sell your eye for beauty — not just the photos',
+    taglineEm: 'eye for beauty',
+    desc: 'Photography income in 2025 goes far beyond shooting events. Stock photos, Instagram content, product photography, YouTube thumbnails, and online courses all represent massive income streams for Indian photographers.',
+    tags: ['Creative Freedom', 'Passive Income', 'Multiple Streams', 'Scalable'],
+    earning: '₹20K–₹1.5L',
+    earningPeriod: 'per month',
+    difficulty: 'Easy–Moderate',
+    timeToFirst: '1–3 Weeks',
+    demandLevel: 'High Demand 📸',
+    roadmap: [
+      { week: 'Week 1', title: 'Learn Composition & Light', desc: 'Study the rule of thirds, golden hour, and natural lighting. No need for expensive gear — a phone works at first.' },
+      { week: 'Week 2–3', title: 'Build a 30-Photo Portfolio', desc: 'Shoot 30 great photos. Focus on a theme: nature, street, food, or portraits. Upload to Unsplash to get noticed.' },
+      { week: 'Month 1', title: 'Start Selling Stock Photos', desc: 'Upload to Shutterstock, Getty Images, and Adobe Stock. Indian geography and culture sells very well globally.' },
+      { week: 'Month 2', title: 'Offer Local Services', desc: 'Offer product photography to local shops and food businesses. Charge ₹2000–₹5000 per session.' },
+      { week: 'Month 3+', title: 'Teach & License', desc: 'Sell photography presets on Gumroad, start a YouTube channel, or offer paid workshops in your city.' },
+    ],
+    tools: [
+      { icon: '📸', name: 'Lightroom Mobile', desc: 'Free photo editor' },
+      { icon: '🖼️', name: 'Canva', desc: 'Thumbnails & layouts' },
+      { icon: '📤', name: 'Shutterstock', desc: 'Sell stock photos' },
+      { icon: '☁️', name: 'Google Drive', desc: 'Client delivery' },
+    ],
+    resources: [
+      { title: 'Shutterstock Contributor', url: 'https://submit.shutterstock.com', desc: 'Upload and sell your photos globally' },
+      { title: 'Peter McKinnon – YouTube', url: 'https://youtube.com', desc: 'Best photography YouTube channel for learning' },
+      { title: 'Unsplash', url: 'https://unsplash.com', desc: 'Get discovered by brands looking for photographers' },
+    ],
+    platforms: [
+      { icon: '📷', name: 'Shutterstock', tag: 'Passive Income', desc: 'Upload once, earn every time someone downloads' },
+      { icon: '🟢', name: 'Fiverr', tag: 'Photo Editing', desc: 'Offer retouching and editing as a service' },
+      { icon: '📱', name: 'Instagram', tag: 'Local Clients', desc: 'Build portfolio, get DMs from local businesses' },
+      { icon: '💛', name: 'Instamojo', tag: 'Sell Presets', desc: 'Sell Lightroom presets and photo courses in ₹' },
+    ],
+    tips: [
+      { icon: '🌅', title: 'Golden Hour Magic', desc: 'Photos shot during golden hour (1 hour after sunrise, 1 hour before sunset) sell 5x more on stock sites.' },
+      { icon: '🍽️', title: 'Food Photography Pays', desc: 'Restaurants and food brands pay ₹3K–₹15K per session. It\'s India\'s fastest-growing photo niche.' },
+      { icon: '📦', title: 'Sell Presets', desc: 'Create 10 Lightroom presets and sell them on Gumroad for ₹299–₹999. Pure passive income.' },
+      { icon: '🤝', title: 'Partner With Vendors', desc: 'Partner with wedding planners, event companies, and restaurants for consistent referral income.' },
+    ]
+  },
+
+  coding: {
+    emoji: '💻',
+    name: 'Web Development',
+    tagline: 'Build the digital world and get paid handsomely',
+    taglineEm: 'digital world',
+    desc: 'Every business needs a website. Every startup needs an app. Web developers are among the highest-paid freelancers in India and globally. You don\'t need a degree — just skills and a portfolio.',
+    tags: ['Highest Paying', 'Always in Demand', 'Global Clients', 'Remote First'],
+    earning: '₹60K–₹5L',
+    earningPeriod: 'per month',
+    difficulty: 'High Effort, High Reward',
+    timeToFirst: '2–4 Months',
+    demandLevel: 'Massive Demand 💻',
+    roadmap: [
+      { week: 'Month 1', title: 'Learn HTML, CSS & JavaScript', desc: 'Start with The Odin Project or freeCodeCamp. Build 3 simple websites. Focus on fundamentals before frameworks.' },
+      { week: 'Month 2', title: 'Learn React or Next.js', desc: 'React is the most hired frontend skill. Build a personal portfolio, a to-do app, and a weather app as projects.' },
+      { week: 'Month 3', title: 'Build 3 Real Projects', desc: 'Make a restaurant website, a portfolio for a friend, and a landing page. These go in your portfolio on GitHub.' },
+      { week: 'Month 3–4', title: 'Get First Freelance Client', desc: 'Join Upwork and Fiverr. Reach out to local businesses with outdated websites. Offer to build for ₹5K–₹15K.' },
+      { week: 'Month 5+', title: 'Specialize & Scale', desc: 'Choose: Full stack, WordPress, Shopify, or React Native. Specialists command ₹2L–₹5L/month easily.' },
+    ],
+    tools: [
+      { icon: '⚡', name: 'VS Code', desc: 'Best free IDE' },
+      { icon: '🐙', name: 'GitHub', desc: 'Portfolio & hosting' },
+      { icon: '🌐', name: 'Netlify', desc: 'Free website hosting' },
+      { icon: '🎨', name: 'Figma', desc: 'Design reference' },
+    ],
+    resources: [
+      { title: 'The Odin Project', url: 'https://theodinproject.com', desc: 'Best free full-stack web dev curriculum' },
+      { title: 'freeCodeCamp', url: 'https://freecodecamp.org', desc: 'Free certifications that clients respect' },
+      { title: 'JavaScript.info', url: 'https://javascript.info', desc: 'The most complete JS learning resource' },
+    ],
+    platforms: [
+      { icon: '🔵', name: 'Upwork', tag: 'Highest Pay', desc: 'Senior devs earn $30–$100/hour on Upwork' },
+      { icon: '🟢', name: 'Fiverr', tag: 'Easy Entry', desc: 'Start with website gigs at ₹5K–₹25K each' },
+      { icon: '🔷', name: 'LinkedIn', tag: 'Professionals', desc: 'Corporate clients, long-term contracts' },
+      { icon: '🇮🇳', name: 'Internshala', tag: 'India Remote', desc: 'Remote dev roles for Indian startups' },
+    ],
+    tips: [
+      { icon: '🏗️', title: 'Build Real Projects', desc: 'No client hires a dev without a GitHub. Build 3 real projects — doesn\'t matter if they\'re for "fake" clients.' },
+      { icon: '⚡', title: 'Learn Fast Deployment', desc: 'Being able to deploy quickly (Vercel, Netlify) makes you 10x more hireable than someone who can only code locally.' },
+      { icon: '🤝', title: 'Local Business Strategy', desc: 'Walk into 10 local shops with bad or no websites. Offer ₹5K builds. This gets you a portfolio and reviews fast.' },
+      { icon: '📈', title: 'Raise Rates Quarterly', desc: 'Dev skills grow fast. Every 3 months, raise your rate by 20%. Clients who value you will accept it.' },
+    ]
+  },
+
+  music: {
+    emoji: '🎵',
+    name: 'Music',
+    tagline: 'Turn your sound into a sustainable business',
+    taglineEm: 'sound',
+    desc: 'Music income in the digital age means royalties, teaching, beat sales, licensing, and YouTube. Indian music creators are earning from multiple streams simultaneously — and you can too.',
+    tags: ['Creative Work', 'Passive Royalties', 'Multiple Revenue', 'Global Reach'],
+    earning: '₹20K–₹2L',
+    earningPeriod: 'per month',
+    difficulty: 'Moderate',
+    timeToFirst: '4–8 Weeks',
+    demandLevel: 'Growing Fast 🎵',
+    roadmap: [
+      { week: 'Week 1–2', title: 'Define Your Music Niche', desc: 'Teaching? Beat selling? Licensing? YouTube? Each path is different. Pick one to start, then expand.' },
+      { week: 'Week 3–4', title: 'Build Your Online Presence', desc: 'Create YouTube, Instagram, and SoundCloud profiles. Post consistently. Algorithm rewards consistent creators.' },
+      { week: 'Month 2', title: 'Start Monetizing', desc: 'Upload beats to BeatStars. Apply to distribute on Spotify and Apple Music via DistroKid. Start online lessons.' },
+      { week: 'Month 3', title: 'Grow & License', desc: 'License music for YouTube channels, podcasts, and ad creators. This is pure passive income.' },
+      { week: 'Month 4+', title: 'Scale to ₹1L+', desc: 'Combine teaching + beat sales + YouTube + licensing. Each stream adds to the total income.' },
+    ],
+    tools: [
+      { icon: '🎹', name: 'GarageBand / FL Studio', desc: 'Music production' },
+      { icon: '🎧', name: 'BeatStars', desc: 'Sell beats online' },
+      { icon: '🌍', name: 'DistroKid', desc: 'Music distribution' },
+      { icon: '📱', name: 'Zoom / Google Meet', desc: 'Online lessons' },
+    ],
+    resources: [
+      { title: 'BeatStars', url: 'https://beatstars.com', desc: 'Sell your beats to artists worldwide' },
+      { title: 'DistroKid', url: 'https://distrokid.com', desc: 'Distribute music to Spotify, Apple Music, etc.' },
+      { title: 'Musicbed', url: 'https://musicbed.com', desc: 'License your music for films and commercials' },
+    ],
+    platforms: [
+      { icon: '🎵', name: 'BeatStars', tag: 'Beat Selling', desc: 'India\'s producers sell 100s of beats monthly here' },
+      { icon: '🔴', name: 'YouTube', tag: 'Ad Revenue', desc: 'Tutorials, covers, and original music monetize fast' },
+      { icon: '📚', name: 'Superprof', tag: 'Music Lessons', desc: 'Teach music online to students across India' },
+      { icon: '💛', name: 'Instamojo', tag: 'Sell Courses', desc: 'Sell music courses in ₹ directly to Indian students' },
+    ],
+    tips: [
+      { icon: '🎹', title: 'Niche Your Sound', desc: 'A "Bollywood style beat maker" earns more than a generic producer. Your unique sound = your brand.' },
+      { icon: '📱', title: 'Reels Are Powerful', desc: 'Post 30-second music clips on Instagram Reels. Viral Reels have launched whole careers overnight.' },
+      { icon: '🎓', title: 'Teach What You Know', desc: 'You don\'t need to be Ar Rahman. If you know more than a beginner, you can charge ₹500–₹2000/hour to teach.' },
+      { icon: '💰', title: 'Stack Income Streams', desc: 'The goal is 5+ income streams: beats + royalties + lessons + YouTube + licensing = financial freedom.' },
+    ]
+  },
+
+  teaching: {
+    emoji: '📚',
+    name: 'Online Teaching',
+    tagline: 'Share your knowledge and get paid forever',
+    taglineEm: 'get paid forever',
+    desc: 'Online education is India\'s fastest-growing industry. Every subject, skill, and language is being taught online. If you know something well enough to explain it, you can build a six-figure teaching income.',
+    tags: ['Passive Income', 'Scale Infinitely', 'No Commute', 'Courses = Leverage'],
+    earning: '₹30K–₹3L',
+    earningPeriod: 'per month',
+    difficulty: 'Moderate',
+    timeToFirst: '2–4 Weeks',
+    demandLevel: 'Enormous 📚',
+    roadmap: [
+      { week: 'Week 1–2', title: 'Choose Your Subject', desc: 'Pick what you know: math, English, coding, music, cooking, or a board exam. Specific subjects earn more than broad ones.' },
+      { week: 'Week 3', title: 'Start Live Tutoring', desc: 'Register on Vedantu, Preply, or Superprof. Start taking live sessions. This builds confidence and immediate income.' },
+      { week: 'Month 2', title: 'Create Course Content', desc: 'Record 10–20 video lessons for your first course. Free tools: OBS Studio to record, Canva for slides.' },
+      { week: 'Month 2–3', title: 'Launch Your Course', desc: 'Upload to Udemy (global) and Instamojo (India). Price between ₹499–₹2999 to start.' },
+      { week: 'Month 4+', title: 'Build & Automate', desc: 'Your course earns while you sleep. Focus on marketing: YouTube shorts, Instagram reels, and free webinars.' },
+    ],
+    tools: [
+      { icon: '🎥', name: 'OBS Studio', desc: 'Free screen recording' },
+      { icon: '📊', name: 'Canva', desc: 'Beautiful course slides' },
+      { icon: '📹', name: 'Zoom', desc: 'Live online classes' },
+      { icon: '🎬', name: 'Teachable', desc: 'Host your courses' },
+    ],
+    resources: [
+      { title: 'Udemy Instructor', url: 'https://udemy.com/teaching', desc: '70% revenue share on the world\'s largest course platform' },
+      { title: 'Instamojo Course Selling', url: 'https://instamojo.com', desc: 'Sell courses directly to Indians with UPI payments' },
+      { title: 'Superprof India', url: 'https://superprof.co.in', desc: 'Connect with students for live tutoring sessions' },
+    ],
+    platforms: [
+      { icon: '🎓', name: 'Udemy', tag: 'Global Reach', desc: 'Millions of students, 70% revenue share on your courses' },
+      { icon: '💛', name: 'Instamojo', tag: 'India Payments', desc: 'Accept UPI and sell courses directly' },
+      { icon: '📖', name: 'Vedantu', tag: 'K-12 Tutoring', desc: 'Teach school subjects to lakhs of Indian students' },
+      { icon: '📚', name: 'Superprof', tag: 'All Subjects', desc: 'Every subject, every age group, live online sessions' },
+    ],
+    tips: [
+      { icon: '🎯', title: 'Solve One Problem', desc: 'The best courses solve one specific problem. "Pass Class 10 Maths" beats "Learn All of Maths".' },
+      { icon: '🆓', title: 'Free Webinar First', desc: 'Host a free 60-min webinar. Build trust, collect emails, then convert 10–20% to paid course buyers.' },
+      { icon: '⭐', title: 'Reviews Are Everything', desc: 'Give your first 10 students a discount in exchange for honest reviews. Reviews drive 80% of future sales.' },
+      { icon: '📱', title: 'WhatsApp Community', desc: 'Build a free WhatsApp group of 100 students. They become your loyal buyers for every future course.' },
+    ]
+  },
+
+  translation: {
+    emoji: '🌍',
+    name: 'Translation',
+    tagline: 'Your bilingual brain is worth a fortune',
+    taglineEm: 'bilingual brain',
+    desc: 'India\'s linguistic diversity is a goldmine. If you speak Hindi, Tamil, Telugu, Bengali, Kannada, Malayalam, or any regional language plus English, you\'re sitting on a high-demand, well-paying skill.',
+    tags: ['Unique Skill', 'Very High Pay', 'Low Competition', 'Global Demand'],
+    earning: '₹40K–₹2L',
+    earningPeriod: 'per month',
+    difficulty: 'Easy if Bilingual',
+    timeToFirst: '1–2 Weeks',
+    demandLevel: 'High & Growing 🌍',
+    roadmap: [
+      { week: 'Week 1', title: 'Identify Your Language Pairs', desc: 'List all languages you speak fluently. The rarer the pair (e.g. English↔Telugu), the higher you can charge.' },
+      { week: 'Week 2', title: 'Create Sample Translations', desc: 'Translate a 500-word article in each language pair. These are your portfolio samples.' },
+      { week: 'Week 3', title: 'Sign Up on Platforms', desc: 'Join ProZ, Gengo, and Upwork. Create profiles highlighting your language pairs and subject expertise.' },
+      { week: 'Month 2', title: 'Build Specialty', desc: 'Legal, medical, and technical translations pay 3–4x more than general content. Pick a specialty.' },
+      { week: 'Month 3+', title: 'Direct Clients', desc: 'Reach out to law firms, hospitals, and MNCs. Direct contracts pay the most — no platform fees.' },
+    ],
+    tools: [
+      { icon: '📝', name: 'Google Docs', desc: 'Delivery tool' },
+      { icon: '🔤', name: 'DeepL Pro', desc: 'Reference tool' },
+      { icon: '📁', name: 'SDL Trados', desc: 'CAT tool for speed' },
+      { icon: '✅', name: 'Grammarly', desc: 'Quality check' },
+    ],
+    resources: [
+      { title: 'ProZ.com', url: 'https://proz.com', desc: 'World\'s largest platform for professional translators' },
+      { title: 'Gengo', url: 'https://gengo.com/translators', desc: 'Get consistent translation work from global brands' },
+      { title: 'ATA Certification Prep', url: 'https://atanet.org', desc: 'Certification to charge premium rates' },
+    ],
+    platforms: [
+      { icon: '🌐', name: 'ProZ.com', tag: 'Best for Translators', desc: 'Dedicated translation marketplace, premium clients' },
+      { icon: '🔵', name: 'Upwork', tag: 'High Paying', desc: 'Corporate clients paying $0.08–$0.25 per word' },
+      { icon: '📝', name: 'Gengo', tag: 'Consistent Work', desc: 'Steady workflow for quality translators' },
+      { icon: '🟢', name: 'Fiverr', tag: 'Easy Start', desc: 'Document translation gigs, great for beginners' },
+    ],
+    tips: [
+      { icon: '⚖️', title: 'Legal Translation = Gold', desc: 'Legal document translators earn ₹5–₹15 per word. One 5,000-word contract = ₹25,000–₹75,000.' },
+      { icon: '🏥', title: 'Medical Translation', desc: 'Hospitals need patient documents translated. Get certified in medical terminology for premium rates.' },
+      { icon: '🎬', title: 'Subtitle Translation', desc: 'Subtitle translators for Netflix and Amazon Prime earn ₹1,500–₹5,000 per hour of content.' },
+      { icon: '📄', title: 'Certified Translation', desc: 'Offer notarized/certified translations. Companies pay 2–3x for official certified documents.' },
+    ]
+  },
+
+  cooking: {
+    emoji: '🍳',
+    name: 'Cooking',
+    tagline: "India's kitchens have global fans willing to pay",
+    taglineEm: 'global fans',
+    desc: 'Indian food is beloved worldwide. If you can cook well and share it online, you can build a massive income through YouTube, Instagram, recipe eBooks, and online cooking classes. Your kitchen is your studio.',
+    tags: ['Passion to Profit', 'Huge Audience', 'Multiple Streams', 'Cultural Value'],
+    earning: '₹25K–₹2L',
+    earningPeriod: 'per month',
+    difficulty: 'Easy to Start',
+    timeToFirst: '2–4 Weeks',
+    demandLevel: 'Massive Appetite 🍳',
+    roadmap: [
+      { week: 'Week 1–2', title: 'Set Up Your Content Kitchen', desc: 'Create YouTube + Instagram accounts. Get a basic ring light (₹500) and a phone stand. Natural kitchen light works too.' },
+      { week: 'Week 3–4', title: 'Create First 10 Videos', desc: 'Start with your 10 best recipes. Film in your kitchen. Edit with CapCut. Post consistently — 3x per week.' },
+      { week: 'Month 2', title: 'Build an Audience', desc: 'Engage with comments. Join cooking Facebook groups. Collaborate with other food creators. Consistency beats perfection.' },
+      { week: 'Month 2–3', title: 'Start Monetizing', desc: 'Sell a ₹299 recipe eBook on Instamojo. Start online cooking classes at ₹500–₹2000/session via Zoom.' },
+      { week: 'Month 4+', title: 'Multiple Revenue Streams', desc: 'YouTube AdSense + brand deals + course sales + cookbook + affiliate marketing = ₹1L+ monthly.' },
+    ],
+    tools: [
+      { icon: '📱', name: 'CapCut', desc: 'Free video editing' },
+      { icon: '🖼️', name: 'Canva', desc: 'Recipe card design' },
+      { icon: '💛', name: 'Instamojo', desc: 'Sell eBooks in ₹' },
+      { icon: '🎥', name: 'Zoom', desc: 'Live cooking classes' },
+    ],
+    resources: [
+      { title: 'YouTube for Creators', url: 'https://youtube.com/creators', desc: 'Learn how to grow and monetize a food channel' },
+      { title: 'Instamojo eBook Guide', url: 'https://instamojo.com', desc: 'Create and sell recipe eBooks to Indian buyers' },
+      { title: 'Tasty (for inspiration)', url: 'https://tasty.co', desc: 'Study their video format — it works globally' },
+    ],
+    platforms: [
+      { icon: '🔴', name: 'YouTube', tag: 'Main Platform', desc: 'Long-form recipes + ad revenue + brand deals' },
+      { icon: '📱', name: 'Instagram', tag: 'Reels Growth', desc: 'Short recipe Reels can go viral overnight' },
+      { icon: '💛', name: 'Instamojo', tag: 'Sell in ₹', desc: 'eBooks, courses, and online classes with UPI' },
+      { icon: '🌐', name: 'Food Blog', tag: 'AdSense Revenue', desc: 'A recipe blog with SEO earns ₹20K–₹80K/month passively' },
+    ],
+    tips: [
+      { icon: '🎬', title: 'Vertical Video First', desc: 'Instagram Reels and YouTube Shorts have 10x the reach of horizontal videos for food content in 2025.' },
+      { icon: '🇮🇳', title: 'Regional = Viral', desc: 'Authentic regional Indian recipes (Chettinad, Awadhi, Goan) go massively viral — the world loves them.' },
+      { icon: '📦', title: 'Recipe eBook Fast Money', desc: 'Compile 25 recipes into a PDF. Sell for ₹299 on Instamojo. Even 100 sales = ₹29,900 passively.' },
+      { icon: '🤝', title: 'Brand Collaborations', desc: 'Kitchen brands (Prestige, Borosil, Sunfeast) pay ₹10K–₹1L per post to food creators with good engagement.' },
+    ]
+  },
+
+  socialmedia: {
+    emoji: '📱',
+    name: 'Social Media Management',
+    tagline: 'Every business needs someone who knows the algorithm',
+    taglineEm: 'knows the algorithm',
+    desc: 'Every brand, restaurant, clinic, and startup needs a social media presence — but most owners don\'t have the time or skills to manage it. One social media manager can handle 5–10 clients simultaneously.',
+    tags: ['High Demand', 'Recurring Income', 'Remote Work', 'Creative + Strategic'],
+    earning: '₹35K–₹2L',
+    earningPeriod: 'per month',
+    difficulty: 'Easy to Moderate',
+    timeToFirst: '2–3 Weeks',
+    demandLevel: 'Booming 📱',
+    roadmap: [
+      { week: 'Week 1–2', title: 'Learn Platform Algorithms', desc: 'Study Instagram, YouTube, and LinkedIn algorithms. Free resources: Creator Academy on YouTube and Meta Blueprint.' },
+      { week: 'Week 3', title: 'Build Your Own Profile', desc: 'Grow your personal Instagram or LinkedIn to show clients you know what you\'re doing. Proof > promises.' },
+      { week: 'Week 4', title: 'Create Case Study Content', desc: 'Manage 1 local business page for free for 30 days. Show results (follower growth, reach). This is your portfolio.' },
+      { week: 'Month 2', title: 'Land First Paying Clients', desc: 'Approach local businesses, coaches, and influencers. Charge ₹5,000–₹15,000/month to manage their pages.' },
+      { week: 'Month 3+', title: 'Scale to 5+ Clients', desc: '5 clients × ₹10,000 = ₹50,000/month. Hire a VA to help with scheduling as you scale.' },
+    ],
+    tools: [
+      { icon: '📅', name: 'Buffer / Hootsuite', desc: 'Schedule posts' },
+      { icon: '🎨', name: 'Canva', desc: 'Create graphics' },
+      { icon: '📊', name: 'Meta Business Suite', desc: 'Analytics & insights' },
+      { icon: '🤖', name: 'ChatGPT', desc: 'Faster content writing' },
+    ],
+    resources: [
+      { title: 'Meta Blueprint', url: 'https://www.facebook.com/business/learn', desc: 'Free official certification for Facebook & Instagram' },
+      { title: 'HubSpot Social Media Cert', url: 'https://hubspot.com/resources/free-courses-certifications', desc: 'Free certificate that impresses clients' },
+      { title: 'Creator Academy – YouTube', url: 'https://creatoracademy.youtube.com', desc: 'Learn YouTube growth directly from Google' },
+    ],
+    platforms: [
+      { icon: '🔵', name: 'Upwork', tag: 'Premium Clients', desc: 'International brands paying $500–$2000/month' },
+      { icon: '🟢', name: 'Fiverr', tag: 'Quick Gigs', desc: 'Offer content calendars and profile audits as gigs' },
+      { icon: '🔷', name: 'LinkedIn', tag: 'B2B Clients', desc: 'SMEs and coaches actively looking for SMMs' },
+      { icon: '🇮🇳', name: 'Direct Outreach', tag: 'India Local', desc: 'Visit local businesses and pitch in person' },
+    ],
+    tips: [
+      { icon: '📊', title: 'Show Numbers, Not Effort', desc: 'Clients don\'t care how hard you worked. Show: "Grew from 500 to 5000 followers in 30 days." Numbers sell.' },
+      { icon: '🎯', title: 'Niche Down by Industry', desc: 'A "Social Media Manager for Restaurants" earns more than a generalist. Vertical expertise commands premium.' },
+      { icon: '📦', title: 'Offer Retainers', desc: 'Monthly retainers (₹8K–₹25K/month/client) beat per-project pricing. 5 retainers = stable ₹40K–₹125K.' },
+      { icon: '🤖', title: 'Use AI Tools', desc: 'ChatGPT + Canva + Buffer = one person managing 10 clients in 4 hours/day. AI is your leverage.' },
+    ]
+  },
+
+  voiceover: {
+    emoji: '🎙️',
+    name: 'Voiceover',
+    tagline: 'Your voice is a professional instrument — use it',
+    taglineEm: 'voice',
+    desc: 'Voiceover is one of the most overlooked and underrated income streams in India. Ads, explainer videos, e-learning, audiobooks, IVR systems — all need voices. And Indian accents are globally sought-after.',
+    tags: ['Work From Home', 'No Camera Needed', 'High Pay Per Hour', 'Passive Potential'],
+    earning: '₹30K–₹2L',
+    earningPeriod: 'per month',
+    difficulty: 'Low Barrier to Entry',
+    timeToFirst: '2–3 Weeks',
+    demandLevel: 'Underserved & High 🎙️',
+    roadmap: [
+      { week: 'Week 1–2', title: 'Set Up Your Home Studio', desc: 'Get a USB mic (₹2000–₹5000 range: BM-800 or MAONO AU-A04). Record in a closet or with blankets for acoustic treatment.' },
+      { week: 'Week 3', title: 'Practice & Build Demo Reel', desc: 'Record 3–5 demo clips: a commercial, a narration, and an e-learning script. These get you hired.' },
+      { week: 'Week 4', title: 'List on Voice Platforms', desc: 'Create profiles on Voice123, Voices.com, and Fiverr with your demo reel. Quality mic check is everything.' },
+      { week: 'Month 2', title: 'Land First Gigs', desc: 'Apply to jobs on Voice123 daily. Offer to record a 30-sec sample free. First 5 reviews = career launchpad.' },
+      { week: 'Month 3+', title: 'Build Direct Clients', desc: 'Approach e-learning companies, ad agencies, and YouTube channels directly. These pay the most.' },
+    ],
+    tools: [
+      { icon: '🎙️', name: 'Audacity', desc: 'Free audio editing' },
+      { icon: '🔊', name: 'Adobe Audition', desc: 'Pro audio editing' },
+      { icon: '🎤', name: 'MAONO AU-A04', desc: 'Affordable USB mic' },
+      { icon: '📦', name: 'Fiverr', desc: 'Marketplace listing' },
+    ],
+    resources: [
+      { title: 'Voice123', url: 'https://voice123.com', desc: 'World\'s top voiceover audition platform' },
+      { title: 'Edge Studio', url: 'https://edgestudio.com', desc: 'Free voice acting learning resources' },
+      { title: 'Gravy for the Brain', url: 'https://gravyforthebrain.com', desc: 'Business resources for voice actors' },
+    ],
+    platforms: [
+      { icon: '🎙️', name: 'Voice123', tag: 'Best Platform', desc: 'Premium voiceover jobs from global clients' },
+      { icon: '🟢', name: 'Fiverr', tag: 'Easy Start', desc: 'Offer 60-sec voiceover gigs, great for beginners' },
+      { icon: '🔵', name: 'Upwork', tag: 'Recurring', desc: 'Long-term retainers for e-learning narrators' },
+      { icon: '📱', name: 'Direct to Agencies', tag: 'Highest Pay', desc: 'Ad agencies pay ₹5K–₹50K per spot' },
+    ],
+    tips: [
+      { icon: '🎤', title: 'Your Demo Reel is Everything', desc: 'A professional 90-second demo reel showcasing 3–4 styles gets you hired more than anything else.' },
+      { icon: '🏠', title: 'Home Studio on Budget', desc: 'Record inside a closet full of clothes. Clothes absorb echo. ₹3000 USB mic + closet = professional sound.' },
+      { icon: '🌐', title: 'Indian Accent = Demand', desc: 'Global e-learning, BPO training, and Indian market ads actively seek natural Indian English voices.' },
+      { icon: '📚', title: 'E-Learning Pays the Most', desc: 'E-learning narration pays ₹3,000–₹10,000 per recorded hour. One course = ₹30K–₹100K.' },
+    ]
+  },
+
+  va: {
+    emoji: '🤝',
+    name: 'Virtual Assistant',
+    tagline: 'Help busy people succeed — and get well paid for it',
+    taglineEm: 'get well paid',
+    desc: 'Entrepreneurs, coaches, doctors, and executives are drowning in admin work. Virtual Assistants handle emails, calendars, research, data entry, and customer support remotely. It\'s one of the easiest ways to start earning online.',
+    tags: ['No Special Skills', 'Immediate Income', 'Global Clients', 'Flexible Hours'],
+    earning: '₹25K–₹1L',
+    earningPeriod: 'per month',
+    difficulty: 'Easiest to Start',
+    timeToFirst: '1–2 Weeks',
+    demandLevel: 'Always in Demand 🤝',
+    roadmap: [
+      { week: 'Week 1', title: 'List Your VA Skills', desc: 'Write down what you can do: email management, scheduling, data entry, research, customer service, social media. Be specific.' },
+      { week: 'Week 2', title: 'Set Up Professional Profiles', desc: 'Create profiles on Fiverr, Upwork, and LinkedIn. Write a clear bio focused on how you save clients time.' },
+      { week: 'Week 3', title: 'Apply to First 20 Jobs', desc: 'Send personalized proposals on Upwork. Mention the client\'s specific business. Generic proposals get ignored.' },
+      { week: 'Month 2', title: 'Specialize Your Service', desc: 'VA + niche = higher pay. "VA for real estate agents" or "VA for online coaches" earns 2x a general VA.' },
+      { week: 'Month 3+', title: 'Build to 3–5 Retainer Clients', desc: '3 clients × ₹20K/month = ₹60K/month. Add each client slowly to maintain quality.' },
+    ],
+    tools: [
+      { icon: '📧', name: 'Gmail + G Suite', desc: 'Email management' },
+      { icon: '📅', name: 'Google Calendar', desc: 'Scheduling' },
+      { icon: '✅', name: 'Trello / Asana', desc: 'Task management' },
+      { icon: '📊', name: 'Google Sheets', desc: 'Data & reporting' },
+    ],
+    resources: [
+      { title: 'VA Bootcamp by Horkey Handbook', url: 'https://horkeyhandbook.com', desc: 'Best resource to learn VA business from scratch' },
+      { title: 'Upwork VA Guide', url: 'https://upwork.com', desc: 'How to create a winning VA profile on Upwork' },
+      { title: 'Zirtual Blog', url: 'https://zirtual.com/blog', desc: 'Learn best practices from a top VA company' },
+    ],
+    platforms: [
+      { icon: '🔵', name: 'Upwork', tag: 'Best for VAs', desc: 'Consistent VA jobs from coaches and executives' },
+      { icon: '🟢', name: 'Fiverr', tag: 'Quick Gigs', desc: 'Offer inbox management and research as gigs' },
+      { icon: '🔷', name: 'LinkedIn', tag: 'Premium Clients', desc: 'Corporate VAs earn the highest rates via LinkedIn' },
+      { icon: '🇮🇳', name: 'Internshala', tag: 'India Jobs', desc: 'Work-from-home VA roles with Indian businesses' },
+    ],
+    tips: [
+      { icon: '⏰', title: 'Time = Your Product', desc: 'You\'re selling time saved for your client. Track this and report it monthly. "I saved you 25 hours this month."' },
+      { icon: '🎯', title: 'Specialize by Client Type', desc: '"VA for podcasters" or "VA for doctors" earns 2–3x more. Build tools and processes for one type of client.' },
+      { icon: '🤖', title: 'Learn Basic Automation', desc: 'VAs who know Zapier and basic automations earn 40% more. It\'s a weekend skill that makes you invaluable.' },
+      { icon: '⭐', title: 'Over-Communicate', desc: 'Send daily updates to clients. It builds massive trust. Most clients keep great communicating VAs forever.' },
+    ]
+  }
+};
+
+/* ─────────────────────────────────────────────
+   NAVIGATION HELPERS
+   FIX: Proper nav handling — no page jumps,
+   correct scroll-on-main-page behavior
+───────────────────────────────────────────── */
+function goHome() {
+  showPage('main');
+}
+
+// Nav links: if on skill page, go to main first, then scroll
+function navTo(e, sectionId) {
+  e.preventDefault();
+  if (document.getElementById('skill-page').classList.contains('active')) {
+    showPage('main');
+    setTimeout(() => {
+      const el = document.getElementById(sectionId);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 50);
+  } else {
+    const el = document.getElementById(sectionId);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+// Inline links on main page only
+function smoothScrollTo(e, sectionId) {
+  e.preventDefault();
+  const el = document.getElementById(sectionId);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+}
+
+// Skill page CTA buttons: go home then scroll to quiz
+function goHomeAndStart() {
+  showPage('main');
+  setTimeout(function () {
+    var el = document.getElementById('start');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }, 50);
+}
+
+/* ─────────────────────────────────────────────
+   SKILL QUIZ
+───────────────────────────────────────────── */
+var quizAnswers = [null, null, null];
+
+var quizMatrix = {
+  'creative-low-fast':     'design',
+  'creative-low-passive':  'photography',
+  'creative-low-grow':     'design',
+  'creative-mid-fast':     'design',
+  'creative-mid-passive':  'photography',
+  'creative-mid-grow':     'video',
+  'creative-high-fast':    'video',
+  'creative-high-passive': 'photography',
+  'creative-high-grow':    'video',
+  'words-low-fast':        'writing',
+  'words-low-passive':     'writing',
+  'words-low-grow':        'writing',
+  'words-mid-fast':        'writing',
+  'words-mid-passive':     'voiceover',
+  'words-mid-grow':        'socialmedia',
+  'words-high-fast':       'writing',
+  'words-high-passive':    'voiceover',
+  'words-high-grow':       'socialmedia',
+  'tech-low-fast':         'va',
+  'tech-low-passive':      'coding',
+  'tech-low-grow':         'coding',
+  'tech-mid-fast':         'coding',
+  'tech-mid-passive':      'coding',
+  'tech-mid-grow':         'coding',
+  'tech-high-fast':        'coding',
+  'tech-high-passive':     'coding',
+  'tech-high-grow':        'coding',
+  'teach-low-fast':        'va',
+  'teach-low-passive':     'teaching',
+  'teach-low-grow':        'teaching',
+  'teach-mid-fast':        'translation',
+  'teach-mid-passive':     'teaching',
+  'teach-mid-grow':        'teaching',
+  'teach-high-fast':       'translation',
+  'teach-high-passive':    'teaching',
+  'teach-high-grow':       'teaching'
+};
+
+function quizPick(stepIdx, value) {
+  quizAnswers[stepIdx] = value;
+  var step = document.getElementById('qstep-' + stepIdx);
+  step.querySelectorAll('.quiz-opt').forEach(function (o) { o.classList.remove('selected'); });
+  event.currentTarget.classList.add('selected');
+  setTimeout(function () {
+    if (stepIdx < 2) {
+      document.getElementById('qstep-' + stepIdx).classList.remove('active');
+      document.getElementById('qstep-' + (stepIdx + 1)).classList.add('active');
+      document.getElementById('pip-' + stepIdx).classList.remove('active');
+      document.getElementById('pip-' + stepIdx).classList.add('done');
+      document.getElementById('pip-' + (stepIdx + 1)).classList.add('active');
+    } else {
+      showQuizResult();
+    }
+  }, 280);
+}
+
+function showQuizResult() {
+  var key = quizAnswers[0] + '-' + quizAnswers[1] + '-' + quizAnswers[2];
+  var skillId = quizMatrix[key] || 'writing';
+  var s = skills[skillId];
+  [0,1,2].forEach(function (i) {
+    document.getElementById('qstep-' + i).classList.remove('active');
+    var pip = document.getElementById('pip-' + i);
+    pip.classList.remove('active');
+    pip.classList.add('done');
+  });
+  document.getElementById('qr-emoji').textContent = s.emoji;
+  document.getElementById('qr-name').textContent = s.name;
+  document.getElementById('qr-desc').textContent = s.desc;
+  document.getElementById('qr-stats').innerHTML =
+    '<div class="qrs"><div class="qrs-label">Earnings</div><div class="qrs-val">' + s.earning + '/mo</div></div>' +
+    '<div class="qrs"><div class="qrs-label">First Income</div><div class="qrs-val">' + s.timeToFirst + '</div></div>' +
+    '<div class="qrs"><div class="qrs-label">Demand</div><div class="qrs-val">' + s.demandLevel + '</div></div>';
+  document.getElementById('qr-explore-btn').onclick = function () { openSkill(skillId); };
+  document.getElementById('quiz-result').classList.add('show');
+}
+
+function quizReset() {
+  quizAnswers = [null, null, null];
+  document.getElementById('quiz-result').classList.remove('show');
+  [0,1,2].forEach(function (i) {
+    var pip = document.getElementById('pip-' + i);
+    pip.classList.remove('done', 'active');
+    document.getElementById('qstep-' + i).classList.remove('active');
+    document.getElementById('qstep-' + i).querySelectorAll('.quiz-opt').forEach(function (o) { o.classList.remove('selected'); });
+  });
+  document.getElementById('pip-0').classList.add('active');
+  document.getElementById('qstep-0').classList.add('active');
+}
+
+/* ─────────────────────────────────────────────
+   PAGE SYSTEM
+───────────────────────────────────────────── */
+function showPage(page) {
+  document.getElementById('main-page').classList.toggle('active', page === 'main');
+  document.getElementById('skill-page').classList.toggle('active', page === 'skill');
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+/* ─────────────────────────────────────────────
+   SKILL PAGE BUILDER
+   FIX: tagline em rendering, cooking platforms,
+        button onclick handlers
+───────────────────────────────────────────── */
+function buildTaglineHTML(s) {
+  // Replace the taglineEm word(s) with an <em> wrapped version
+  if (!s.taglineEm) return s.tagline;
+  return s.tagline.replace(s.taglineEm, `<em>${s.taglineEm}</em>`);
+}
+
+function openSkill(skillId) {
+  const s = skills[skillId];
+  if (!s) return;
+
+  const roadmapHTML = s.roadmap.map((step, i) => `
+    <div class="roadmap-step">
+      <div class="roadmap-step-left">
+        <div class="roadmap-dot">${String(i+1).padStart(2,'0')}</div>
+        <div class="roadmap-line"></div>
+      </div>
+      <div class="roadmap-step-content">
+        <span class="roadmap-step-week">${step.week}</span>
+        <h4>${step.title}</h4>
+        <p>${step.desc}</p>
+      </div>
+    </div>
+  `).join('');
+
+  const toolsHTML = s.tools.map(t => `
+    <li class="tool-item">
+      <div class="tool-icon">${t.icon}</div>
+      <div>
+        <strong style="font-size:0.85rem;color:var(--text)">${t.name}</strong><br>
+        <span style="font-size:0.76rem">${t.desc}</span>
+      </div>
+    </li>
+  `).join('');
+
+  const resourcesHTML = s.resources.map((r, i) => `
+    <li class="resource-item">
+      <span class="ri-num">0${i+1}</span>
+      <div>
+        <a href="${r.url}" target="_blank">${r.title}</a>
+        <p>${r.desc}</p>
+      </div>
+    </li>
+  `).join('');
+
+  // FIX: platforms now always use .desc (no .text fallback bug)
+  const platformsHTML = s.platforms.map(p => `
+    <a class="skill-platform-item" href="#" onclick="return false;">
+      <div class="spi-logo">${p.icon}</div>
+      <div class="spi-info">
+        <h4>${p.name}</h4>
+        <p>${p.desc}</p>
+      </div>
+      <span class="spi-tag">${p.tag}</span>
+    </a>
+  `).join('');
+
+  const tipsHTML = s.tips.map(t => `
+    <div class="tip-card">
+      <span class="tip-icon">${t.icon}</span>
+      <h4>${t.title}</h4>
+      <p>${t.desc}</p>
+    </div>
+  `).join('');
+
+  const tagsHTML = s.tags.map(t => `<span class="skill-tag">${t}</span>`).join('');
+
+  // FIX: tagline rendered with proper <em> injection
+  const taglineHTML = buildTaglineHTML(s);
+
+  document.getElementById('skill-page-content').innerHTML = `
+    <div class="skill-hero">
+      <div style="padding:0 5%">
+        <button class="skill-back" onclick="showPage('main')">
+          <span class="back-arrow">→</span> Back to All Skills
+        </button>
+        <div class="skill-hero-inner">
+          <div>
+            <div class="skill-big-icon">${s.emoji}</div>
+            <h1>${s.name}:<br><em>${taglineHTML}</em></h1>
+            <p class="skill-hero-desc">${s.desc}</p>
+            <div class="skill-hero-tags">${tagsHTML}</div>
+            <div style="display:flex;gap:1rem;flex-wrap:wrap">
+              <button class="btn-primary" onclick="goHomeAndStart()">Find My Best Skill →</button>
+              <button class="btn-secondary" onclick="showPage('main')">← Explore Other Skills</button>
+            </div>
+          </div>
+          <div class="earnings-card">
+            <div class="earnings-label">Realistic Earnings</div>
+            <div class="earnings-range">${s.earning}</div>
+            <div class="earnings-sub">${s.earningPeriod} (India, 2025)</div>
+            <div class="earnings-divider"></div>
+            <div class="earnings-stat"><span>Difficulty Level</span><strong>${s.difficulty}</strong></div>
+            <div class="earnings-stat"><span>Time to First Income</span><strong>${s.timeToFirst}</strong></div>
+            <div class="earnings-stat"><span>Market Demand</span><strong>${s.demandLevel}</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-content">
+      <div>
+        <div class="skill-tabs">
+          <button class="skill-tab active" onclick="switchTab(this,'roadmap')">🗺️ Roadmap</button>
+          <button class="skill-tab" onclick="switchTab(this,'tips')">💡 Pro Tips</button>
+          <button class="skill-tab" onclick="switchTab(this,'platforms-tab')">🚀 Platforms</button>
+        </div>
+
+        <div class="skill-tab-content active" id="tab-roadmap">
+          <h2 class="roadmap-title">Your Step-by-Step Roadmap</h2>
+          <div class="roadmap-steps">${roadmapHTML}</div>
+        </div>
+
+        <div class="skill-tab-content" id="tab-tips">
+          <h2 class="roadmap-title">Pro Tips to Earn Faster</h2>
+          <div class="tips-grid">${tipsHTML}</div>
+        </div>
+
+        <div class="skill-tab-content" id="tab-platforms-tab">
+          <h2 class="roadmap-title">Best Platforms for ${s.name}</h2>
+          <div class="skill-platforms-list">${platformsHTML}</div>
+        </div>
+      </div>
+
+      <div class="skill-sidebar">
+        <div class="sidebar-card">
+          <div class="sidebar-card-title"><span>🛠️</span> Essential Tools</div>
+          <ul class="tool-list">${toolsHTML}</ul>
+        </div>
+        <div class="sidebar-card">
+          <div class="sidebar-card-title"><span>📖</span> Learning Resources</div>
+          <ul class="resource-list">${resourcesHTML}</ul>
+        </div>
+        <div class="sidebar-card" style="background:linear-gradient(135deg,rgba(240,180,41,0.07),rgba(255,94,58,0.05));border-color:var(--border)">
+          <div class="sidebar-card-title"><span>🎯</span> Quick Win Challenge</div>
+          <p style="color:var(--muted2);font-size:0.85rem;line-height:1.7;margin-bottom:1.2rem">
+            <strong style="color:var(--text)">Your 7-day challenge:</strong> Spend 1 hour daily on ${s.name} for 7 days. At the end, you'll have your first sample ready.
+          </p>
+          <button class="btn-primary" onclick="goHomeAndStart()" style="width:100%;justify-content:center;font-size:0.85rem;padding:0.75rem">
+            Take the Skill Quiz →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-page-cta">
+      <h2>Ready to start earning with ${s.name}?</h2>
+      <p>Get your free, personalized roadmap and start your journey today. Join 12,000+ Indians who made it work.</p>
+      <button class="btn-primary" onclick="goHomeAndStart()">Take the 60-Second Quiz →</button>
+    </div>
+  `;
+
+  showPage('skill');
+}
+
+function switchTab(btn, tabId) {
+  document.querySelectorAll('.skill-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.skill-tab-content').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + tabId).classList.add('active');
+}
+
+/* ─────────────────────────────────────────────
+   BOOT — all DOM-touching init inside DOMContentLoaded
+───────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', function () {
+
+  /* NAV SCROLL */
+  window.addEventListener('scroll', function () {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  /* SCROLL REVEAL */
+  var fadeEls = document.querySelectorAll('.fade-in');
+  fadeEls.forEach(function (el) {
+    var siblings = Array.from(el.parentElement.querySelectorAll('.fade-in'));
+    el.dataset.staggerIdx = siblings.indexOf(el);
+  });
+
+  if (typeof IntersectionObserver !== 'undefined') {
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var idx = parseInt(entry.target.dataset.staggerIdx) || 0;
+          entry.target.style.transitionDelay = (idx * 0.08) + 's';
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    fadeEls.forEach(function (el) { revealObserver.observe(el); });
+  } else {
+    fadeEls.forEach(function (el) { el.classList.add('visible'); });
+  }
+
+}); /* end DOMContentLoaded */
+</script>
+</body>
+</html>
