@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillEarn India — Turn Your Skills Into Income</title>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+/* ── VARIABLES ── */
+:root {
+  --bg: #06060e;
+  --surface: #0e0e1a;
+  --card: #12121f;
+  --card2: #16162a;
+  --accent: #f0b429;
+  --accent2: #ff5e3a;
+  --accent3: #7c3aed;
+  --green: #22c55e;
+  --text: #f0ede8;
+  --muted: #6b6b8a;
+  --border: rgba(240,180,41,0.12);
+  --border2: rgba(255,255,255,0.06);
+  --glow: rgba(240,180,41,0.2);
+  --radius: 20px;
+  --radius-sm: 12px;
+}
+
+/* ── RESET ── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── NOISE TEXTURE OVERLAY ── */
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:0;
+  opacity:0.4;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius:10px; }
+
+/* ── NAV ── */
+nav {
+  position:fixed; top:0; left:0; right:0;
+  z-index:1000;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:1rem 5%;
+  background: rgba(6,6,14,0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border2);
+  transition: all 0.3s;
+}
+nav.scrolled { border-bottom-color: var(--border); background: rgba(6,6,14,0.95); }
+.logo {
+  font-family:'Syne', sans-serif;
+  font-weight:800; font-size:1.5rem; letter-spacing:-0.5px;
+  text-decoration:none; color:var(--text);
+}
+.logo span {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+nav ul { list-style:none; display:flex; gap:2rem; align-items:center; }
+nav ul a {
+  color:var(--muted); text-decoration:none;
+  font-size:0.88rem; font-weight:500;
+  transition:color 0.2s; position:relative;
+}
+nav ul a:not(.nav-cta)::after {
+  content:''; position:absolute; bottom:-3px; left:0; right:0; height:1px;
+  background: var(--accent); transform:scaleX(0); transition:transform 0.2s;
+}
+nav ul a:not(.nav-cta):hover { color:var(--text); }
+nav ul a:not(.nav-cta):hover::after { transform:scaleX(1); }
+.nav-cta {
+  background: linear-gradient(135deg, var(--accent), #f59e0b);
+  color:#000 !important; padding:0.5rem 1.3rem;
+  border-radius:8px; font-weight:700 !important; font-size:0.85rem !important;
+  transition:transform 0.2s, box-shadow 0.2s !important;
+}
+.nav-cta:hover { transform:translateY(-1px); box-shadow:0 6px 20px var(--glow); }
+.nav-cta::after { display:none !important; }
+
+/* ── HERO ── */
+.hero {
+  min-height:100vh;
+  display:flex; flex-direction:column; justify-content:center;
+  padding:9rem 5% 5rem;
+  position:relative; overflow:hidden;
+}
+.hero-grid-bg {
+  position:absolute; inset:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(240,180,41,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(240,180,41,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+}
+.hero-glow {
+  position:absolute; pointer-events:none;
+  border-radius:50%;
+}
+.hero-glow-1 {
+  width:600px; height:600px;
+  top:-100px; right:-100px;
+  background: radial-gradient(circle, rgba(240,180,41,0.08) 0%, transparent 70%);
+}
+.hero-glow-2 {
+  width:400px; height:400px;
+  bottom:0; left:-50px;
+  background: radial-gradient(circle, rgba(255,94,58,0.07) 0%, transparent 70%);
+}
+.hero-glow-3 {
+  width:300px; height:300px;
+  top:40%; left:40%;
+  background: radial-gradient(circle, rgba(124,58,237,0.05) 0%, transparent 70%);
+}
+.hero-badge {
+  display:inline-flex; align-items:center; gap:0.5rem;
+  background: rgba(240,180,41,0.08);
+  border:1px solid rgba(240,180,41,0.25);
+  color:var(--accent); font-size:0.72rem; font-weight:700;
+  letter-spacing:0.12em; text-transform:uppercase;
+  padding:0.45rem 1rem; border-radius:100px;
+  margin-bottom:1.8rem; width:fit-content;
+  animation: fadeUp 0.7s ease both;
+}
+.hero-badge-dot {
+  width:6px; height:6px; border-radius:50%;
+  background:var(--accent); animation:pulse 2s infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50% { opacity:0.4; transform:scale(0.6); }
+}
+.hero h1 {
+  font-family:'Syne', sans-serif; font-weight:800;
+  font-size:clamp(2.6rem, 6vw, 5.8rem);
+  line-height:1.05; letter-spacing:-2.5px;
+  max-width:860px;
+  animation: fadeUp 0.7s 0.1s ease both;
+}
+.hero h1 .line2 { display:block; }
+.hero h1 em {
+  font-style:normal;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero-sub {
+  margin-top:1.5rem; color:var(--muted);
+  font-size:1.1rem; max-width:500px; font-weight:300; line-height:1.7;
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+.hero-actions {
+  margin-top:2.5rem; display:flex; gap:1rem; flex-wrap:wrap;
+  animation: fadeUp 0.7s 0.3s ease both;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), #f59e0b);
+  color:#000; font-weight:700; font-size:0.92rem;
+  padding:0.9rem 2rem; border:none; border-radius:10px;
+  cursor:pointer; text-decoration:none;
+  transition:transform 0.2s, box-shadow 0.2s;
+  display:inline-flex; align-items:center; gap:0.5rem;
+  box-shadow:0 4px 20px rgba(240,180,41,0.3);
+  position:relative; overflow:hidden;
+}
+.btn-primary::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+  opacity:0; transition:opacity 0.2s;
+}
+.btn-primary:hover { transform:translateY(-3px); box-shadow:0 12px 35px rgba(240,180,41,0.4); }
+.btn-primary:hover::before { opacity:1; }
+.btn-secondary {
+  background:transparent; color:var(--text);
+  font-weight:500; font-size:0.92rem;
+  padding:0.9rem 2rem;
+  border:1px solid rgba(255,255,255,0.12); border-radius:10px;
+  cursor:pointer; text-decoration:none;
+  transition:border-color 0.2s, background 0.2s, transform 0.2s;
+  display:inline-flex; align-items:center; gap:0.5rem;
+}
+.btn-secondary:hover { border-color:rgba(240,180,41,0.4); background:rgba(240,180,41,0.05); transform:translateY(-2px); }
+.hero-stats {
+  margin-top:4rem; display:flex; gap:0; flex-wrap:wrap;
+  animation:fadeUp 0.7s 0.4s ease both;
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:var(--radius); overflow:hidden;
+  width:fit-content;
+}
+.stat-item {
+  padding:1.5rem 2.5rem;
+  border-right:1px solid var(--border2);
+  position:relative;
+}
+.stat-item:last-child { border-right:none; }
+.stat-item::before {
+  content:''; position:absolute;
+  top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg, var(--accent), transparent);
+  opacity:0; transition:opacity 0.3s;
+}
+.stat-item:hover::before { opacity:1; }
+.stat-num {
+  font-family:'Syne', sans-serif;
+  font-size:2rem; font-weight:800;
+  background:linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.stat-label { font-size:0.78rem; color:var(--muted); margin-top:0.1rem; }
+
+/* ── MARQUEE ── */
+.marquee-wrap {
+  overflow:hidden;
+  border-top:1px solid var(--border2);
+  border-bottom:1px solid var(--border2);
+  background:var(--surface);
+  padding:1rem 0;
+  position:relative;
+}
+.marquee-wrap::before, .marquee-wrap::after {
+  content:''; position:absolute;
+  top:0; bottom:0; width:100px; z-index:2;
+}
+.marquee-wrap::before { left:0; background:linear-gradient(90deg, var(--surface), transparent); }
+.marquee-wrap::after { right:0; background:linear-gradient(-90deg, var(--surface), transparent); }
+.marquee {
+  display:flex; gap:2.5rem;
+  animation:marquee 30s linear infinite;
+  white-space:nowrap;
+}
+.marquee-item {
+  display:inline-flex; align-items:center; gap:0.6rem;
+  font-size:0.75rem; font-weight:700;
+  letter-spacing:0.1em; text-transform:uppercase; color:var(--muted);
+  flex-shrink:0;
+}
+.marquee-item span { color:var(--accent); font-size:0.6rem; }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* ── SECTIONS ── */
+section { padding:6rem 5%; position:relative; z-index:1; }
+.section-label {
+  display:inline-flex; align-items:center; gap:0.5rem;
+  font-size:0.72rem; font-weight:700;
+  letter-spacing:0.15em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:1rem;
+}
+.section-label::before {
+  content:''; width:20px; height:2px;
+  background:linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius:2px;
+}
+.section-title {
+  font-family:'Syne', sans-serif;
+  font-size:clamp(1.9rem, 3.5vw, 3rem);
+  font-weight:800; letter-spacing:-1px; line-height:1.1;
+  margin-bottom:1rem;
+}
+.section-sub {
+  color:var(--muted); font-size:1rem;
+  max-width:520px; font-weight:300; line-height:1.7;
+  margin-bottom:3.5rem;
+}
+
+/* ── HOW IT WORKS ── */
+#how { background:var(--surface); }
+.how-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));
+  gap:1.5rem; margin-top:1rem;
+}
+.step-card {
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:var(--radius);
+  padding:2.2rem 2rem;
+  position:relative; overflow:hidden;
+  transition:transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  cursor:default;
+}
+.step-card::before {
+  content:''; position:absolute;
+  inset:0; opacity:0;
+  background:radial-gradient(circle at 50% 0%, rgba(240,180,41,0.06), transparent 70%);
+  transition:opacity 0.3s;
+}
+.step-card:hover { transform:translateY(-8px); border-color:var(--border); box-shadow:0 20px 50px rgba(0,0,0,0.4); }
+.step-card:hover::before { opacity:1; }
+.step-num {
+  font-family:'Syne', sans-serif; font-size:4rem; font-weight:800;
+  color:rgba(240,180,41,0.08); line-height:1; margin-bottom:1rem;
+  position:absolute; top:1.2rem; right:1.5rem;
+}
+.step-icon {
+  font-size:2rem; margin-bottom:1rem; display:block;
+  filter:drop-shadow(0 0 8px rgba(240,180,41,0.3));
+}
+.step-card h3 {
+  font-family:'Syne', sans-serif; font-weight:700; font-size:1.05rem;
+  margin-bottom:0.6rem; color:var(--text);
+}
+.step-card p { color:var(--muted); font-size:0.88rem; line-height:1.65; }
+.step-connector {
+  display:flex; align-items:center; justify-content:center;
+  color:var(--border); font-size:1.5rem; align-self:center;
+}
+
+/* ── SKILLS ── */
+#skills { background:var(--bg); }
+.skills-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(160px, 1fr));
+  gap:1rem;
+}
+.skill-pill {
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:var(--radius-sm);
+  padding:1.4rem 1.2rem;
+  text-align:center;
+  transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  cursor:pointer; position:relative; overflow:hidden;
+}
+.skill-pill::before {
+  content:''; position:absolute;
+  top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg, var(--accent), var(--accent2));
+  transform:scaleX(0); transition:transform 0.3s;
+}
+.skill-pill:hover {
+  background:var(--card2);
+  border-color:rgba(240,180,41,0.3);
+  transform:translateY(-5px) scale(1.02);
+  box-shadow:0 15px 40px rgba(0,0,0,0.3);
+}
+.skill-pill:hover::before { transform:scaleX(1); }
+.skill-emoji { font-size:2rem; margin-bottom:0.6rem; display:block; line-height:1; }
+.skill-pill h4 {
+  font-family:'Syne', sans-serif; font-weight:700;
+  font-size:0.85rem; margin-bottom:0.25rem; color:var(--text);
+}
+.skill-pill p { color:var(--muted); font-size:0.72rem; line-height:1.4; }
+
+/* ── PLATFORMS ── */
+#platforms { background:var(--surface); }
+.platforms-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(290px, 1fr));
+  gap:1.5rem;
+}
+.platform-card {
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:var(--radius);
+  padding:2rem;
+  text-decoration:none; color:inherit;
+  display:block; position:relative; overflow:hidden;
+  transition:transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.platform-card::after {
+  content:''; position:absolute;
+  inset:0; opacity:0;
+  background:radial-gradient(circle at 80% 20%, rgba(240,180,41,0.05), transparent 60%);
+  transition:opacity 0.3s;
+}
+.platform-card:hover { transform:translateY(-6px); border-color:var(--border); box-shadow:0 20px 50px rgba(0,0,0,0.3); }
+.platform-card:hover::after { opacity:1; }
+.platform-header {
+  display:flex; align-items:center; gap:1rem; margin-bottom:1rem;
+}
+.platform-logo {
+  width:48px; height:48px; border-radius:12px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.4rem;
+  background:var(--card2); border:1px solid var(--border2);
+  flex-shrink:0;
+}
+.platform-header h3 {
+  font-family:'Syne', sans-serif; font-weight:700; font-size:1rem; color:var(--text);
+}
+.platform-tag {
+  font-size:0.68rem; font-weight:700; letter-spacing:0.06em;
+  background:rgba(240,180,41,0.1); color:var(--accent);
+  border:1px solid rgba(240,180,41,0.2);
+  padding:0.2rem 0.6rem; border-radius:4px;
+  display:inline-block; margin-top:0.2rem;
+}
+.platform-card p { color:var(--muted); font-size:0.87rem; line-height:1.65; }
+.platform-link {
+  margin-top:1.2rem; font-size:0.8rem;
+  font-weight:700; color:var(--accent);
+  display:flex; align-items:center; gap:0.3rem;
+  transition:gap 0.2s;
+}
+.platform-card:hover .platform-link { gap:0.6rem; }
+
+/* ── TESTIMONIALS ── */
+#testimonials { background:var(--bg); }
+.testi-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(290px, 1fr));
+  gap:1.5rem;
+}
+.testi-card {
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:var(--radius);
+  padding:2rem; position:relative; overflow:hidden;
+  transition:transform 0.3s, border-color 0.3s;
+}
+.testi-card::before {
+  content:'"'; position:absolute;
+  top:-10px; right:20px;
+  font-size:8rem; font-family:'Syne', sans-serif; font-weight:800;
+  color:rgba(240,180,41,0.04); line-height:1; pointer-events:none;
+}
+.testi-card:hover { transform:translateY(-5px); border-color:var(--border); }
+.stars { color:var(--accent); font-size:0.85rem; margin-bottom:1rem; letter-spacing:2px; }
+.testi-card > p {
+  color:var(--muted); font-size:0.92rem; line-height:1.75;
+  margin-bottom:1.5rem; font-style:italic;
+}
+.testi-author { display:flex; align-items:center; gap:0.9rem; }
+.avatar {
+  width:44px; height:44px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-weight:800; font-size:0.85rem;
+  font-family:'Syne', sans-serif; flex-shrink:0;
+  border:2px solid var(--border);
+}
+.testi-author h4 { font-family:'Syne', sans-serif; font-weight:700; font-size:0.88rem; }
+.testi-author span { color:var(--muted); font-size:0.75rem; display:block; margin-top:0.1rem; }
+
+/* ── CTA ── */
+.cta-section {
+  text-align:center; padding:7rem 5%;
+  background:var(--surface);
+  border-top:1px solid var(--border2);
+  position:relative; overflow:hidden;
+}
+.cta-section::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 60% at 50% 50%, rgba(240,180,41,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(255,94,58,0.05) 0%, transparent 60%);
+}
+.cta-section h2 {
+  font-family:'Syne', sans-serif; font-weight:800;
+  font-size:clamp(2rem, 4.5vw, 3.8rem);
+  letter-spacing:-1.5px; margin-bottom:1rem;
+  position:relative;
+}
+.cta-section > p { color:var(--muted); max-width:450px; margin:0 auto 2.5rem; line-height:1.7; }
+.email-form {
+  display:flex; gap:0.6rem; justify-content:center;
+  flex-wrap:wrap; max-width:500px; margin:0 auto;
+}
+.email-form input {
+  flex:1; min-width:220px;
+  padding:0.9rem 1.3rem;
+  background:var(--card); border:1px solid var(--border2);
+  border-radius:10px; color:var(--text);
+  font-family:'DM Sans', sans-serif; font-size:0.9rem;
+  outline:none; transition:border-color 0.2s, box-shadow 0.2s;
+}
+.email-form input:focus {
+  border-color:rgba(240,180,41,0.4);
+  box-shadow:0 0 0 3px rgba(240,180,41,0.08);
+}
+.email-form input::placeholder { color:var(--muted); }
+
+/* ── FOOTER ── */
+footer {
+  background:var(--bg);
+  border-top:1px solid var(--border2);
+  padding:2.5rem 5%;
+}
+.footer-top {
+  display:flex; justify-content:space-between;
+  align-items:center; flex-wrap:wrap; gap:1.5rem;
+  padding-bottom:2rem;
+  border-bottom:1px solid var(--border2);
+}
+.footer-links { display:flex; gap:2rem; flex-wrap:wrap; }
+.footer-links a {
+  color:var(--muted); text-decoration:none;
+  font-size:0.83rem; transition:color 0.2s;
+}
+.footer-links a:hover { color:var(--text); }
+.footer-bottom {
+  display:flex; justify-content:space-between;
+  align-items:center; flex-wrap:wrap; gap:1rem;
+  padding-top:1.5rem;
+}
+.footer-bottom p { color:var(--muted); font-size:0.8rem; }
+.made-by {
+  font-size:0.8rem; color:var(--muted);
+  display:flex; align-items:center; gap:0.4rem;
+}
+.made-by strong { color:var(--accent); font-weight:700; }
+.made-by .heart {
+  color:var(--accent2);
+  animation:heartbeat 1.5s infinite;
+  display:inline-block;
+}
+@keyframes heartbeat {
+  0%,100% { transform:scale(1); }
+  50% { transform:scale(1.3); }
+}
+
+/* ── SCROLL REVEAL ── */
+.fade-in { opacity:0; transform:translateY(24px); transition:opacity 0.6s ease, transform 0.6s ease; }
+.fade-in.visible { opacity:1; transform:translateY(0); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(28px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* ── MOBILE ── */
+@media (max-width:768px) {
+  nav ul { display:none; }
+  .hero-stats { width:100%; }
+  .stat-item { padding:1.2rem 1.5rem; }
+  .footer-top { flex-direction:column; text-align:center; }
+  .footer-bottom { flex-direction:column; text-align:center; }
+}
+@media (max-width:480px) {
+  .hero h1 { letter-spacing:-1.5px; }
+  .stat-item { padding:1rem 1.2rem; }
+  .section-title { letter-spacing:-0.5px; }
+}
+
+/* ── GLOW CARD EFFECT ── */
+.glow-card {
+  background:linear-gradient(135deg, var(--card) 0%, var(--card2) 100%);
+  border:1px solid var(--border2);
+  border-radius:var(--radius);
+  padding:2rem;
+  position:relative; overflow:hidden;
+}
+.glow-card::before {
+  content:''; position:absolute;
+  top:-50%; left:-50%; width:200%; height:200%;
+  background:conic-gradient(from 0deg, transparent 0deg, rgba(240,180,41,0.03) 60deg, transparent 120deg);
+  animation:rotate 8s linear infinite;
+}
+@keyframes rotate { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+/* ── SECTION DIVIDER ── */
+.divider {
+  width:100%; height:1px;
+  background:linear-gradient(90deg, transparent, var(--border), transparent);
+  margin:0;
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="logo" href="#">Skill<span>Earn</span></a>
+  <ul>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#platforms">Platforms</a></li>
+    <li><a href="#testimonials">Stories</a></li>
+    <li><a href="#start" class="nav-cta">Get Started</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow hero-glow-1"></div>
+  <div class="hero-glow hero-glow-2"></div>
+  <div class="hero-glow hero-glow-3"></div>
+
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    India's #1 Skill-to-Income Guide
+  </div>
+
+  <h1>
+    Your skills are
+    <span class="line2"><em>worth real money.</em></span>
+    Let's prove it.
+  </h1>
+
+  <p class="hero-sub">You already have valuable skills — you just need the right direction. We guide Indians step-by-step from zero to their first online income, completely free.</p>
+
+  <div class="hero-actions">
+    <a href="#start" class="btn-primary">Start Earning Today →</a>
+    <a href="#how" class="btn-secondary">See How It Works</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">12K+</div>
+      <div class="stat-label">Indians Helped</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">₹35Cr+</div>
+      <div class="stat-label">Earned by Community</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">80+</div>
+      <div class="stat-label">Skills Covered</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    <div class="marquee-item">Graphic Design <span>✦</span></div>
+    <div class="marquee-item">Video Editing <span>✦</span></div>
+    <div class="marquee-item">Writing <span>✦</span></div>
+    <div class="marquee-item">Cooking <span>✦</span></div>
+    <div class="marquee-item">Photography <span>✦</span></div>
+    <div class="marquee-item">Teaching <span>✦</span></div>
+    <div class="marquee-item">Coding <span>✦</span></div>
+    <div class="marquee-item">Music <span>✦</span></div>
+    <div class="marquee-item">Translation <span>✦</span></div>
+    <div class="marquee-item">Social Media <span>✦</span></div>
+    <div class="marquee-item">Voiceover <span>✦</span></div>
+    <div class="marquee-item">Virtual Assistant <span>✦</span></div>
+    <!-- duplicate -->
+    <div class="marquee-item">Graphic Design <span>✦</span></div>
+    <div class="marquee-item">Video Editing <span>✦</span></div>
+    <div class="marquee-item">Writing <span>✦</span></div>
+    <div class="marquee-item">Cooking <span>✦</span></div>
+    <div class="marquee-item">Photography <span>✦</span></div>
+    <div class="marquee-item">Teaching <span>✦</span></div>
+    <div class="marquee-item">Coding <span>✦</span></div>
+    <div class="marquee-item">Music <span>✦</span></div>
+    <div class="marquee-item">Translation <span>✦</span></div>
+    <div class="marquee-item">Social Media <span>✦</span></div>
+    <div class="marquee-item">Voiceover <span>✦</span></div>
+    <div class="marquee-item">Virtual Assistant <span>✦</span></div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-label">The Process</div>
+  <div class="section-title">From skill to paycheck<br>in 4 simple steps</div>
+  <p class="section-sub">No experience needed. No investment required. Just follow the 4 steps we've built for you and start earning.</p>
+  <div class="how-grid">
+    <div class="step-card fade-in">
+      <div class="step-num">01</div>
+      <span class="step-icon">🔍</span>
+      <h3>Identify Your Skill</h3>
+      <p>Discover what you're good at and what people are willing to pay for right now in the Indian market.</p>
+    </div>
+    <div class="step-card fade-in">
+      <div class="step-num">02</div>
+      <span class="step-icon">🗺️</span>
+      <h3>Get Your Roadmap</h3>
+      <p>We give you a personalized, step-by-step guide tailored to your skill level and time available.</p>
+    </div>
+    <div class="step-card fade-in">
+      <div class="step-num">03</div>
+      <span class="step-icon">🚀</span>
+      <h3>Set Up & Launch</h3>
+      <p>Create your profile on the right platforms, build a simple portfolio, and send your first proposals.</p>
+    </div>
+    <div class="step-card fade-in">
+      <div class="step-num">04</div>
+      <span class="step-icon">💰</span>
+      <h3>Earn & Grow</h3>
+      <p>Land your first client, deliver great work, and build towards a sustainable growing income stream.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">All Skills Welcome</div>
+  <div class="section-title">Whatever you can do,<br>someone will pay for it</div>
+  <p class="section-sub">Think you don't have a marketable skill? Think again — all of these are in high demand across India right now.</p>
+  <div class="skills-grid">
+    <div class="skill-pill fade-in"><span class="skill-emoji">✍️</span><h4>Writing</h4><p>Blogs, copywriting, scripts</p></div>
+    <div class="skill-pill fade-in"><span class="skill-emoji">🎨</span><h4>Design</h4><p>Logos, social media, UI</p></div>
+    <div class="skill-pill fade-in"><span class="skill-emoji">🎬</span><h4>Video Editing</h4><p>YouTube, Reels, ads</p></div>
+    <div class="skill-pill fade-in"><span class="skill-emoji">📸</span><h4>Photography</h4><p>Sell photos online</p></div>
+    <div class="skill-pill fade-in"><span class="skill-emoji">💻</span><h4>Coding</h4><p>Web apps, automation</p></div>
+    <div class="skill-pill fade-in"><span class="skill-emoji">🎵</span><h4>Music</h4><p>Beats, mixing, lessons</p></div>
+    <div class="skill-pill fade-in"><span class="skill-emoji">📚</span><h4>Teaching</h4><p>Tutoring, online courses</p></div>
+    <div class="skill-pill fade-in"><span class="skill-emoji">🌍</span><h4>Translation</h4><p>Documents, subtitles</p></div>
+    <div class="skill-pill fade-in"><span class="skill-emoji">🍳</span><h4>Cooking</h4><p>Recipe content, courses</p></div>
+    <div class="skill-pill fade-in"><span class="skill-emoji">📱</span><h4>Social Media</h4><p>Management, strategy</p></div>
+    <div class="skill-pill fade-in"><span class="skill-emoji">🎙️</span><h4>Voiceover</h4><p>Ads, audiobooks, videos</p></div>
+    <div class="skill-pill fade-in"><span class="skill-emoji">🤝</span><h4>Virtual Assist.</h4><p>Admin, scheduling, email</p></div>
+  </div>
+</section>
+
+<!-- PLATFORMS -->
+<section id="platforms">
+  <div class="section-label">Where To Earn</div>
+  <div class="section-title">The best platforms<br>to get paid online</div>
+  <p class="section-sub">The best platforms for Indian freelancers — sign up and start earning today.</p>
+  <div class="platforms-grid">
+    <a href="https://www.fiverr.com" target="_blank" class="platform-card fade-in">
+      <div class="platform-header">
+        <div class="platform-logo">🟢</div>
+        <div>
+          <h3>Fiverr</h3>
+          <span class="platform-tag">Beginner Friendly</span>
+        </div>
+      </div>
+      <p>Create "gigs" for your services and let clients come to you. Great for design, writing, voiceover, and more.</p>
+      <div class="platform-link">Visit Fiverr <span>→</span></div>
+    </a>
+    <a href="https://www.upwork.com" target="_blank" class="platform-card fade-in">
+      <div class="platform-header">
+        <div class="platform-logo">🔵</div>
+        <div>
+          <h3>Upwork</h3>
+          <span class="platform-tag">Higher Pay</span>
+        </div>
+      </div>
+      <p>Bid on projects posted by businesses worldwide. Best for freelancers with some experience. Better rates.</p>
+      <div class="platform-link">Visit Upwork <span>→</span></div>
+    </a>
+    <a href="https://internshala.com" target="_blank" class="platform-card fade-in">
+      <div class="platform-header">
+        <div class="platform-logo">🇮🇳</div>
+        <div>
+          <h3>Internshala</h3>
+          <span class="platform-tag">India's Own</span>
+        </div>
+      </div>
+      <p>India's largest platform for internships and fresher jobs. Perfect for beginners looking for their first Indian client.</p>
+      <div class="platform-link">Visit Internshala <span>→</span></div>
+    </a>
+    <a href="https://www.youtube.com/creators" target="_blank" class="platform-card fade-in">
+      <div class="platform-header">
+        <div class="platform-logo">🔴</div>
+        <div>
+          <h3>YouTube</h3>
+          <span class="platform-tag">Content Creator</span>
+        </div>
+      </div>
+      <p>Share your skill and earn through ad revenue, sponsorships, and selling products. Scales massively with consistency.</p>
+      <div class="platform-link">Visit YouTube Creators <span>→</span></div>
+    </a>
+    <a href="https://www.linkedin.com" target="_blank" class="platform-card fade-in">
+      <div class="platform-header">
+        <div class="platform-logo">🔷</div>
+        <div>
+          <h3>LinkedIn</h3>
+          <span class="platform-tag">Professional</span>
+        </div>
+      </div>
+      <p>Build your personal brand, attract corporate clients, and land consulting or freelance contracts professionally.</p>
+      <div class="platform-link">Visit LinkedIn <span>→</span></div>
+    </a>
+    <a href="https://instamojo.com" target="_blank" class="platform-card fade-in">
+      <div class="platform-header">
+        <div class="platform-logo">💛</div>
+        <div>
+          <h3>Instamojo</h3>
+          <span class="platform-tag">Sell in ₹</span>
+        </div>
+      </div>
+      <p>Sell digital products, courses, and services directly in India. Receive payments via UPI, cards, and net banking.</p>
+      <div class="platform-link">Visit Instamojo <span>→</span></div>
+    </a>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-label">Real People, Real Results</div>
+  <div class="section-title">They didn't think they could.<br>These are real Indian stories.</div>
+  <div class="testi-grid">
+    <div class="testi-card fade-in">
+      <div class="stars">★★★★★</div>
+      <p>"I always thought writing was just a hobby. Within 3 months on Upwork, I was making ₹55,000/month. Now I'm a full-time freelancer."</p>
+      <div class="testi-author">
+        <div class="avatar" style="background:rgba(240,180,41,0.15);color:var(--accent);">RS</div>
+        <div><h4>Rahul S.</h4><span>Freelance Content Writer, Pune</span></div>
+      </div>
+    </div>
+    <div class="testi-card fade-in">
+      <div class="stars">★★★★★</div>
+      <p>"I spoke Hindi and English my whole life but never thought it was valuable. Now I earn ₹1.5 lakh/month translating documents."</p>
+      <div class="testi-author">
+        <div class="avatar" style="background:rgba(255,94,58,0.15);color:var(--accent2);">PM</div>
+        <div><h4>Priya M.</h4><span>Freelance Translator, Delhi</span></div>
+      </div>
+    </div>
+    <div class="testi-card fade-in">
+      <div class="stars">★★★★★</div>
+      <p>"I've been cooking at home for 20 years. Now I earn ₹40,000/month through YouTube and Instamojo selling recipe content."</p>
+      <div class="testi-author">
+        <div class="avatar" style="background:rgba(124,58,237,0.15);color:#a78bfa;">AK</div>
+        <div><h4>Anita K.</h4><span>Food Content Creator, Mumbai</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="start">
+  <h2>Your first online income<br><em style="background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;">starts today.</em></h2>
+  <p>Join thousands of Indians who turned their existing skills into a real, stable income. Get your free guide and start today.</p>
+  <div class="email-form">
+    <input type="email" placeholder="Enter your email address">
+    <a href="#" class="btn-primary">Get My Free Guide →</a>
+  </div>
+  <p style="margin-top:1rem;font-size:0.76rem;color:var(--muted);">No spam. Free forever. Unsubscribe anytime.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <a class="logo" href="#">Skill<span>Earn</span></a>
+    <div class="footer-links">
+      <a href="#how">How It Works</a>
+      <a href="#skills">Skills</a>
+      <a href="#platforms">Platforms</a>
+      <a href="#testimonials">Stories</a>
+      <a href="#start">Get Started</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 SkillEarn India. Empowering Indian freelancers & creators.</p>
+    <div class="made-by">
+      Made with <span class="heart">❤️</span> by <strong>Abhijit</strong> &nbsp;·&nbsp; For <strong>Asin</strong>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        entry.target.style.transitionDelay = (i % 4) * 0.1 + 's';
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Email form
+  document.querySelector('.email-form .btn-primary').addEventListener('click', (e) => {
+    e.preventDefault();
+    const input = document.querySelector('.email-form input');
+    if (input.value.includes('@')) {
+      input.value = '';
+      input.placeholder = "✓ You're on the list!";
+      input.style.borderColor = 'rgba(240,180,41,0.6)';
+      input.style.boxShadow = '0 0 0 3px rgba(240,180,41,0.1)';
+    } else {
+      input.style.borderColor = 'rgba(255,94,58,0.7)';
+      input.style.boxShadow = '0 0 0 3px rgba(255,94,58,0.1)';
+      input.placeholder = 'Please enter a valid email';
+    }
+  });
+</script>
+</body>
+</html>
