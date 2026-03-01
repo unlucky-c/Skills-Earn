@@ -1065,8 +1065,8 @@
     // Try gemini-1.5-flash first, fallback to gemini-pro
     const models = [
       'gemini-2.0-flash',
-      'gemini-1.5-flash',
-      'gemini-1.0-pro'
+      'gemini-1.5-flash-8b',
+      'gemini-1.5-flash'
     ];
 
     const GEMINI_KEY = 'AIzaSyCLFGSMlPkPVOLcP084VsDn2YDopUlu8G4';
@@ -1701,6 +1701,23 @@ function openSkillPage(key) {
   const s = skillData[key];
   if (!s) return;
 
+  // Build platforms HTML using array join (avoids nested template literals)
+  const platformsHTML = s.platforms.map(p =>
+    '<a href="' + p.url + '" target="_blank" class="sp-platform">' +
+    '<div class="sp-platform-left">' +
+    '<div class="sp-platform-name">' + p.name + '</div>' +
+    '<div class="sp-platform-tip">' + p.tip + '</div>' +
+    '</div><span class="sp-platform-arrow">→</span></a>'
+  ).join('');
+
+  // Build steps HTML using array join
+  const stepsHTML = s.steps.map((step, i) =>
+    '<div class="sp-step">' +
+    '<div class="sp-step-icon">' + step.icon + '</div>' +
+    '<div><h4>Step ' + (i+1) + ': ' + step.title + '</h4>' +
+    '<p>' + step.desc + '</p></div></div>'
+  ).join('');
+
   skillPageEl.innerHTML = `
     <div class="sp-nav">
       <button class="sp-back" onclick="closeSkillPage()">← Back</button>
@@ -1724,44 +1741,24 @@ function openSkillPage(key) {
       </div>
       <div class="sp-card">
         <h2>🔗 Best Platforms for India</h2>
-        <div class="sp-platform-list">
-          ${s.platforms.map(p => `
-            <a href="${p.url}" target="_blank" class="sp-platform">
-              <div class="sp-platform-left">
-                <div class="sp-platform-name">${p.name}</div>
-                <div class="sp-platform-tip">${p.tip}</div>
-              </div>
-              <span class="sp-platform-arrow">→</span>
-            </a>
-          `).join('')}
-        </div>
+        <div class="sp-platform-list">${platformsHTML}</div>
       </div>
       <div class="sp-card sp-full">
         <h2>🗺️ Your Step-by-Step Roadmap</h2>
-        <div class="sp-steps">
-          ${s.steps.map((step, i) => `
-            <div class="sp-step">
-              <div class="sp-step-icon">${step.icon}</div>
-              <div>
-                <h4>Step ${i+1}: ${step.title}</h4>
-                <p>${step.desc}</p>
-              </div>
-            </div>
-          `).join('')}
-        </div>
+        <div class="sp-steps">${stepsHTML}</div>
       </div>
       <div class="sp-chat-section">
         <h2>✦ Ask SkillBot about ${s.name}</h2>
         <p>Get personalized advice for your situation — experience level, time available, and income goals.</p>
         <div class="sp-chat-messages" id="sp-chat-messages"></div>
         <div class="sp-quick-questions" id="sp-quick-questions">
-          <button class="sp-quick-btn" onclick="spSendMessage('How do I get my first ${s.name.toLowerCase()} client?')">First client tips?</button>
-          <button class="sp-quick-btn" onclick="spSendMessage('What tools do I need for ${s.name.toLowerCase()}?')">What tools do I need?</button>
-          <button class="sp-quick-btn" onclick="spSendMessage('How much should I charge for ${s.name.toLowerCase()} as a beginner?')">What to charge?</button>
-          <button class="sp-quick-btn" onclick="spSendMessage('How do I build a portfolio for ${s.name.toLowerCase()}?')">Build a portfolio?</button>
+          <button class="sp-quick-btn" onclick="spSendMessage('How do I get my first ${s.name} client in India?')">How to get first client?</button>
+          <button class="sp-quick-btn" onclick="spSendMessage('What tools do I need for ${s.name}?')">What tools do I need?</button>
+          <button class="sp-quick-btn" onclick="spSendMessage('How much should I charge for ${s.name} as a beginner in India?')">What should I charge?</button>
+          <button class="sp-quick-btn" onclick="spSendMessage('How do I build a portfolio for ${s.name}?')">How to build a portfolio?</button>
         </div>
         <div class="sp-chat-input-row">
-          <input class="sp-chat-input" id="sp-chat-input" type="text" placeholder="Ask anything about earning with ${s.name}…" maxlength="200">
+          <input class="sp-chat-input" id="sp-chat-input" type="text" placeholder="Ask anything about earning with ${s.name} in India..." maxlength="200">
           <button class="sp-chat-send" onclick="spSendFromInput()">Ask →</button>
         </div>
       </div>
@@ -1772,17 +1769,18 @@ function openSkillPage(key) {
   skillPageEl.scrollTop = 0;
   document.body.style.overflow = 'hidden';
 
-  // Add greeting message
-  const skillContext = key;
   spConversationHistory = [];
   spCurrentSkill = s.name;
   setTimeout(() => {
-    spAddBotMessage(`Hey! 👋 I'm SkillBot, your guide to earning with **${s.name}**.\n\nI can help you figure out where to start, how much to charge, how to find clients, or anything else about making money with this skill. What do you want to know?`);
+    spAddBotMessage("Hey! 👋 I'm SkillBot, your guide to earning with **" + s.name + "** in India.\n\nI can help you find clients, set your rates, build a portfolio, or anything else. What do you want to know?");
   }, 300);
 
-  document.getElementById('sp-chat-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') spSendFromInput();
-  });
+  const spInput = document.getElementById('sp-chat-input');
+  if (spInput) {
+    spInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') spSendFromInput();
+    });
+  }
 }
 
 function closeSkillPage() {
@@ -1872,4 +1870,4 @@ async function spSendMessage(text) {
 
 </script>
 </body>
-</html>
+  </html>
