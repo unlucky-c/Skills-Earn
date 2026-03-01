@@ -1,0 +1,1875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillEarn India — Turn Your Skills Into Income</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #13131c;
+    --card: #1a1a28;
+    --accent: #f5c842;
+    --accent2: #ff6b35;
+    --text: #f0eee8;
+    --muted: #7a7a9a;
+    --border: rgba(245,200,66,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 5%;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.5px;
+  }
+  .logo span { color: var(--accent); }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+  }
+  nav ul a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  nav ul a:hover { color: var(--text); }
+  .nav-cta {
+    background: var(--accent);
+    color: #000 !important;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600 !important;
+    transition: opacity 0.2s !important;
+  }
+  .nav-cta:hover { opacity: 0.85; color: #000 !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 5% 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 40%, rgba(245,200,66,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 70%, rgba(255,107,53,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(245,200,66,0.12);
+    border: 1px solid rgba(245,200,66,0.3);
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    width: fit-content;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    line-height: 1.08;
+    letter-spacing: -2px;
+    max-width: 820px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+    position: relative;
+  }
+  .hero p {
+    margin-top: 1.5rem;
+    color: var(--muted);
+    font-size: 1.15rem;
+    max-width: 520px;
+    font-weight: 300;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-actions {
+    margin-top: 2.5rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #000;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.85rem 2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(245,200,66,0.35); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.85rem 2rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.04); }
+  .hero-stats {
+    margin-top: 4rem;
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--accent);
+  }
+  .stat-label {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-top: -0.2rem;
+  }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    overflow: hidden;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    padding: 0.9rem 0;
+  }
+  .marquee {
+    display: flex;
+    gap: 3rem;
+    animation: marquee 25s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee span {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .marquee .dot { color: var(--accent); }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SECTIONS */
+  section { padding: 5rem 5%; }
+  .section-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  .section-sub {
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 500px;
+    font-weight: 300;
+    margin-bottom: 3rem;
+  }
+
+  /* HOW IT WORKS */
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .step-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem 1.8rem;
+    position: relative;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .step-card:hover { transform: translateY(-6px); border-color: rgba(245,200,66,0.4); }
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    color: rgba(245,200,66,0.15);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+  .step-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+  }
+  .step-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  .step-card p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* SKILLS GRID */
+  #skills { background: var(--surface); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+  .skill-pill {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem 1.2rem;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: center;
+  }
+  .skill-pill:hover {
+    background: rgba(245,200,66,0.07);
+    border-color: rgba(245,200,66,0.5);
+    transform: scale(1.03);
+  }
+  .skill-emoji { font-size: 1.8rem; margin-bottom: 0.4rem; }
+  .skill-pill h4 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 0.2rem;
+  }
+  .skill-pill p { color: var(--muted); font-size: 0.75rem; }
+
+  /* PLATFORMS */
+  .platforms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .platform-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.8rem;
+    transition: transform 0.3s;
+  }
+  .platform-card:hover { transform: translateY(-4px); }
+  .platform-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .platform-logo {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    background: rgba(245,200,66,0.1);
+    border: 1px solid var(--border);
+  }
+  .platform-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  .platform-card .tag {
+    font-size: 0.7rem;
+    background: rgba(255,107,53,0.15);
+    color: var(--accent2);
+    border-radius: 4px;
+    padding: 0.1rem 0.4rem;
+    font-weight: 600;
+  }
+  .platform-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
+
+  /* TESTIMONIALS */
+  #testimonials { background: var(--surface); }
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .testi-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+  }
+  .stars { color: var(--accent); font-size: 0.9rem; margin-bottom: 1rem; }
+  .testi-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.7; margin-bottom: 1.5rem; }
+  .testi-author { display: flex; align-items: center; gap: 0.8rem; }
+  .avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    font-family: 'Syne', sans-serif;
+  }
+  .testi-author h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; }
+  .testi-author span { color: var(--muted); font-size: 0.78rem; }
+
+  /* CTA */
+  .cta-section {
+    text-align: center;
+    padding: 6rem 5%;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 50%, rgba(245,200,66,0.07) 0%, transparent 70%);
+    border-top: 1px solid var(--border);
+  }
+  .cta-section h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    margin-bottom: 1rem;
+  }
+  .cta-section p { color: var(--muted); max-width: 450px; margin: 0 auto 2.5rem; }
+
+  /* EMAIL FORM */
+  .email-form {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .email-form input {
+    flex: 1;
+    min-width: 220px;
+    padding: 0.85rem 1.2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .email-form input:focus { border-color: rgba(245,200,66,0.5); }
+  .email-form input::placeholder { color: var(--muted); }
+
+  /* FOOTER */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 3rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  footer .logo { font-size: 1.1rem; }
+  footer p { color: var(--muted); font-size: 0.82rem; }
+  footer a { color: var(--muted); text-decoration: none; font-size: 0.82rem; }
+  footer a:hover { color: var(--text); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 600px) {
+    nav ul { display: none; }
+    .hero-stats { gap: 1.5rem; }
+  }
+
+  /* ── AI CHATBOT ── */
+  #chat-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 999;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    border-radius: 50px;
+    padding: 0.85rem 1.4rem;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 6px 30px rgba(245,200,66,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  #chat-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 35px rgba(245,200,66,0.5); }
+  #chat-btn .chat-dot {
+    width: 8px; height: 8px;
+    background: #000;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
+
+  #chat-window {
+    position: fixed;
+    bottom: 5.5rem;
+    right: 2rem;
+    z-index: 998;
+    width: 370px;
+    max-height: 560px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    transform: scale(0.9) translateY(20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  #chat-window.open {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+    pointer-events: all;
+  }
+  .chat-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .chat-avatar {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .chat-header-info h4 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .chat-header-info span {
+    font-size: 0.72rem;
+    color: #4ade80;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .chat-header-info span::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: #4ade80;
+    border-radius: 50%;
+  }
+  #chat-close {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 1.2rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0.2rem;
+  }
+  #chat-close:hover { color: var(--text); }
+
+  #chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .msg {
+    max-width: 85%;
+    padding: 0.7rem 1rem;
+    border-radius: 14px;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    animation: msgIn 0.25s ease;
+  }
+  @keyframes msgIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .msg.bot {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+    color: var(--text);
+  }
+  .msg.user {
+    background: var(--accent);
+    color: #000;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+    font-weight: 500;
+  }
+  .msg.bot a { color: var(--accent); text-decoration: underline; }
+  .typing-indicator {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    padding: 0.7rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    border-bottom-left-radius: 4px;
+    align-self: flex-start;
+    max-width: 70px;
+  }
+  .typing-indicator span {
+    width: 7px; height: 7px;
+    background: var(--muted);
+    border-radius: 50%;
+    animation: bounce 1.2s infinite;
+  }
+  .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+  }
+
+  .chat-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0 1rem 0.5rem;
+  }
+  .suggestion-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .suggestion-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  #chat-input-area {
+    border-top: 1px solid var(--border);
+    padding: 0.8rem 1rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  #chat-input {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.6rem 0.9rem;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  #chat-input:focus { border-color: rgba(245,200,66,0.5); }
+  #chat-input::placeholder { color: var(--muted); }
+  #chat-send {
+    background: var(--accent);
+    border: none;
+    color: #000;
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: opacity 0.2s;
+  }
+  #chat-send:hover { opacity: 0.85; }
+
+  @media (max-width: 420px) {
+    #chat-window { width: calc(100vw - 2rem); right: 1rem; }
+    #chat-btn { right: 1rem; bottom: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Skill<span>Earn</span></div>
+  <ul>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#skills">Your Skills</a></li>
+    <li><a href="#platforms">Platforms</a></li>
+    <li><a href="#testimonials">Stories</a></li>
+    <li><a href="#start" class="nav-cta">Get Started</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-tag">✦ India's #1 Skill-to-Income Guide</div>
+  <h1>Your skills are<br><em>worth real money.</em><br>Let's prove it.</h1>
+  <p>You already have valuable skills — you just need the right direction. We guide Indians step-by-step from zero to their first online income, completely free.</p>
+  <div class="hero-actions">
+    <a href="#start" class="btn-primary">Start Earning Today →</a>
+    <a href="#how" class="btn-secondary">See How It Works</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">12K+</div>
+      <div class="stat-label">Indians Helped</div>
+    </div>
+    <div>
+      <div class="stat-num">₹35Cr+</div>
+      <div class="stat-label">Earned by Community</div>
+    </div>
+    <div>
+      <div class="stat-num">80+</div>
+      <div class="stat-label">Skills Covered</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span>Graphic Design <span class="dot">✦</span></span>
+    <span>Video Editing <span class="dot">✦</span></span>
+    <span>Writing <span class="dot">✦</span></span>
+    <span>Cooking <span class="dot">✦</span></span>
+    <span>Photography <span class="dot">✦</span></span>
+    <span>Teaching <span class="dot">✦</span></span>
+    <span>Coding <span class="dot">✦</span></span>
+    <span>Music <span class="dot">✦</span></span>
+    <span>Translation <span class="dot">✦</span></span>
+    <span>Social Media <span class="dot">✦</span></span>
+    <span>Crafts <span class="dot">✦</span></span>
+    <span>Voiceover <span class="dot">✦</span></span>
+    <!-- duplicate for seamless loop -->
+    <span>Graphic Design <span class="dot">✦</span></span>
+    <span>Video Editing <span class="dot">✦</span></span>
+    <span>Writing <span class="dot">✦</span></span>
+    <span>Cooking <span class="dot">✦</span></span>
+    <span>Photography <span class="dot">✦</span></span>
+    <span>Teaching <span class="dot">✦</span></span>
+    <span>Coding <span class="dot">✦</span></span>
+    <span>Music <span class="dot">✦</span></span>
+    <span>Translation <span class="dot">✦</span></span>
+    <span>Social Media <span class="dot">✦</span></span>
+    <span>Crafts <span class="dot">✦</span></span>
+    <span>Voiceover <span class="dot">✦</span></span>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-tag">The Process</div>
+  <div class="section-title">From skill to paycheck<br>in 4 simple steps</div>
+  <p class="section-sub">No experience needed. No investment required. Just follow the 4 steps we've built for you and start earning.</p>
+  <div class="how-grid">
+    <div class="step-card fade-in">
+      <div class="step-num">01</div>
+      <div class="step-icon">🔍</div>
+      <h3>Identify Your Skill</h3>
+      <p>Take our free 5-minute quiz to discover what you're good at and what people are willing to pay for right now.</p>
+    </div>
+    <div class="step-card fade-in">
+      <div class="step-num">02</div>
+      <div class="step-icon">🗺️</div>
+      <h3>Get Your Roadmap</h3>
+      <p>We give you a personalized, step-by-step guide tailored to your skill level and the time you have available.</p>
+    </div>
+    <div class="step-card fade-in">
+      <div class="step-num">03</div>
+      <div class="step-icon">🚀</div>
+      <h3>Set Up & Launch</h3>
+      <p>Create your profile on the right platforms, build a simple portfolio, and start sending your first proposals.</p>
+    </div>
+    <div class="step-card fade-in">
+      <div class="step-num">04</div>
+      <div class="step-icon">💰</div>
+      <h3>Earn & Grow</h3>
+      <p>Land your first client, deliver great work, and build towards a sustainable, growing online income stream.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-tag">All Skills Welcome</div>
+  <div class="section-title">Whatever you can do,<br>someone will pay for it</div>
+  <p class="section-sub">Think you don't have a marketable skill? Think again — all of these are in high demand across India right now.</p>
+  <div class="skills-grid">
+    <div class="skill-pill fade-in" data-skill="writing"><div class="skill-emoji">✍️</div><h4>Writing</h4><p>Blogs, copywriting, scripts</p></div>
+    <div class="skill-pill fade-in" data-skill="design"><div class="skill-emoji">🎨</div><h4>Design</h4><p>Logos, social media, UI</p></div>
+    <div class="skill-pill fade-in" data-skill="video-editing"><div class="skill-emoji">🎬</div><h4>Video Editing</h4><p>YouTube, Reels, ads</p></div>
+    <div class="skill-pill fade-in" data-skill="photography"><div class="skill-emoji">📸</div><h4>Photography</h4><p>Sell photos online</p></div>
+    <div class="skill-pill fade-in" data-skill="coding"><div class="skill-emoji">💻</div><h4>Coding</h4><p>Web apps, automation</p></div>
+    <div class="skill-pill fade-in" data-skill="music"><div class="skill-emoji">🎵</div><h4>Music</h4><p>Beats, mixing, lessons</p></div>
+    <div class="skill-pill fade-in" data-skill="teaching"><div class="skill-emoji">📚</div><h4>Teaching</h4><p>Tutoring, online courses</p></div>
+    <div class="skill-pill fade-in" data-skill="translation"><div class="skill-emoji">🌍</div><h4>Translation</h4><p>Documents, subtitles</p></div>
+    <div class="skill-pill fade-in" data-skill="cooking"><div class="skill-emoji">🍳</div><h4>Cooking</h4><p>Recipe content, courses</p></div>
+    <div class="skill-pill fade-in" data-skill="social-media"><div class="skill-emoji">📱</div><h4>Social Media</h4><p>Management, strategy</p></div>
+    <div class="skill-pill fade-in" data-skill="voiceover"><div class="skill-emoji">🎙️</div><h4>Voiceover</h4><p>Ads, audiobooks, videos</p></div>
+    <div class="skill-pill fade-in" data-skill="virtual-assistant"><div class="skill-emoji">🤝</div><h4>Virtual Assist.</h4><p>Admin, scheduling, email</p></div>
+  </div>
+</section>
+
+<!-- PLATFORMS -->
+<section id="platforms">
+  <div class="section-tag">Where To Earn</div>
+  <div class="section-title">The best platforms<br>to get paid online</div>
+  <p class="section-sub">The best platforms for Indian freelancers — sign up and start earning today.</p>
+  <div class="platforms-grid">
+    <a href="https://www.fiverr.com" target="_blank" class="platform-card fade-in" style="text-decoration:none;color:inherit;display:block;">
+      <div class="platform-header">
+        <div class="platform-logo">🟢</div>
+        <div><h3>Fiverr</h3><span class="tag">Beginners Friendly</span></div>
+      </div>
+      <p>Create "gigs" for your services and let clients come to you. Great for design, writing, voiceover, and more.</p>
+      <div style="margin-top:1rem;font-size:0.82rem;color:var(--accent);font-weight:600;">Visit Fiverr →</div>
+    </a>
+    <a href="https://www.upwork.com" target="_blank" class="platform-card fade-in" style="text-decoration:none;color:inherit;display:block;">
+      <div class="platform-header">
+        <div class="platform-logo">🔵</div>
+        <div><h3>Upwork</h3><span class="tag">Higher Pay</span></div>
+      </div>
+      <p>Bid on projects posted by businesses worldwide. Best for freelancers with some experience. Longer projects, better rates.</p>
+      <div style="margin-top:1rem;font-size:0.82rem;color:var(--accent);font-weight:600;">Visit Upwork →</div>
+    </a>
+    <a href="https://gumroad.com" target="_blank" class="platform-card fade-in" style="text-decoration:none;color:inherit;display:block;">
+      <div class="platform-header">
+        <div class="platform-logo">🟡</div>
+        <div><h3>Teachable / Gumroad</h3><span class="tag">Passive Income</span></div>
+      </div>
+      <p>Package your knowledge into a digital product or course. Sell it once, earn forever. Perfect for teachers and coaches.</p>
+      <div style="margin-top:1rem;font-size:0.82rem;color:var(--accent);font-weight:600;">Visit Gumroad →</div>
+    </a>
+    <a href="https://www.youtube.com/creators" target="_blank" class="platform-card fade-in" style="text-decoration:none;color:inherit;display:block;">
+      <div class="platform-header">
+        <div class="platform-logo">🔴</div>
+        <div><h3>YouTube / TikTok</h3><span class="tag">Content Creator</span></div>
+      </div>
+      <p>Share your skill and earn through ad revenue, sponsorships, and selling products. Scales massively with consistency.</p>
+      <div style="margin-top:1rem;font-size:0.82rem;color:var(--accent);font-weight:600;">Visit YouTube Creators →</div>
+    </a>
+    <a href="https://www.linkedin.com" target="_blank" class="platform-card fade-in" style="text-decoration:none;color:inherit;display:block;">
+      <div class="platform-header">
+        <div class="platform-logo">🟣</div>
+        <div><h3>LinkedIn</h3><span class="tag">Professional</span></div>
+      </div>
+      <p>Build your personal brand, attract corporate clients, and land consulting or freelance contracts in professional fields.</p>
+      <div style="margin-top:1rem;font-size:0.82rem;color:var(--accent);font-weight:600;">Visit LinkedIn →</div>
+    </a>
+    <a href="https://www.etsy.com/sell" target="_blank" class="platform-card fade-in" style="text-decoration:none;color:inherit;display:block;">
+      <div class="platform-header">
+        <div class="platform-logo">🟠</div>
+        <div><h3>Etsy / Redbubble</h3><span class="tag">Creative Sellers</span></div>
+      </div>
+      <p>Sell digital downloads, print-on-demand products, or handmade goods. Great for artists, crafters, and designers.</p>
+      <div style="margin-top:1rem;font-size:0.82rem;color:var(--accent);font-weight:600;">Visit Etsy →</div>
+    </a>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-tag">Real People, Real Results</div>
+  <div class="section-title">They didn't think they could. These are real stories from Indians just like you.</div>
+  <div class="testi-grid">
+    <div class="testi-card fade-in">
+      <div class="stars">★★★★★</div>
+      <p>"I always thought writing was just a hobby. Within 3 months on Upwork, I was making ₹55,000/month. Now I'm a full-time freelancer."</p>
+      <div class="testi-author">
+        <div class="avatar" style="background: rgba(245,200,66,0.2); color: var(--accent);">RS</div>
+        <div><h4>Rahul S.</h4><span>Freelance Content Writer, Pune</span></div>
+      </div>
+    </div>
+    <div class="testi-card fade-in">
+      <div class="stars">★★★★★</div>
+      <p>"I spoke Hindi and English my whole life but never thought it was valuable. Now I earn ₹1.5 lakh/month translating documents and subtitles."</p>
+      <div class="testi-author">
+        <div class="avatar" style="background: rgba(255,107,53,0.2); color: var(--accent2);">PM</div>
+        <div><h4>Priya M.</h4><span>Freelance Translator, Delhi</span></div>
+      </div>
+    </div>
+    <div class="testi-card fade-in">
+      <div class="stars">★★★★★</div>
+      <p>"I've been cooking at home for 20 years. Now I earn ₹40,000/month through YouTube and Instamojo selling recipe content."</p>
+      <div class="testi-author">
+        <div class="avatar" style="background: rgba(245,200,66,0.15); color: var(--accent);">AK</div>
+        <div><h4>Anita K.</h4><span>Food Content Creator, Mumbai</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="start">
+  <h2>Your first online income<br><em style="color: var(--accent); font-style: normal;">starts today.</em></h2>
+  <p>Join thousands of Indians who turned their existing skills into a real, stable income. Get your free guide and start today.</p>
+  <div class="email-form">
+    <input type="email" placeholder="Enter your email address">
+    <a href="#" class="btn-primary">Get My Free Guide →</a>
+  </div>
+  <p style="margin-top: 1rem; font-size: 0.78rem; color: var(--muted);">No spam. Free forever. Unsubscribe anytime.</p>
+</section>
+
+<!-- AI CHATBOT -->
+<button id="chat-btn"><span class="chat-dot"></span> Ask SkillBot ✦</button>
+
+<div id="chat-window">
+  <div class="chat-header">
+    <div class="chat-avatar">✦</div>
+    <div class="chat-header-info">
+      <h4>SkillBot</h4>
+      <span>Online — here to help</span>
+    </div>
+    <button id="chat-close">✕</button>
+  </div>
+  <div id="chat-messages"></div>
+  <div class="chat-suggestions" id="chat-suggestions">
+    <button class="suggestion-btn">How do I start?</button>
+    <button class="suggestion-btn">Best platform for beginners?</button>
+    <button class="suggestion-btn">I can write, what should I do?</button>
+    <button class="suggestion-btn">How much can I earn?</button>
+  </div>
+  <div id="chat-input-area">
+    <input id="chat-input" type="text" placeholder="Ask anything about earning online…" maxlength="200">
+    <button id="chat-send">➤</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Skill<span>Earn</span></div>
+  <p>© 2025 SkillEarn India. Made with ❤️ for Indian freelancers &amp; creators.</p>
+  <div style="display:flex; gap:1.5rem;">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        entry.target.style.transitionDelay = `${(i % 4) * 0.08}s`;
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // ── AI CHATBOT ──
+  const chatBtn = document.getElementById('chat-btn');
+  const chatWindow = document.getElementById('chat-window');
+  const chatClose = document.getElementById('chat-close');
+  const chatMessages = document.getElementById('chat-messages');
+  const chatInput = document.getElementById('chat-input');
+  const chatSend = document.getElementById('chat-send');
+  const chatSuggestions = document.getElementById('chat-suggestions');
+
+  let chatOpen = false;
+  let conversationHistory = [];
+
+  chatBtn.addEventListener('click', () => {
+    chatOpen = !chatOpen;
+    chatWindow.classList.toggle('open', chatOpen);
+    if (chatOpen && chatMessages.children.length === 0) {
+      addBotMessage("Hey! 👋 I'm SkillBot — your personal guide to earning online in India.\n\nTell me what skills you have, and I'll show you exactly how to make money with them. What would you like to know?");
+    }
+    if (chatOpen) chatInput.focus();
+  });
+
+  chatClose.addEventListener('click', () => {
+    chatOpen = false;
+    chatWindow.classList.remove('open');
+  });
+
+  // Suggestion buttons
+  chatSuggestions.querySelectorAll('.suggestion-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      sendMessage(btn.textContent);
+    });
+  });
+
+  chatInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage(chatInput.value.trim());
+    }
+  });
+  chatSend.addEventListener('click', () => sendMessage(chatInput.value.trim()));
+
+  function addBotMessage(text) {
+    const div = document.createElement('div');
+    div.className = 'msg bot';
+    div.innerHTML = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function addUserMessage(text) {
+    const div = document.createElement('div');
+    div.className = 'msg user';
+    div.textContent = text;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  function showTyping() {
+    const div = document.createElement('div');
+    div.className = 'typing-indicator';
+    div.id = 'typing';
+    div.innerHTML = '<span></span><span></span><span></span>';
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return div;
+  }
+
+  function removeTyping() {
+    const t = document.getElementById('typing');
+    if (t) t.remove();
+  }
+
+  // ── Test Gemini connection on load ──
+  async function testConnection() {
+    try {
+      const res = await fetch(
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyCLFGSMlPkPVOLcP084VsDn2YDopUlu8G4',
+        { method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ contents: [{ role:'user', parts:[{ text:'hi' }] }], generationConfig:{ maxOutputTokens:5 } }) }
+      );
+      if (res.ok) {
+        document.getElementById('chat-btn').style.boxShadow = '0 6px 30px rgba(74,222,128,0.5)';
+        console.log('✅ SkillBot connected to Gemini successfully');
+      } else {
+        const d = await res.json();
+        console.warn('⚠️ Gemini error:', d?.error?.message);
+      }
+    } catch(e) {
+      console.warn('⚠️ SkillBot network error:', e.message);
+    }
+  }
+  testConnection();
+
+  const SKILLBOT_SYSTEM = `You are SkillBot, a friendly expert advisor on SkillEarn India. Help Indians earn money online using their existing skills. Speak in clear simple English. Be warm, encouraging and practical. Always ask about their skills if not mentioned. Give specific actionable advice for Indian users. Recommend platforms: Fiverr (fiverr.com), Upwork (upwork.com), Internshala (internshala.com), Instamojo (instamojo.com), YouTube (youtube.com/creators), LinkedIn (linkedin.com). Give earning ranges in Indian Rupees. Keep responses under 150 words. Use **bold** for key terms.`;
+
+  async function callGemini(systemPrompt, history) {
+    // Try gemini-1.5-flash first, fallback to gemini-pro
+    const models = [
+      'gemini-2.0-flash',
+      'gemini-1.5-flash',
+      'gemini-1.0-pro'
+    ];
+
+    const GEMINI_KEY = 'AIzaSyCLFGSMlPkPVOLcP084VsDn2YDopUlu8G4';
+
+    // Build contents — Gemini needs role 'user'/'model', starting with 'user'
+    let contents = history.map(m => ({
+      role: m.role === 'assistant' ? 'model' : 'user',
+      parts: [{ text: String(m.content) }]
+    }));
+
+    // Ensure starts with user
+    while (contents.length && contents[0].role !== 'user') contents.shift();
+    if (!contents.length) throw new Error('No valid messages');
+
+    // Remove consecutive same roles (Gemini strict alternation)
+    const dedupedContents = [contents[0]];
+    for (let i = 1; i < contents.length; i++) {
+      if (contents[i].role !== dedupedContents[dedupedContents.length - 1].role) {
+        dedupedContents.push(contents[i]);
+      }
+    }
+
+    let lastError = null;
+    for (const model of models) {
+      try {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_KEY}`;
+        const body = {
+          system_instruction: { parts: [{ text: systemPrompt }] },
+          contents: dedupedContents,
+          generationConfig: { maxOutputTokens: 400, temperature: 0.7 }
+        };
+
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          const msg = data?.error?.message || `HTTP ${res.status}`;
+          console.warn(`Gemini ${model} failed: ${msg}`);
+          lastError = msg;
+          continue; // try next model
+        }
+
+        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (!text) {
+          // Check for safety block
+          const reason = data?.candidates?.[0]?.finishReason;
+          const safety = data?.promptFeedback?.blockReason;
+          console.warn(`Gemini ${model} empty response. finishReason=${reason}, blockReason=${safety}`);
+          lastError = `Empty response (${reason || safety || 'unknown'})`;
+          continue;
+        }
+
+        return text; // success
+      } catch (e) {
+        console.warn(`Gemini ${model} exception:`, e.message);
+        lastError = e.message;
+      }
+    }
+
+    throw new Error(lastError || 'All Gemini models failed');
+  }
+
+  async function sendMessage(text) {
+    if (!text) return;
+    chatInput.value = '';
+    chatSuggestions.style.display = 'none';
+    addUserMessage(text);
+    conversationHistory.push({ role: 'user', content: text });
+    showTyping();
+
+    try {
+      const reply = await callGemini(SKILLBOT_SYSTEM, conversationHistory);
+      removeTyping();
+      conversationHistory.push({ role: 'assistant', content: reply });
+      addBotMessage(reply);
+    } catch (err) {
+      removeTyping();
+      console.error('SkillBot final error:', err.message);
+      // Show the actual error so user can report it
+      const errMsg = err.message || 'Unknown error';
+      let userMsg = '⚠️ SkillBot is offline.';
+      if (errMsg.includes('Failed to fetch') || errMsg.includes('NetworkError')) {
+        userMsg = '⚠️ Cannot connect to AI. If viewing this as a local file, please upload it to a website first (try netlify.com/drop). If already hosted, check your internet connection.';
+      } else if (errMsg.includes('API_KEY') || errMsg.includes('invalid') || errMsg.includes('403')) {
+        userMsg = '⚠️ API key issue. Please get a new key from aistudio.google.com and update the file.';
+      } else if (errMsg.includes('quota') || errMsg.includes('429')) {
+        userMsg = '⚠️ Free quota reached. Please wait a minute and try again.';
+      } else {
+        userMsg = '⚠️ Error: ' + errMsg + '. Please try again.';
+      }
+      addBotMessage(userMsg);
+    }
+  }
+
+  document.querySelector('.email-form .btn-primary').addEventListener('click', (e) => {
+    e.preventDefault();
+    const input = document.querySelector('.email-form input');
+    if (input.value.includes('@')) {
+      input.value = '';
+      input.placeholder = '✓ You\'re on the list!';
+      input.style.borderColor = 'rgba(245,200,66,0.6)';
+    } else {
+      input.style.borderColor = 'rgba(255,107,53,0.7)';
+      input.placeholder = 'Please enter a valid email';
+    }
+  });
+
+
+
+// ── SKILL PAGE ENGINE ──
+// Powered by Anthropic Claude API
+
+const skillData = {
+  'writing': {
+    emoji:'✍️', name:'Writing', color:'#f5c842',
+    tagline:'Turn your words into income',
+    description:'Writing is one of the most in-demand skills online. Businesses constantly need blog posts, product descriptions, email campaigns, and social media content. You can start earning today with zero investment.',
+    earning:'₹15,000 – ₹4,00,000/month',
+    difficulty:'Beginner Friendly',
+    timeToFirst:'1–2 weeks',
+    platforms:[
+      {name:'Upwork', url:'https://upwork.com', tip:'Great for long-term writing contracts'},
+      {name:'Fiverr', url:'https://fiverr.com', tip:'Offer blog posts, product descriptions'},
+      {name:'Internshala', url:'https://internshala.com', tip:'Great for Indian beginners, pays in ₹'},
+      {name:'Pepper Content', url:'https://www.peppercontent.io', tip:'Indian content marketplace, pay in ₹'},
+    ],
+    steps:[
+      {icon:'📝', title:'Pick your writing niche', desc:'Tech, finance, health, lifestyle — specialize to earn more.'},
+      {icon:'🗂️', title:'Create 3 writing samples', desc:'Write sample articles on topics you enjoy. Post them on a free Medium account.'},
+      {icon:'🟢', title:'Set up a Fiverr gig', desc:'Offer "I will write a 500-word blog post" starting at ₹500–₹1,500.'},
+      {icon:'💌', title:'Apply to 5 jobs on Upwork', desc:'Write personalized proposals showing you understand the client\'s need.'},
+      {icon:'⭐', title:'Deliver great work & collect reviews', desc:'5-star reviews are your currency. Overdeliver for your first 3 clients.'},
+    ]
+  },
+  'design': {
+    emoji:'🎨', name:'Graphic Design', color:'#ff6b35',
+    tagline:'Your creativity is a business',
+    description:'Graphic design is everywhere — logos, social media posts, ads, packaging, presentations. If you know tools like Canva, Photoshop, or Illustrator, businesses will pay you well for your eye.',
+    earning:'₹25,000 – ₹5,00,000/month',
+    difficulty:'Beginner Friendly',
+    timeToFirst:'1–3 weeks',
+    platforms:[
+      {name:'Fiverr', url:'https://fiverr.com', tip:'Logo design gigs are top sellers'},
+      {name:'99designs', url:'https://99designs.com', tip:'Compete in design contests to build portfolio'},
+      {name:'Dribbble', url:'https://dribbble.com', tip:'Showcase your portfolio to attract clients'},
+      {name:'Etsy', url:'https://etsy.com/sell', tip:'Sell digital templates and graphics'},
+    ],
+    steps:[
+      {icon:'🎯', title:'Pick a design service', desc:'Logo design, social media kits, or Canva templates are easiest to start.'},
+      {icon:'🖼️', title:'Build a portfolio of 5–8 pieces', desc:'Create mock projects for fake brands to demonstrate your range.'},
+      {icon:'🟢', title:'List 3 gigs on Fiverr', desc:'Logo design, business cards, social media posts — start at ₹1,500–₹4,000.'},
+      {icon:'📣', title:'Share on social media', desc:'Post your designs on Instagram or Pinterest with relevant hashtags.'},
+      {icon:'💼', title:'Pitch local businesses', desc:'Offer to redo a bad logo for a local restaurant or shop for free, then use it as a case study.'},
+    ]
+  },
+  'video-editing': {
+    emoji:'🎬', name:'Video Editing', color:'#a855f7',
+    tagline:'The internet runs on video',
+    description:'Every YouTuber, brand, and content creator needs a video editor. With the explosion of short-form content on YouTube Shorts, TikTok, and Instagram Reels, demand for video editors has never been higher.',
+    earning:'₹30,000 – ₹6,00,000/month',
+    difficulty:'Moderate',
+    timeToFirst:'2–4 weeks',
+    platforms:[
+      {name:'Fiverr', url:'https://fiverr.com', tip:'Offer YouTube video editing or Reels editing'},
+      {name:'Upwork', url:'https://upwork.com', tip:'Find retainer clients who need weekly edits'},
+      {name:'YouTube Creators', url:'https://youtube.com/creators', tip:'Become a hired editor for YouTubers'},
+      {name:'Internshala', url:'https://internshala.com', tip:'Indian platform for video editing roles'},
+    ],
+    steps:[
+      {icon:'🎞️', title:'Master one editing tool', desc:'DaVinci Resolve is free and professional. CapCut is great for short-form content.'},
+      {icon:'📹', title:'Edit 3 sample videos', desc:'Find free YouTube footage and create polished sample edits — show before & after.'},
+      {icon:'🟢', title:'Create a Fiverr gig', desc:'Offer "YouTube video editing with captions and transitions" from ₹2,000–₹6,000.'},
+      {icon:'📱', title:'Target content creators', desc:'DM small YouTubers (5K–100K subs) who could improve their editing quality.'},
+      {icon:'🔄', title:'Build monthly retainer clients', desc:'Offer a monthly package (e.g. 8 videos/month) for predictable income.'},
+    ]
+  },
+  'photography': {
+    emoji:'📸', name:'Photography', color:'#06b6d4',
+    tagline:'Every photo you take has value',
+    description:'Your photos can earn money in multiple ways — selling stock photos, doing client shoots, creating presets, or teaching photography online. The key is knowing which path fits your style.',
+    earning:'₹12,000 – ₹3,50,000/month',
+    difficulty:'Beginner Friendly',
+    timeToFirst:'1–2 weeks',
+    platforms:[
+      {name:'Shutterstock', url:'https://shutterstock.com/become-a-contributor', tip:'Upload once, earn royalties forever'},
+      {name:'Adobe Stock', url:'https://stock.adobe.com/contributor', tip:'Great for high-quality editorial photos'},
+      {name:'Etsy', url:'https://etsy.com/sell', tip:'Sell Lightroom presets and photo packs'},
+      {name:'Upwork', url:'https://upwork.com', tip:'Find product photography clients'},
+    ],
+    steps:[
+      {icon:'📂', title:'Sort your best 50 photos', desc:'Quality beats quantity on stock platforms. Select your sharpest, most commercially usable shots.'},
+      {icon:'🏷️', title:'Upload to Shutterstock & Adobe Stock', desc:'Tag photos with relevant keywords. Business, food, people, and nature sell best.'},
+      {icon:'🎨', title:'Create and sell Lightroom presets', desc:'Package your editing style as presets and sell them on Etsy for ₹500–₹2,000/pack.'},
+      {icon:'📦', title:'Offer product photography locally', desc:'Small e-commerce shops need great product shots. Charge ₹2,000–₹8,000 per session.'},
+      {icon:'📘', title:'Start a photography blog or YouTube', desc:'Share tips and link to your presets/courses to create passive income.'},
+    ]
+  },
+  'coding': {
+    emoji:'💻', name:'Coding', color:'#22c55e',
+    tagline:'The highest paid skill online',
+    description:'Coding is the most lucrative skill you can offer online. From building websites to automating tasks to creating apps, the demand for developers consistently outpaces supply worldwide.',
+    earning:'₹50,000 – ₹12,00,000/month',
+    difficulty:'Intermediate',
+    timeToFirst:'2–6 weeks',
+    platforms:[
+      {name:'Upwork', url:'https://upwork.com', tip:'Best platform for high-paying dev contracts'},
+      {name:'Toptal', url:'https://toptal.com', tip:'Top 3% of developers, premium rates'},
+      {name:'Fiverr', url:'https://fiverr.com', tip:'Great for WordPress and small web projects'},
+      {name:'GitHub', url:'https://github.com', tip:'Showcase your code to attract employers/clients'},
+    ],
+    steps:[
+      {icon:'🧰', title:'Pick your specialization', desc:'Web dev (HTML/CSS/JS), Python automation, WordPress — pick one and go deep.'},
+      {icon:'🏗️', title:'Build 3 portfolio projects', desc:'Create real projects: a landing page, a small app, an automation script.'},
+      {icon:'📋', title:'Create a profile on Upwork', desc:'Write a sharp headline like "React Developer | I build fast, clean websites" and set competitive rates.'},
+      {icon:'🤝', title:'Take your first small project', desc:'Even ₹2,000 projects help build your reputation. Collect reviews, then raise rates.'},
+      {icon:'🚀', title:'Niche down for premium rates', desc:'Specialists earn more. "Shopify developer" or "Python data automation" beats "general developer".'},
+    ]
+  },
+  'music': {
+    emoji:'🎵', name:'Music', color:'#ec4899',
+    tagline:'Your beats deserve to be heard — and paid',
+    description:'Music skills translate to online income in many ways: selling beats, licensing tracks, teaching music, creating content, or even selling sound effects and samples to other creators.',
+    earning:'₹10,000 – ₹4,00,000/month',
+    difficulty:'Moderate',
+    timeToFirst:'2–4 weeks',
+    platforms:[
+      {name:'BeatStars', url:'https://beatstars.com', tip:'Sell beats and instrumentals directly'},
+      {name:'Fiverr', url:'https://fiverr.com', tip:'Offer mixing, mastering, and music lessons'},
+      {name:'Pond5', url:'https://pond5.com', tip:'License your music for film and TV'},
+      {name:'YouTube', url:'https://youtube.com/creators', tip:'Monetize tutorials and original music'},
+    ],
+    steps:[
+      {icon:'🎹', title:'Decide what to sell', desc:'Beats, mixing services, lessons, or licensed music — pick one to start.'},
+      {icon:'📦', title:'Package 10 beats or tracks', desc:'Prepare your best work with proper tags, BPM, and key info.'},
+      {icon:'🟢', title:'List on BeatStars', desc:'Upload beats with lease prices (₹500–₹2,000 basic, ₹5,000–₹20,000 exclusive rights).'},
+      {icon:'🎓', title:'Offer online music lessons', desc:'Use Fiverr or Superprof to offer 1-on-1 lessons via Zoom for ₹1,500–₹5,000/hour.'},
+      {icon:'📲', title:'Build an audience on social media', desc:'Short videos of your production process on TikTok/Instagram build buyers.'},
+    ]
+  },
+  'teaching': {
+    emoji:'📚', name:'Teaching', color:'#f59e0b',
+    tagline:'What you know is worth teaching',
+    description:'If you\'re good at anything — a language, a skill, a subject — someone wants to learn it from you. Online teaching is one of the most scalable income sources: teach once, sell forever.',
+    earning:'₹15,000 – ₹6,50,000/month',
+    difficulty:'Beginner Friendly',
+    timeToFirst:'1–3 weeks',
+    platforms:[
+      {name:'Udemy', url:'https://udemy.com/teaching', tip:'Upload a course once and earn passively'},
+      {name:'Teachable', url:'https://teachable.com', tip:'Build your own branded course website'},
+      {name:'Preply', url:'https://preply.com/en/teach', tip:'Great for language and academic tutoring'},
+      {name:'Instamojo', url:'https://instamojo.com', tip:'Sell online courses in India, receive ₹'},
+    ],
+    steps:[
+      {icon:'🎯', title:'Choose your course topic', desc:'Teach what you already know well. "Excel for beginners" or "Spanish for travelers" — be specific.'},
+      {icon:'📋', title:'Outline 10–15 lessons', desc:'Break your topic into small, digestible lessons. Each should be 5–15 minutes.'},
+      {icon:'🎥', title:'Record with your phone', desc:'Good lighting and clear audio matter more than fancy equipment. Start simple.'},
+      {icon:'🚀', title:'Upload to Udemy', desc:'Udemy has built-in traffic. Run a launch sale at ₹499 to get reviews fast.'},
+      {icon:'📣', title:'Promote on social media', desc:'Share free tips related to your course topic. Interested followers become students.'},
+    ]
+  },
+  'translation': {
+    emoji:'🌍', name:'Translation', color:'#14b8a6',
+    tagline:'Two languages = two income streams',
+    description:'If you speak two or more languages, you have a skill that\'s constantly in demand. Businesses, legal firms, content creators, and app developers all need accurate translations every day.',
+    earning:'₹15,000 – ₹3,00,000/month',
+    difficulty:'Beginner Friendly',
+    timeToFirst:'1–2 weeks',
+    platforms:[
+      {name:'Upwork', url:'https://upwork.com', tip:'Find consistent translation contracts'},
+      {name:'Fiverr', url:'https://fiverr.com', tip:'Great for document and website translation'},
+      {name:'ProZ', url:'https://proz.com', tip:'The largest professional translator marketplace'},
+      {name:'Gengo', url:'https://gengo.com', tip:'High-volume translation work for beginners'},
+    ],
+    steps:[
+      {icon:'🗣️', title:'List your language pairs', desc:'e.g. English ↔ Spanish, French ↔ Arabic. The more rare the pair, the higher the rate.'},
+      {icon:'📄', title:'Create a Fiverr gig', desc:'Offer "professional document translation" with fast delivery. Start at $10–20 per 500 words.'},
+      {icon:'📝', title:'Join ProZ.com', desc:'Complete your profile, list your specializations (legal, medical, tech) and start applying to jobs.'},
+      {icon:'🏆', title:'Specialize for higher pay', desc:'Legal or medical translation pays 2–3x more than general. Get certified if possible.'},
+      {icon:'🔄', title:'Build long-term client relationships', desc:'Consistent clients who send regular work are more valuable than one-off projects.'},
+    ]
+  },
+  'cooking': {
+    emoji:'🍳', name:'Cooking', color:'#f97316',
+    tagline:'People will pay to cook like you',
+    description:'Cooking skills can be monetized in creative ways online — recipe content, YouTube channels, digital cookbooks, online cooking classes, and food blogging. Your kitchen is your studio.',
+    earning:'₹10,000 – ₹4,00,000/month',
+    difficulty:'Beginner Friendly',
+    timeToFirst:'2–4 weeks',
+    platforms:[
+      {name:'YouTube', url:'https://youtube.com/creators', tip:'Recipe videos earn ad revenue + sponsorships'},
+      {name:'Gumroad', url:'https://gumroad.com', tip:'Sell digital recipe ebooks and meal plans'},
+      {name:'Skillshare', url:'https://skillshare.com/teach', tip:'Teach cooking techniques online'},
+      {name:'Instamojo', url:'https://instamojo.com', tip:'Sell digital recipe PDFs in India, get ₹ instantly'},
+    ],
+    steps:[
+      {icon:'🎥', title:'Start filming your cooking', desc:'Use your phone. Film recipe tutorials, quick tips, or "what I eat" style content.'},
+      {icon:'▶️', title:'Create a YouTube channel', desc:'Post 1–2 recipe videos per week consistently. Use searchable titles like "Easy 15-minute pasta".'},
+      {icon:'📖', title:'Compile an ebook', desc:'Turn your 20 best recipes into a themed PDF ebook and sell it on Gumroad for ₹150–₹499.'},
+      {icon:'🎓', title:'Offer online cooking classes', desc:'Use Zoom to teach live cooking classes. Charge ₹500–₹2,000/person, up to 10 people per class.'},
+      {icon:'🤝', title:'Partner with food brands', desc:'Once you have an audience, approach spice companies, kitchenware brands for sponsorships.'},
+    ]
+  },
+  'social-media': {
+    emoji:'📱', name:'Social Media', color:'#8b5cf6',
+    tagline:'Manage accounts. Get paid.',
+    description:'Small businesses know they need social media but have no time to manage it. If you understand how platforms work, how to create engaging content, and how to grow followers, you have a sellable service.',
+    earning:'₹20,000 – ₹4,00,000/month',
+    difficulty:'Beginner Friendly',
+    timeToFirst:'1–2 weeks',
+    platforms:[
+      {name:'Fiverr', url:'https://fiverr.com', tip:'Offer social media management packages'},
+      {name:'Upwork', url:'https://upwork.com', tip:'Find monthly retainer social media clients'},
+      {name:'LinkedIn', url:'https://linkedin.com', tip:'Pitch local businesses directly'},
+      {name:'Internshala', url:'https://internshala.com', tip:'Find Indian SMM internships & jobs'},
+    ],
+    steps:[
+      {icon:'📊', title:'Document your own results', desc:'Grow your own social media account first. Real numbers (even small ones) prove your skill.'},
+      {icon:'📦', title:'Create service packages', desc:'e.g. "Starter: 12 posts/month + scheduling — ₹8,000". Make it easy to say yes.'},
+      {icon:'🏪', title:'Pitch 10 local small businesses', desc:'Restaurants, salons, boutiques often have bad or inactive social media. Offer a free audit.'},
+      {icon:'🛠️', title:'Use scheduling tools', desc:'Learn Buffer, Later, or Hootsuite to manage multiple clients efficiently.'},
+      {icon:'📈', title:'Show monthly reports', desc:'Send clients a simple monthly report showing follower growth and engagement. Builds trust.'},
+    ]
+  },
+  'voiceover': {
+    emoji:'🎙️', name:'Voiceover', color:'#f43f5e',
+    tagline:'Your voice is your product',
+    description:'Every ad, YouTube video, podcast intro, audiobook, and explainer video needs a voice. If you have a clear, pleasant speaking voice, you can start earning from home with minimal equipment.',
+    earning:'₹15,000 – ₹5,00,000/month',
+    difficulty:'Beginner Friendly',
+    timeToFirst:'1–2 weeks',
+    platforms:[
+      {name:'Fiverr', url:'https://fiverr.com', tip:'Most popular platform for voiceover work'},
+      {name:'Voices.com', url:'https://voices.com', tip:'Professional platform with premium clients'},
+      {name:'ACX', url:'https://acx.com', tip:'Narrate audiobooks for Amazon/Audible'},
+      {name:'Voice123', url:'https://voice123.com', tip:'Audition for high-paying voice roles'},
+    ],
+    steps:[
+      {icon:'🎤', title:'Set up a basic home studio', desc:'A USB microphone (₹4,000–₹8,000) and a closet full of clothes acts as acoustic treatment.'},
+      {icon:'🎧', title:'Record a demo reel', desc:'Record 60–90 seconds showcasing different styles: commercial, narration, character.'},
+      {icon:'🟢', title:'Create a Fiverr gig', desc:'Offer "professional voiceover for ads, explainers, or YouTube videos" from ₹1,000–₹4,000.'},
+      {icon:'📚', title:'Audition on ACX for audiobooks', desc:'Audiobooks pay per finished hour ($100–300 PFH). Long-form but highly rewarding.'},
+      {icon:'🏆', title:'Specialize in a voice style', desc:'Corporate narrator, energetic ad voice, character voices — niche down to charge more.'},
+    ]
+  },
+  'virtual-assistant': {
+    emoji:'🤝', name:'Virtual Assistant', color:'#06b6d4',
+    tagline:'Organized people are always in demand',
+    description:'Virtual assistants help business owners manage their time by handling emails, scheduling, research, customer support, and administrative tasks. It\'s one of the easiest ways to earn online fast.',
+    earning:'₹15,000 – ₹3,00,000/month',
+    difficulty:'Beginner Friendly',
+    timeToFirst:'1 week',
+    platforms:[
+      {name:'Upwork', url:'https://upwork.com', tip:'Most VA jobs are posted here'},
+      {name:'Fiverr', url:'https://fiverr.com', tip:'Great for one-off admin tasks'},
+      {name:'Internshala', url:'https://internshala.com', tip:'Popular for Indian VA & admin work'},
+      {name:'Freelancer.in', url:'https://www.freelancer.in', tip:'Indian freelance platform, pay in ₹'},
+    ],
+    steps:[
+      {icon:'📋', title:'List your admin skills', desc:'Email management, calendar scheduling, data entry, travel booking, research — list everything you can do.'},
+      {icon:'📄', title:'Create a simple portfolio page', desc:'Use Notion or Canva to create a one-page portfolio showing your skills and availability.'},
+      {icon:'🟢', title:'Apply on Upwork daily', desc:'Apply to 5–10 VA job posts per day with personalized proposals. Volume matters early on.'},
+      {icon:'💼', title:'Offer a free trial hour', desc:'Offer 1 hour free to promising clients. Once they see your value, they\'ll hire you long-term.'},
+      {icon:'📦', title:'Create monthly retainer packages', desc:'Offer "10 hours/month — ₹15,000" packages. Retainers = stable, predictable income.'},
+    ]
+  }
+};
+
+// ── SKILL PAGE CSS ──
+const styleEl = document.createElement('style');
+styleEl.textContent = `
+  #skill-page {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: var(--bg);
+    overflow-y: auto;
+    animation: slideIn 0.35s cubic-bezier(0.16,1,0.3,1);
+  }
+  #skill-page.active { display: block; }
+  @keyframes slideIn {
+    from { transform: translateX(60px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  .sp-nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(10,10,15,0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 5%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .sp-back {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: background 0.2s;
+  }
+  .sp-back:hover { background: var(--surface); }
+  .sp-breadcrumb {
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .sp-breadcrumb span { color: var(--text); font-weight: 600; }
+  .sp-hero {
+    padding: 4rem 5% 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .sp-hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .sp-emoji-big {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    display: block;
+    animation: fadeUp 0.4s ease both;
+  }
+  .sp-hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    animation: fadeUp 0.4s 0.05s ease both;
+  }
+  .sp-tagline {
+    color: var(--muted);
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+    font-weight: 300;
+    animation: fadeUp 0.4s 0.1s ease both;
+  }
+  .sp-badges {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.4s 0.15s ease both;
+  }
+  .sp-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.82rem;
+  }
+  .sp-badge strong { font-weight: 700; color: var(--accent); }
+  .sp-body { padding: 0 5% 5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  @media (max-width: 768px) { .sp-body { grid-template-columns: 1fr; } }
+  .sp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+  }
+  .sp-card h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .sp-desc { color: var(--muted); line-height: 1.7; font-size: 0.95rem; }
+  .sp-steps { display: flex; flex-direction: column; gap: 1rem; }
+  .sp-step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1rem;
+    background: var(--surface);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    transition: border-color 0.2s;
+  }
+  .sp-step:hover { border-color: rgba(245,200,66,0.3); }
+  .sp-step-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 0.1rem; }
+  .sp-step h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; margin-bottom: 0.2rem; }
+  .sp-step p { color: var(--muted); font-size: 0.82rem; line-height: 1.5; }
+  .sp-platform-list { display: flex; flex-direction: column; gap: 0.8rem; }
+  .sp-platform {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.2s;
+  }
+  .sp-platform:hover { border-color: var(--accent); background: rgba(245,200,66,0.05); }
+  .sp-platform-left { display: flex; flex-direction: column; }
+  .sp-platform-name { font-weight: 700; font-size: 0.9rem; font-family: 'Syne', sans-serif; }
+  .sp-platform-tip { font-size: 0.78rem; color: var(--muted); margin-top: 0.1rem; }
+  .sp-platform-arrow { color: var(--accent); font-size: 1rem; }
+  .sp-full { grid-column: 1 / -1; }
+
+  /* Skill page chatbot */
+  .sp-chat-section {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, var(--card), var(--surface));
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .sp-chat-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(245,200,66,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .sp-chat-section h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+  }
+  .sp-chat-section p { color: var(--muted); font-size: 0.88rem; margin-bottom: 1.2rem; }
+  .sp-chat-messages {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    height: 280px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin-bottom: 1rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .sp-quick-questions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.8rem;
+  }
+  .sp-quick-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    padding: 0.35rem 0.8rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .sp-quick-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .sp-chat-input-row {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .sp-chat-input {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.7rem 1rem;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .sp-chat-input:focus { border-color: rgba(245,200,66,0.5); }
+  .sp-chat-input::placeholder { color: var(--muted); }
+  .sp-chat-send {
+    background: var(--accent);
+    border: none;
+    color: #000;
+    padding: 0.7rem 1.2rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    transition: opacity 0.2s;
+  }
+  .sp-chat-send:hover { opacity: 0.85; }
+`;
+document.head.appendChild(styleEl);
+
+// ── SKILL PAGE HTML ──
+const skillPageEl = document.createElement('div');
+skillPageEl.id = 'skill-page';
+document.body.appendChild(skillPageEl);
+
+// ── OPEN SKILL PAGE ──
+document.querySelectorAll('.skill-pill[data-skill]').forEach(pill => {
+  pill.style.cursor = 'pointer';
+  pill.addEventListener('click', () => {
+    const key = pill.getAttribute('data-skill');
+    openSkillPage(key);
+  });
+});
+
+function openSkillPage(key) {
+  const s = skillData[key];
+  if (!s) return;
+
+  skillPageEl.innerHTML = `
+    <div class="sp-nav">
+      <button class="sp-back" onclick="closeSkillPage()">← Back</button>
+      <div class="sp-breadcrumb">Skills / <span>${s.name}</span></div>
+    </div>
+    <div class="sp-hero">
+      <div class="sp-hero-bg" style="background: radial-gradient(ellipse 60% 50% at 70% 30%, ${s.color}12 0%, transparent 70%)"></div>
+      <span class="sp-emoji-big">${s.emoji}</span>
+      <h1 style="color:${s.color}">${s.name}</h1>
+      <p class="sp-tagline">${s.tagline}</p>
+      <div class="sp-badges">
+        <div class="sp-badge">💰 Earn: <strong>${s.earning}</strong></div>
+        <div class="sp-badge">📊 <strong>${s.difficulty}</strong></div>
+        <div class="sp-badge">⚡ First income in: <strong>${s.timeToFirst}</strong></div>
+      </div>
+    </div>
+    <div class="sp-body">
+      <div class="sp-card">
+        <h2>📖 About This Skill</h2>
+        <p class="sp-desc">${s.description}</p>
+      </div>
+      <div class="sp-card">
+        <h2>🔗 Best Platforms for India</h2>
+        <div class="sp-platform-list">
+          ${s.platforms.map(p => `
+            <a href="${p.url}" target="_blank" class="sp-platform">
+              <div class="sp-platform-left">
+                <div class="sp-platform-name">${p.name}</div>
+                <div class="sp-platform-tip">${p.tip}</div>
+              </div>
+              <span class="sp-platform-arrow">→</span>
+            </a>
+          `).join('')}
+        </div>
+      </div>
+      <div class="sp-card sp-full">
+        <h2>🗺️ Your Step-by-Step Roadmap</h2>
+        <div class="sp-steps">
+          ${s.steps.map((step, i) => `
+            <div class="sp-step">
+              <div class="sp-step-icon">${step.icon}</div>
+              <div>
+                <h4>Step ${i+1}: ${step.title}</h4>
+                <p>${step.desc}</p>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <div class="sp-chat-section">
+        <h2>✦ Ask SkillBot about ${s.name}</h2>
+        <p>Get personalized advice for your situation — experience level, time available, and income goals.</p>
+        <div class="sp-chat-messages" id="sp-chat-messages"></div>
+        <div class="sp-quick-questions" id="sp-quick-questions">
+          <button class="sp-quick-btn" onclick="spSendMessage('How do I get my first ${s.name.toLowerCase()} client?')">First client tips?</button>
+          <button class="sp-quick-btn" onclick="spSendMessage('What tools do I need for ${s.name.toLowerCase()}?')">What tools do I need?</button>
+          <button class="sp-quick-btn" onclick="spSendMessage('How much should I charge for ${s.name.toLowerCase()} as a beginner?')">What to charge?</button>
+          <button class="sp-quick-btn" onclick="spSendMessage('How do I build a portfolio for ${s.name.toLowerCase()}?')">Build a portfolio?</button>
+        </div>
+        <div class="sp-chat-input-row">
+          <input class="sp-chat-input" id="sp-chat-input" type="text" placeholder="Ask anything about earning with ${s.name}…" maxlength="200">
+          <button class="sp-chat-send" onclick="spSendFromInput()">Ask →</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  skillPageEl.classList.add('active');
+  skillPageEl.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+
+  // Add greeting message
+  const skillContext = key;
+  spConversationHistory = [];
+  spCurrentSkill = s.name;
+  setTimeout(() => {
+    spAddBotMessage(`Hey! 👋 I'm SkillBot, your guide to earning with **${s.name}**.\n\nI can help you figure out where to start, how much to charge, how to find clients, or anything else about making money with this skill. What do you want to know?`);
+  }, 300);
+
+  document.getElementById('sp-chat-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') spSendFromInput();
+  });
+}
+
+function closeSkillPage() {
+  skillPageEl.classList.remove('active');
+  document.body.style.overflow = '';
+  setTimeout(() => { skillPageEl.innerHTML = ''; }, 350);
+}
+
+let spConversationHistory = [];
+let spCurrentSkill = '';
+
+function spAddBotMessage(text) {
+  const msgs = document.getElementById('sp-chat-messages');
+  if (!msgs) return;
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.innerHTML = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function spAddUserMessage(text) {
+  const msgs = document.getElementById('sp-chat-messages');
+  if (!msgs) return;
+  const div = document.createElement('div');
+  div.className = 'msg user';
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function spShowTyping() {
+  const msgs = document.getElementById('sp-chat-messages');
+  if (!msgs) return;
+  const div = document.createElement('div');
+  div.className = 'typing-indicator';
+  div.id = 'sp-typing';
+  div.innerHTML = '<span></span><span></span><span></span>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function spRemoveTyping() {
+  const t = document.getElementById('sp-typing');
+  if (t) t.remove();
+}
+
+function spSendFromInput() {
+  const input = document.getElementById('sp-chat-input');
+  if (!input) return;
+  spSendMessage(input.value.trim());
+  input.value = '';
+}
+
+async function spSendMessage(text) {
+  if (!text) return;
+  const qq = document.getElementById('sp-quick-questions');
+  if (qq) qq.style.display = 'none';
+  spAddUserMessage(text);
+  spConversationHistory.push({ role: 'user', content: text });
+  spShowTyping();
+
+  const spSystemPrompt = `You are SkillBot, a friendly expert helping Indians earn money online with ${spCurrentSkill} on SkillEarn India. Speak in clear simple English. Be warm and practical. Give actionable advice for Indian users. Give earning ranges in Indian Rupees. Mention India-relevant platforms (Fiverr, Upwork, Internshala, Instamojo, YouTube India). Keep responses under 120 words. Use **bold** for key terms. Always end with an encouraging note.`;
+
+  try {
+    const reply = await callGemini(spSystemPrompt, spConversationHistory);
+    spRemoveTyping();
+    spConversationHistory.push({ role: 'assistant', content: reply });
+    spAddBotMessage(reply);
+  } catch (err) {
+    spRemoveTyping();
+    console.error('SkillBot skill page error:', err.message);
+    const errMsg = err.message || 'Unknown error';
+    let userMsg = '⚠️ SkillBot is offline.';
+    if (errMsg.includes('Failed to fetch') || errMsg.includes('NetworkError')) {
+      userMsg = '⚠️ Cannot connect to AI. Please host this file online (try netlify.com/drop) instead of opening locally.';
+    } else if (errMsg.includes('API_KEY') || errMsg.includes('403')) {
+      userMsg = '⚠️ API key issue. Get a new key from aistudio.google.com.';
+    } else if (errMsg.includes('quota') || errMsg.includes('429')) {
+      userMsg = '⚠️ Free quota reached. Please wait a minute and try again.';
+    } else {
+      userMsg = '⚠️ Error: ' + errMsg;
+    }
+    spAddBotMessage(userMsg);
+  }
+}
+
+</script>
+</body>
+</html>
